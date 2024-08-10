@@ -620,7 +620,7 @@ const Line7 = styled("div")({
     backgroundColor: '#fff', // 배경색을 흰색으로 설정
   });
 
-function salarRegister() {
+function SalarRegister() {
     const router = useRouter();
     const handleClick = () => {
         alert('선택 완료 버튼이 클릭되었습니다!'); // 클릭 시 동작
@@ -695,6 +695,6 @@ function salarRegister() {
 
   }
 
-export default salarRegister;
+export default SalarRegister;
 
   

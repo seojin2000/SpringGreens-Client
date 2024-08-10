@@ -575,7 +575,7 @@ const Line7 = styled("div")({
     backgroundColor: '#fff', // 배경색을 흰색으로 설정
   });
 
-function domasticRegister1() {
+function DomasticRegister1() {
   const router = useRouter();
   const moveSalarRegister = () => {
       router.push("/salar");
@@ -650,6 +650,6 @@ function domasticRegister1() {
 
   }
 
-export default domasticRegister1;
+export default DomasticRegister1;
 
   
