@@ -13,19 +13,16 @@ const Q1 = styled("div")(({ theme }) => ({
   boxSizing: `border-box`,
   width: `100vw`,  // viewport 너비에 맞추기
   height: `100vh`, // viewport 높이에 맞추기
-  overflow: `hidden`,
+  overflow: `auto`,
 }));
 
 const Group82 = styled("div")(({ theme }) => ({
   display: `flex`,
   flexDirection: `row`,
-  justifyContent: `space-between`,
+  justifyContent: `center`,
   alignItems: `center`,
   width: `100%`,
   marginBottom: `20px`,
-  [theme.breakpoints.up('sm')]: {
-    width: `auto`,
-  },
 }));
 
 const ListItemForgotYour = styled("div")({
