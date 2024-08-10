@@ -502,7 +502,7 @@ function RegisterKind() {
       <Q3>{`국내사업자`}</Q3>
       <Q4>{`일반사용자`}</Q4>
       <Group101 onClick={() => handleClick()}>
-        <Rectangle31></Rectangle31>
+        <Rectangle31 ></Rectangle31>
         <Q5>{`선택완료`}</Q5>
       </Group101>
       <DomesticBusiness>{`Domestic business`}</DomesticBusiness>

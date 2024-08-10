@@ -7,14 +7,15 @@ export const metadata = {
 import dynamic from 'next/dynamic';
 
 const ClientComponent = dynamic(() => import('./ClientComponent'), { ssr: false });
-const Q = dynamic(()=> import('./loginPage'), {ssr: false});
-const Q2 = dynamic(()=> import('./loginSelectPage'), {ssr: false});
-const Q3 = dynamic(()=> import('./domasticRegister1'), {ssr: false});
+const loginPage = dynamic(()=> import('./loginPage'), {ssr: false});
+const loginSelectPage = dynamic(()=> import('./loginSelectPage'), {ssr: false});
+const domasticRegister1 = dynamic(()=> import('./domasticRegister1'), {ssr: false});
+const Q4 = dynamic(()=> import('./salarRegister'), {ssr: false});
 
 export default function Page() {
   return (
     <div>
-      <Q2 />
+      <Q4 />
       {/* <Q /> */}
       {/* <ClientComponent /> */}
     </div>
