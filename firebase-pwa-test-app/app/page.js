@@ -7,9 +7,9 @@ export const metadata = {
 import dynamic from 'next/dynamic';
 
 const ClientComponent = dynamic(() => import('./ClientComponent'), { ssr: false });
-const Q = dynamic(()=> import('./Q'), {ssr: false});
-const Q2 = dynamic(()=> import('./Q2'), {ssr: false});
-const Q3 = dynamic(()=> import('./Q3'), {ssr: false});
+const Q = dynamic(()=> import('./loginPage'), {ssr: false});
+const Q2 = dynamic(()=> import('./loginSelectPage'), {ssr: false});
+const Q3 = dynamic(()=> import('./domasticRegister1'), {ssr: false});
 
 export default function Page() {
   return (

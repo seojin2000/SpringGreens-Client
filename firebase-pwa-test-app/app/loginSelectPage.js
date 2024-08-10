@@ -1,19 +1,24 @@
 'use client';
 import React from 'react';
 import { styled } from '@mui/material/styles';
-
 const Q1 = styled("div")({
   backgroundColor: `rgba(255, 255, 255, 1)`,
   display: `flex`,
-  flexDirection: `column`, // 수직 정렬을 위한 flexDirection
+  flexDirection: `column`,
   width: `100vw`,
-  height: `100dvh`, // 전체 화면 높이
-  justifyContent: `center`, // 중앙 정렬
-  alignItems: `center`, // 중앙 정렬
+  height: `100vh`,
+  justifyContent: `center`,
+  alignItems: `center`,
   padding: `0px`,
   boxSizing: `border-box`,
-  position: `relative`, // 내부 요소들이 이 요소를 기준으로 위치를 잡음
-  overflow: `hidden` // 화면 넘침 방지
+  position: `relative`,
+  overflow: `hidden`,
+  '@media (max-width: 1024px)': {
+    height: `auto`, // 더 작은 화면에서 자동 높이 조정
+  },
+  '@media (max-width: 768px)': {
+    padding: `0 16px`, // 모바일 화면에서 패딩 추가
+  },
 });
 
 const Rectangle47 = styled("div")({
@@ -23,6 +28,15 @@ const Rectangle47 = styled("div")({
   height: `211px`,
   position: `absolute`,
   top: `134px`,
+  '@media (max-width: 1024px)': {
+    width: `90%`, // 화면에 맞게 조정
+    height: `auto`,
+    top: `20px`,
+  },
+  '@media (max-width: 768px)': {
+    width: `100%`,
+    top: `20px`,
+  },
 });
 
 const Rectangle48 = styled("div")({
@@ -32,6 +46,15 @@ const Rectangle48 = styled("div")({
   height: `211px`,
   position: `absolute`,
   top: `391px`,
+  '@media (max-width: 1024px)': {
+    width: `90%`,
+    height: `auto`,
+    top: `240px`,
+  },
+  '@media (max-width: 768px)': {
+    width: `100%`,
+    top: `240px`,
+  },
 });
 
 const Q2 = styled("div")({
@@ -48,6 +71,16 @@ const Q2 = styled("div")({
   textTransform: `none`,
   position: `absolute`,
   top: `52px`,
+  '@media (max-width: 1024px)': {
+    fontSize: `18px`,
+    top: `10px`,
+    textAlign: `center`,
+    width: `90%`,
+  },
+  '@media (max-width: 768px)': {
+    fontSize: `16px`,
+    top: `10px`,
+  },
 });
 
 const MingcuteLeftLine = styled("div")({
@@ -64,6 +97,12 @@ const MingcuteLeftLine = styled("div")({
   left: `9px`,
   top: `52px`,
   overflow: `hidden`,
+  '@media (max-width: 1024px)': {
+    left: `5px`,
+  },
+  '@media (max-width: 768px)': {
+    left: `3px`,
+  },
 });
 
 const Group = styled("div")({
@@ -79,6 +118,14 @@ const Group = styled("div")({
   height: `32px`,
   left: `0px`,
   top: `0px`,
+  '@media (max-width: 1024px)': {
+    width: `28px`,
+    height: `28px`,
+  },
+  '@media (max-width: 768px)': {
+    width: `24px`,
+    height: `24px`,
+  },
 });
 
 const Vector = styled("img")({
@@ -87,6 +134,14 @@ const Vector = styled("img")({
   position: `absolute`,
   left: `0px`,
   top: `0px`,
+  '@media (max-width: 1024px)': {
+    width: `28px`,
+    height: `28px`,
+  },
+  '@media (max-width: 768px)': {
+    width: `24px`,
+    height: `24px`,
+  },
 });
 
 const Vector1 = styled("img")({
@@ -95,6 +150,18 @@ const Vector1 = styled("img")({
   position: `absolute`,
   left: `11px`,
   top: `7px`,
+  '@media (max-width: 1024px)': {
+    width: `18px`,
+    height: `10px`,
+    left: `8px`,
+    top: `5px`,
+  },
+  '@media (max-width: 768px)': {
+    width: `16px`,
+    height: `8px`,
+    left: `6px`,
+    top: `4px`,
+  },
 });
 
 const Q3 = styled("div")({
@@ -113,6 +180,16 @@ const Q3 = styled("div")({
   height: `20px`,
   position: `absolute`,
   top: `158px`,
+  '@media (max-width: 1024px)': {
+    fontSize: `12px`,
+    width: `60px`,
+    top: `120px`,
+  },
+  '@media (max-width: 768px)': {
+    fontSize: `10px`,
+    width: `50px`,
+    top: `100px`,
+  },
 });
 
 const Q4 = styled("div")({
@@ -131,6 +208,16 @@ const Q4 = styled("div")({
   height: `20px`,
   position: `absolute`,
   top: `415px`,
+  '@media (max-width: 1024px)': {
+    fontSize: `12px`,
+    width: `60px`,
+    top: `370px`,
+  },
+  '@media (max-width: 768px)': {
+    fontSize: `10px`,
+    width: `50px`,
+    top: `340px`,
+  },
 });
 
 const Group101 = styled("div")({
@@ -145,6 +232,16 @@ const Group101 = styled("div")({
   width: `310px`,
   height: `60px`,
   top: `693px`,
+  '@media (max-width: 1024px)': {
+    width: `90%`,
+    height: `50px`,
+    top: `620px`,
+  },
+  '@media (max-width: 768px)': {
+    width: `100%`,
+    height: `45px`,
+    top: `580px`,
+  },
 });
 
 const Rectangle31 = styled("div")({
@@ -155,6 +252,14 @@ const Rectangle31 = styled("div")({
   position: `absolute`,
   left: `0px`,
   top: `0px`,
+  '@media (max-width: 1024px)': {
+    width: `100%`,
+    height: `50px`,
+  },
+  '@media (max-width: 768px)': {
+    width: `100%`,
+    height: `45px`,
+  },
 });
 
 const Q5 = styled("div")({
@@ -165,14 +270,23 @@ const Q5 = styled("div")({
   fontStyle: `normal`,
   fontFamily: `Arial`,
   fontWeight: `700`,
-  fontSize: `20px`,
+  fontSize: `16px`,
   letterSpacing: `0px`,
   textDecoration: `none`,
-  lineHeight: `24px`,
   textTransform: `none`,
   position: `absolute`,
-  left: `113px`,
-  top: `18px`,
+  top: `20px`,
+  left: `0px`,
+  right: `0px`,
+  bottom: `0px`,
+  '@media (max-width: 1024px)': {
+    fontSize: `14px`,
+    top: `15px`,
+  },
+  '@media (max-width: 768px)': {
+    fontSize: `12px`,
+    top: `10px`,
+  },
 });
 
 const DomesticBusiness = styled("div")({
@@ -191,6 +305,11 @@ const DomesticBusiness = styled("div")({
   height: `16px`,
   position: `absolute`,
   top: `178px`,
+  '@media (max-width: 768px)': {
+    fontSize: `10px`,
+    width: `120px`,
+    top: `150px`,
+  },
 });
 
 const GeneralUser = styled("div")({
@@ -209,6 +328,11 @@ const GeneralUser = styled("div")({
   height: `16px`,
   position: `absolute`,
   top: `435px`,
+  '@media (max-width: 768px)': {
+    fontSize: `10px`,
+    width: `120px`,
+    top: `400px`,
+  },
 });
 
 const Q6Span1 = styled("span")({
@@ -347,7 +471,13 @@ const Q6 = styled("div")({
   height: `106px`,
   position: `absolute`,
   top: `224px`,
-  lineHeight: `16px`
+  lineHeight: `16px`,
+  '@media (max-width: 768px)': {
+    fontSize: `10px`,
+    width: `100%`,
+    height: `auto`,
+    top: `180px`,
+  },
 });
 
 const Q7Span1 = styled("span")({
@@ -438,7 +568,13 @@ const Q7 = styled("div")({
   height: `106px`,
   position: `absolute`,
   top: `481px`,
-  lineHeight: `16px`
+  lineHeight: `16px`,
+  '@media (max-width: 768px)': {
+    fontSize: `10px`,
+    width: `100%`,
+    height: `auto`,
+    top: `380px`,
+  },
 });
 
 const Line8 = styled("div")({
@@ -447,6 +583,10 @@ const Line8 = styled("div")({
   height: `0px`,
   position: `absolute`,
   top: `201px`,
+  '@media (max-width: 768px)': {
+    width: `100%`,
+    top: `160px`,
+  },
 });
 
 const Line9 = styled("div")({
@@ -455,6 +595,10 @@ const Line9 = styled("div")({
   height: `0px`,
   position: `absolute`,
   top: `458px`,
+  '@media (max-width: 768px)': {
+    width: `100%`,
+    top: `380px`,
+  },
 });
 
 function RegisterKind() {
