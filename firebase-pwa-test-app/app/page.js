@@ -9,11 +9,12 @@ import dynamic from 'next/dynamic';
 const ClientComponent = dynamic(() => import('./ClientComponent'), { ssr: false });
 const Q = dynamic(()=> import('./Q'), {ssr: false});
 const Q2 = dynamic(()=> import('./Q2'), {ssr: false});
+const Q3 = dynamic(()=> import('./Q3'), {ssr: false});
 
 export default function Page() {
   return (
     <div>
-      <Q2 />
+      <Q3 />
       {/* <Q /> */}
       {/* <ClientComponent /> */}
     </div>

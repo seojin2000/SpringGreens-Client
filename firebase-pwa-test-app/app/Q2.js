@@ -475,12 +475,6 @@ function RegisterKind() {
       <Rectangle47></Rectangle47>
       <Rectangle48></Rectangle48>
       <Q2>{`회원 유형 선택`}</Q2>
-      {/* <MingcuteLeftLine>
-        <Group>
-          <Vector src={VectorImage} loading='lazy' alt={"Vector"}/>
-          <Vector1 src={Vector1Image} loading='lazy' alt={"Vector"}/>
-        </Group>
-      </MingcuteLeftLine> */}
       <Q3>{`국내사업자`}</Q3>
       <Q4>{`일반사용자`}</Q4>
       <Group101>
