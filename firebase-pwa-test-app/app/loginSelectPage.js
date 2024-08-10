@@ -1,6 +1,42 @@
 'use client';
-import React from 'react';
-import { styled } from '@mui/material/styles';
+import React, { useState } from 'react';
+import { styled, keyframes } from '@mui/material/styles';
+
+// 애니메이션 정의
+const scaleUp = keyframes`
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1.05);
+  }
+`;
+
+// 스타일 정의
+const Button = styled('button')({
+  backgroundColor: 'rgba(48, 79, 254, 1)',
+  border: 'none',
+  borderRadius: '6px',
+  width: '310px',
+  height: '60px',
+  color: 'rgba(255, 255, 255, 1)',
+  fontFamily: 'Arial',
+  fontWeight: '700',
+  fontSize: '20px',
+  textAlign: 'center',
+  lineHeight: '60px',
+  cursor: 'pointer',
+  transition: 'background-color 0.3s ease',
+  '&:hover': {
+    backgroundColor: 'rgba(38, 60, 254, 1)', // 버튼에 마우스를 올렸을 때 색상 변화
+  },
+  '&:active': {
+    backgroundColor: 'rgba(28, 50, 204, 1)', // 버튼을 클릭했을 때 색상 변화
+  },
+});
 
 const Q1 = styled("div")({
   backgroundColor: `rgba(255, 255, 255, 1)`,
@@ -16,23 +52,29 @@ const Q1 = styled("div")({
   overflow: `hidden` // 화면 넘침 방지
 });
 
-const Rectangle47 = styled("div")({
+const Rectangle47 = styled("div")(({ isActive }) => ({
   backgroundColor: `rgba(217, 223, 255, 1)`,
   borderRadius: `8px`,
   width: `310px`,
   height: `211px`,
   position: `absolute`,
   top: `134px`,
-});
+  transition: `transform 0.3s ease`,
+  transform: isActive ? `scale(1.05)` : `scale(1)`,
+  animation: isActive ? `${scaleUp} 0.6s ease` : 'none',
+}));
 
-const Rectangle48 = styled("div")({
+const Rectangle48 = styled("div")(({ isActive }) => ({
   backgroundColor: `rgba(255, 227, 194, 1)`,
   borderRadius: `8px`,
   width: `310px`,
   height: `211px`,
   position: `absolute`,
   top: `391px`,
-});
+  transition: `transform 0.3s ease`,
+  transform: isActive ? `scale(1.05)` : `scale(1)`,
+  animation: isActive ? `${scaleUp} 0.6s ease` : 'none',
+}));
 
 const Q2 = styled("div")({
   textAlign: `left`,
@@ -458,16 +500,32 @@ const Line9 = styled("div")({
 });
 
 function RegisterKind() {
+  const [activeRect, setActiveRect] = useState(null); // 현재 활성화된 상자를 추적
+
+  const handleRectangleClick = (rectNumber) => {
+    setActiveRect(prev => prev === rectNumber ? null : rectNumber); // 클릭한 상자와 현재 활성화된 상자가 같으면 비활성화
+  };
+
+  const handleClick = () => {
+    alert('선택 완료 버튼이 클릭되었습니다!'); // 클릭 시 동작
+  };
+
+
   return (
     <Q1>
-      <Rectangle47></Rectangle47>
-      <Rectangle48></Rectangle48>
-      <Q2>{`회원 유형 선택`}</Q2>
+      <Rectangle47 
+        onClick={() => handleRectangleClick(47)} 
+        isActive={activeRect === 47}
+      />
+      <Rectangle48 
+        onClick={() => handleRectangleClick(48)} 
+        isActive={activeRect === 48}
+      />
       <Q3>{`국내사업자`}</Q3>
       <Q4>{`일반사용자`}</Q4>
       <Group101>
         <Rectangle31></Rectangle31>
-        <Q5>{`선택완료`}</Q5>
+        <Q5 onClick={() => handleClick()}>{`선택완료`}</Q5>
       </Group101>
       <DomesticBusiness>{`Domestic business`}</DomesticBusiness>
       <GeneralUser>{`General user`}</GeneralUser>
