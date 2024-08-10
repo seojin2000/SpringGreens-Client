@@ -1,32 +1,21 @@
 'use client';
 import React from 'react';
 
-// import VectorImage from 'src/assets/images/_Vector.png';
-
-// import Vector1Image from 'src/assets/images/_Vector.png';
-
-// import Vector2Image from 'src/assets/images/_Vector.png';
-
-// import Vector3Image from 'src/assets/images/_Vector.png';
 
 import {
   styled
 } from '@mui/material/styles';
 
-// import StatusBarIPhone13Main from 'src/components/StatusBarIPhone13Main/StatusBarIPhone13Main';
-
 const Q1 = styled("div")({
-  backgroundColor: `rgba(255, 255, 255, 1)`,
-  display: `flex`,
-  position: `relative`,
-  isolation: `isolate`,
-  flexDirection: `row`,
-  width: `100vw`,
-  height: `100dvh`,
-  justifyContent: `flex-start`,
-  alignItems: `flex-start`,
-  padding: `0px`,
-  boxSizing: `border-box`,
+    backgroundColor: `rgba(255, 255, 255, 1)`, // Ensure background is white
+    display: `flex`,
+    flexDirection: `column`, // Stack items vertically
+    position: `relative`,
+    width: `100vw`,
+    minHeight: `100vh`, // Ensure the container covers at least the viewport height
+    padding: `0px`,
+    boxSizing: `border-box`,
+    overflow: `auto`, // Allow scrolling if content exceeds viewport height
 });
 
 
@@ -651,7 +640,7 @@ const Line8 = styled("div")({
 });
 
 
-function RegisterKind2() {
+function Register() {
   return (
     <Q1>
       <Q2>
@@ -743,6 +732,6 @@ function RegisterKind2() {
 
   }
 
-export default RegisterKind2;
+export default Register;
 
   
