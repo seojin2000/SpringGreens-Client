@@ -8,6 +8,7 @@ export default function RootLayout({ children }) {
       <head>
         {/* 이곳에 추가적인 메타 태그나 링크를 넣을 수 있습니다. */}
         <meta name="apple-mobile-web-app-capable" content="yes"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"></meta>
         <link rel="manifest" href="/manifest.json" />
         <link rel="icon" href="/favicon.ico" />
         <meta name="msapplication-TileColor" content="#FF98BA" />
