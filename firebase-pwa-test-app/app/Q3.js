@@ -7,16 +7,18 @@ import {
 } from '@mui/material/styles';
 
 const Q1 = styled("div")({
-    backgroundColor: `rgba(255, 255, 255, 1)`, // Ensure background is white
+    backgroundColor: `rgba(255, 255, 255, 1)`,
     display: `flex`,
-    flexDirection: `column`, // Stack items vertically
+    flexDirection: `column`,
+    alignItems: `center`, // Center horizontally
+    justifyContent: `center`, // Center vertically
     position: `relative`,
     width: `100vw`,
-    minHeight: `100vh`, // Ensure the container covers at least the viewport height
+    minHeight: `100vh`,
     padding: `0px`,
     boxSizing: `border-box`,
-    overflow: `auto`, // Allow scrolling if content exceeds viewport height
-});
+    overflow: `auto`,
+  });
 
 
 const Q2 = styled("div")({
@@ -32,7 +34,6 @@ const Q2 = styled("div")({
   textDecoration: `none`,
   textTransform: `none`,
   position: `absolute`,
-  left: `53px`,
   top: `54px`,
 });
 
@@ -47,7 +48,7 @@ const Component2 = styled("div")({
   boxSizing: `border-box`,
   width: `320px`,
   height: `87px`,
-  left: `20px`,
+
   top: `183px`,
 });
 
@@ -110,7 +111,6 @@ const Component3 = styled("div")({
   boxSizing: `border-box`,
   width: `320px`,
   height: `87px`,
-  left: `20px`,
   top: `290px`,
 });
 
@@ -173,7 +173,7 @@ const Component4 = styled("div")({
   boxSizing: `border-box`,
   width: `320px`,
   height: `87px`,
-  left: `20px`,
+
   top: `397px`,
 });
 
@@ -236,7 +236,6 @@ const Component6 = styled("div")({
   boxSizing: `border-box`,
   width: `320px`,
   height: `87px`,
-  left: `20px`,
   top: `507px`,
 });
 
@@ -347,8 +346,8 @@ const Group101 = styled("div")({
   boxSizing: `border-box`,
   width: `320px`,
   height: `60px`,
-  left: `20px`,
   top: `953px`,
+  marginBottom : `10px`
 });
 
 const Rectangle31 = styled("div")({
@@ -429,14 +428,12 @@ const Vector3 = styled("img")({
 const Frame66 = styled("div")({
   display: `flex`,
   position: `absolute`,
-  isolation: `isolate`,
   flexDirection: `row`,
   justifyContent: `center`,
   alignItems: `center`,
   padding: `0px`,
   boxSizing: `border-box`,
   width: `320px`,
-  left: `20px`,
   top: `119px`,
   height: `31px`,
 });
@@ -470,6 +467,8 @@ const Q12 = styled("div")({
   textDecoration: `none`,
   textTransform: `none`,
   margin: `0px`,
+  justifyContent: `center`,
+  alignItems: `center`,
 });
 
 const Frame64 = styled("div")({
@@ -515,7 +514,6 @@ const Component11 = styled("div")({
   boxSizing: `border-box`,
   width: `320px`,
   height: `87px`,
-  left: `20px`,
   top: `803px`,
 });
 
@@ -578,7 +576,6 @@ const Component12 = styled("div")({
   boxSizing: `border-box`,
   width: `320px`,
   height: `87px`,
-  left: `20px`,
   top: `684px`,
 });
 
@@ -635,7 +632,6 @@ const Line8 = styled("div")({
   width: `300px`,
   height: `0px`,
   position: `absolute`,
-  left: `30px`,
   top: `640px`,
 });
 
@@ -656,6 +652,7 @@ function Register() {
           {`이름을 입력해 주세요`}
         </Q4>
       </Component2>
+
       <Component3>
         <Rectangle261>
         </Rectangle261>
@@ -666,6 +663,7 @@ function Register() {
           {`이메일을 입력해 주세요`}
         </Q6>
       </Component3>
+
       <Component4>
         <Rectangle262>
         </Rectangle262>
@@ -676,6 +674,7 @@ function Register() {
           {`비밀번호를 입력해 주세요`}
         </Q8>
       </Component4>
+
       <Component6>
         <Rectangle263>
         </Rectangle263>
@@ -686,6 +685,7 @@ function Register() {
           {`비밀번호를 입력해 주세요`}
         </Q10>
       </Component6>
+
       <Group101>
         <Rectangle31>
         </Rectangle31>
@@ -693,6 +693,7 @@ function Register() {
           {`가게 등록하기`}
         </Q11>
       </Group101>
+
       <Frame66>
         <Frame65>
           <Q12>
@@ -705,6 +706,7 @@ function Register() {
           </Q13>
         </Frame64>
       </Frame66>
+
       <Component11>
         <Rectangle264>
         </Rectangle264>
@@ -716,6 +718,7 @@ function Register() {
 `}
         </Q15>
       </Component11>
+
       <Component12>
         <Rectangle265>
         </Rectangle265>
@@ -726,6 +729,7 @@ function Register() {
           {`가게 대표자 전화번호를 입력해 주세요`}
         </Q17>
       </Component12>
+      
       <Line8>
       </Line8>
     </Q1>);
