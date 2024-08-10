@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 
 // import VectorImage from 'src/assets/images/_Vector.png';
