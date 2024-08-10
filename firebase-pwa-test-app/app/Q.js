@@ -11,8 +11,9 @@ const Q1 = styled("div")(({ theme }) => ({
   justifyContent: `center`,
   padding: `20px`,
   boxSizing: `border-box`,
-  width: `100%`,
-  height: `100vh`,
+  width: `100vw`,  // viewport 너비에 맞추기
+  height: `100vh`, // viewport 높이에 맞추기
+  overflow: `hidden`, // 스크롤바를 숨깁니다
   [theme.breakpoints.up('sm')]: {
     width: `360px`,
     height: `800px`,
