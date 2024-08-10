@@ -239,7 +239,6 @@ const Q4 = styled("div")({
 function Q() {
   return (
     <Q1>
-      <StatusBarIPhone13Mai/>
       <Q2>
         {`소셜 로그인`}
       </Q2>
