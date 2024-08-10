@@ -85,12 +85,6 @@ const Vector1 = styled("img")({
   top: `7px`,
 });
 
-const Q3 = styled(Q)({
-  height: `45px`,
-  position: `absolute`,
-  left: `30px`,
-  top: `340px`,
-});
 
 const Group81 = styled("div")({
   boxShadow: `0px 0px 16.100000381469727px rgba(0, 0, 0, 0.1)`,
@@ -236,13 +230,13 @@ const Q4 = styled("div")({
 });
 
 
-function Q() {
+function Social() {
   return (
     <Q1>
       <Q2>
         {`소셜 로그인`}
       </Q2>
-      <Q3/>
+    
       <Group81>
         <Rectangle24>
         </Rectangle24>
@@ -260,6 +254,6 @@ function Q() {
 
   }
 
-export default Q;
+export default Social;
 
   

@@ -1,5 +1,6 @@
 'use client';
 import React from 'react';
+import { useRouter } from 'next/navigation';
 
 import {
   styled
@@ -470,53 +471,6 @@ textAlign: `center`,
   top: `18px`,
 });
 
-const MingcuteLeftLine = styled("div")({
-  display: `flex`,
-  position: `absolute`,
-  isolation: `isolate`,
-  flexDirection: `row`,
-  justifyContent: `flex-start`,
-  alignItems: `flex-start`,
-  padding: `0px`,
-  boxSizing: `border-box`,
-  width: `32px`,
-  height: `32px`,
-  left: `9px`,
-  top: `52px`,
-  overflow: `hidden`,
-});
-
-const Group = styled("div")({
-  display: `flex`,
-  position: `absolute`,
-  isolation: `isolate`,
-  flexDirection: `row`,
-  justifyContent: `flex-start`,
-  alignItems: `flex-start`,
-  padding: `0px`,
-  boxSizing: `border-box`,
-  width: `32px`,
-  height: `32px`,
-  left: `0px`,
-  top: `0px`,
-});
-
-const Vector2 = styled("img")({
-  height: `32px`,
-  width: `32px`,
-  position: `absolute`,
-  left: `0px`,
-  top: `0px`,
-});
-
-const Vector3 = styled("img")({
-  height: `17.75px`,
-  width: `10.23px`,
-  position: `absolute`,
-  left: `11px`,
-  top: `7px`,
-});
-
 const Frame66 = styled("div")({
   display: `flex`,
   position: `absolute`,
@@ -622,9 +576,13 @@ const Line7 = styled("div")({
   });
 
 function domasticRegister1() {
-    const handleClick = () => {
-        alert('선택 완료 버튼이 클릭되었습니다!'); // 클릭 시 동작
-      };
+  const router = useRouter();
+  const moveSalarRegister = () => {
+      router.push("/salar");
+  };
+  const handleClick = () => {
+    alert("/회원가입 완료");
+  }
   
   return (
     <Q1>
@@ -680,7 +638,7 @@ function domasticRegister1() {
             {`도매`}
           </Q16>
         </Frame65>
-        <Frame64>
+        <Frame64 onClick={() => moveSalarRegister()}>
           <Q17>
             {`소매`}
           </Q17>

@@ -1,5 +1,6 @@
 'use client';
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { styled, keyframes } from '@mui/material/styles';
 
 // 애니메이션 정의
@@ -478,30 +479,36 @@ const Line9 = styled("div")({
 });
 
 function RegisterKind() {
-  const [activeRect, setActiveRect] = useState(null); // 현재 활성화된 상자를 추적
+  const router = useRouter();
+  const [selected, setSelected] = useState(null);
 
-  const handleRectangleClick = (rectNumber) => {
-    setActiveRect(prev => prev === rectNumber ? null : rectNumber); // 클릭한 상자와 현재 활성화된 상자가 같으면 비활성화
+  const handleSelection = (type) => {
+    setSelected(type);
   };
 
-  const handleClick = () => {
-    alert('선택 완료 버튼이 클릭되었습니다!'); // 클릭 시 동작
+  const handleSubmit = () => {
+    if (selected === 'domestic') {
+      router.push('/domestic');
+    } else if (selected === 'general') {
+      router.push('/general');
+    }
   };
+
 
 
   return (
     <Q1>
       <Rectangle47 
-        onClick={() => handleRectangleClick(47)} 
-        isActive={activeRect === 47}
+        isActive={selected === 'domestic'} 
+        onClick={() => handleSelection('domestic')} 
       />
       <Rectangle48 
-        onClick={() => handleRectangleClick(48)} 
-        isActive={activeRect === 48}
+        isActive={selected === 'general'} 
+        onClick={() => handleSelection('general')} 
       />
       <Q3>{`국내사업자`}</Q3>
       <Q4>{`일반사용자`}</Q4>
-      <Group101 onClick={() => handleClick()}>
+      <Group101 onClick={() => handleSubmit()}>
         <Rectangle31 ></Rectangle31>
         <Q5>{`선택완료`}</Q5>
       </Group101>

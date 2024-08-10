@@ -1,7 +1,7 @@
 "use client";
 import React from 'react';
 import { styled } from '@mui/material/styles';
-
+import { useRouter } from 'next/navigation'
 // 스타일 정의
 const Q1 = styled("div")(({ theme }) => ({
   backgroundColor: `rgba(255, 255, 255, 1)`,
@@ -160,32 +160,38 @@ const Q6 = styled("div")({
 });
 
 function Q() {
+  const router = useRouter(); // useRouter 훅 호출
+
+  const handleSignUpClick = () => {
+    router.push("/loginSelect"); // /loginSelectPage로 이동
+  };
+
   return (
     <Q1>
-        <Q6>{`로그인`}</Q6>
-        <Tabpanel>
-            <InputField type="email" placeholder="  이메일을 입력하세요" />
-        </Tabpanel>
-        
-        <Tabpanel1>
-            <InputField type="password" placeholder="  비밀번호를 입력하세요" />
-        </Tabpanel1>
+      <Q6>{`로그인`}</Q6>
+      <Tabpanel>
+        <InputField type="email" placeholder="  이메일을 입력하세요" />
+      </Tabpanel>
+      
+      <Tabpanel1>
+        <InputField type="password" placeholder="  비밀번호를 입력하세요" />
+      </Tabpanel1>
 
-        <TabpanelButton>
-            <Q2>{`로그인`}</Q2>
-        </TabpanelButton>
+      <TabpanelButton>
+        <Q2>{`로그인`}</Q2>
+      </TabpanelButton>
 
-        <TabpanelButton1>
-            <Q3>{`회원가입`}</Q3>
-        </TabpanelButton1>
+      <TabpanelButton1 onClick={handleSignUpClick}>
+        <Q3>{`회원가입`}</Q3>
+      </TabpanelButton1>
 
-        <Group82>
-            <ListItemForgotYour>
-                {`혹시 비밀번호를 잃어버렸나요?`}
-            </ListItemForgotYour>
-            <ListItemLinkSignUp>
-                {`비밀번호찾기`}
-            </ListItemLinkSignUp>
+      <Group82>
+        <ListItemForgotYour>
+          {`혹시 비밀번호를 잃어버렸나요?`}
+        </ListItemForgotYour>
+        <ListItemLinkSignUp>
+          {`비밀번호찾기`}
+        </ListItemLinkSignUp>
       </Group82>    
     </Q1>
   );

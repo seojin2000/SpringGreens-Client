@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-
+import {useRouter} from 'next/navigation';
 import {
   styled
 } from '@mui/material/styles';
@@ -621,10 +621,14 @@ const Line7 = styled("div")({
   });
 
 function salarRegister() {
+    const router = useRouter();
     const handleClick = () => {
         alert('선택 완료 버튼이 클릭되었습니다!'); // 클릭 시 동작
       };
-    
+      const moveDomestic = () => {
+        router.push("/domestic");
+      };
+
   return (
     <Q1>
       <Q2>
@@ -674,7 +678,7 @@ function salarRegister() {
         <Q15>{`회원가입 완료`}</Q15>
       </Group101>
       <Frame66>
-        <Frame65>
+        <Frame65 onClick={() => moveDomestic()}>
           <Q16>
             {`도매`}
           </Q16>
