@@ -5,15 +5,14 @@ import { styled } from '@mui/material/styles';
 const Q1 = styled("div")({
   backgroundColor: `rgba(255, 255, 255, 1)`,
   display: `flex`,
-  position: `relative`,
-  isolation: `isolate`,
-  flexDirection: `row`,
-  width: `100vw`,
-  height: `100dvh`,
-  justifyContent: `flex-start`,
-  alignItems: `flex-start`,
+  flexDirection: `column`, // 변경: 수직 정렬을 위한 flexDirection
+  width: `100%`,
+  height: `100dvh`, // 전체 화면 높이
+  justifyContent: `center`, // 중앙 정렬
+  alignItems: `center`, // 중앙 정렬
   padding: `0px`,
   boxSizing: `border-box`,
+  overflow: `hidden` // 화면 넘침 방지
 });
 
 const Rectangle47 = styled("div")({
