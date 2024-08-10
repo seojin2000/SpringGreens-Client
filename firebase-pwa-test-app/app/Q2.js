@@ -6,12 +6,13 @@ const Q1 = styled("div")({
   backgroundColor: `rgba(255, 255, 255, 1)`,
   display: `flex`,
   flexDirection: `column`, // 변경: 수직 정렬을 위한 flexDirection
-  width: `100%`,
+  width: `100vw`,
   height: `100dvh`, // 전체 화면 높이
   justifyContent: `center`, // 중앙 정렬
   alignItems: `center`, // 중앙 정렬
   padding: `0px`,
   boxSizing: `border-box`,
+  position: `fixed`,
   overflow: `hidden` // 화면 넘침 방지
 });
 
