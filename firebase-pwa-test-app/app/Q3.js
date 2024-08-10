@@ -29,13 +29,6 @@ const Q1 = styled("div")({
   boxSizing: `border-box`,
 });
 
-const StatusBarIPhone13Mai = styled(StatusBarIPhone13Main)({
-  width: `360px`,
-  height: `43px`,
-  position: `absolute`,
-  left: `0px`,
-  top: `0px`,
-});
 
 const Q2 = styled("div")({
   textAlign: `left`,
@@ -661,7 +654,6 @@ const Line8 = styled("div")({
 function RegisterKind2() {
   return (
     <Q1>
-      <StatusBarIPhone13Mai/>
       <Q2>
         {`회원가입`}
       </Q2>
@@ -705,12 +697,6 @@ function RegisterKind2() {
           {`비밀번호를 입력해 주세요`}
         </Q10>
       </Component6>
-      <MdiEyeOff>
-        <Vector src={VectorImage} loading='lazy' alt={"Vector"}/>
-      </MdiEyeOff>
-      <MdiEyeOff1>
-        <Vector1 src={Vector1Image} loading='lazy' alt={"Vector"}/>
-      </MdiEyeOff1>
       <Group101>
         <Rectangle31>
         </Rectangle31>
@@ -718,12 +704,6 @@ function RegisterKind2() {
           {`가게 등록하기`}
         </Q11>
       </Group101>
-      <MingcuteLeftLine>
-        <Group>
-          <Vector2 src={Vector2Image} loading='lazy' alt={"Vector"}/>
-          <Vector3 src={Vector3Image} loading='lazy' alt={"Vector"}/>
-        </Group>
-      </MingcuteLeftLine>
       <Frame66>
         <Frame65>
           <Q12>
