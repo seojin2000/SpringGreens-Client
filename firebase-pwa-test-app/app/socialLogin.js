@@ -5,9 +5,6 @@ import {
   styled
 } from '@mui/material/styles';
 
-
-import Q from 'src/components/Q/Q';
-
 const Q1 = styled("div")({
   backgroundColor: `rgba(255, 255, 255, 1)`,
   display: `flex`,
@@ -23,13 +20,6 @@ const Q1 = styled("div")({
   overflow: `auto`
 });
 
-const StatusBarIPhone13Mai = styled(StatusBarIPhone13Main)({
-  width: `360px`,
-  height: `43px`,
-  position: `absolute`,
-  left: `0px`,
-  top: `0px`,
-});
 
 const Q2 = styled("div")({
   textAlign: `left`,
@@ -253,25 +243,12 @@ function Q() {
       <Q2>
         {`소셜 로그인`}
       </Q2>
-      <MingcuteLeftLine>
-        <Group>
-          <Vector src={VectorImage} loading='lazy' alt={"Vector"}/>
-          <Vector1 src={Vector1Image} loading='lazy' alt={"Vector"}/>
-        </Group>
-      </MingcuteLeftLine>
       <Q3/>
       <Group81>
         <Rectangle24>
         </Rectangle24>
         <Group80>
           <Group79>
-            <LogoGoogleg48Dp>
-              <Shape src={ShapeImage} loading='lazy' alt={"Shape"}/>
-              <Shape1 src={Shape1Image} loading='lazy' alt={"Shape"}/>
-              <Shape2 src={Shape2Image} loading='lazy' alt={"Shape"}/>
-              <Shape3 src={Shape3Image} loading='lazy' alt={"Shape"}/>
-              <Shape4 src={Shape4Image} loading='lazy' alt={"Shape"}/>
-            </LogoGoogleg48Dp>
           </Group79>
           <Group791>
             <Q4>
