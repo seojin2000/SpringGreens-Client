@@ -657,7 +657,7 @@ const Line8 = styled("div")({
 });
 
 
-function Q() {
+function RegisterKind2() {
   return (
     <Q1>
       <StatusBarIPhone13Mai/>
@@ -762,6 +762,6 @@ function Q() {
 
   }
 
-export default Q;
+export default RegisterKind2;
 
   
