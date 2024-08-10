@@ -1,6 +1,8 @@
 .main {
   display: flex;
   overflow: hidden;
+  transform: scale(1);
+  transform-origin: 0 0;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
