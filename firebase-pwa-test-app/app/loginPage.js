@@ -12,13 +12,8 @@ const Q1 = styled("div")(({ theme }) => ({
   padding: `20px`,
   boxSizing: `border-box`,
   width: `100vw`,  // viewport 너비에 맞추기
-  height: `100dvh`, // viewport 높이에 맞추기
+  height: `100vh`, // viewport 높이에 맞추기
   overflow: `hidden`,
-  position: `fixed`,
-  [theme.breakpoints.up('sm')]: {
-    width: `360px`,
-    height: `800px`,
-  },
 }));
 
 const Group82 = styled("div")(({ theme }) => ({
@@ -34,7 +29,7 @@ const Group82 = styled("div")(({ theme }) => ({
 }));
 
 const ListItemForgotYour = styled("div")({
-  textAlign: `left`,
+  textAlign: `center`,
   color: `rgba(136, 136, 136, 1)`,
   fontFamily: `Arial`,
   fontWeight: `400`,
@@ -45,7 +40,7 @@ const ListItemForgotYour = styled("div")({
 });
 
 const ListItemLinkSignUp = styled("div")({
-  textAlign: `right`,
+  textAlign: `center`,
   color: `rgba(136, 136, 136, 1)`,
   fontFamily: `Arial`,
   fontWeight: `400`,
@@ -54,6 +49,7 @@ const ListItemLinkSignUp = styled("div")({
   textDecoration: `underline`,
   lineHeight: `17px`,
   marginTop: `30px`,
+  marginLeft: `10px`
 });
 
 
@@ -171,11 +167,11 @@ function Q() {
     <Q1>
         <Q6>{`로그인`}</Q6>
         <Tabpanel>
-            <InputField type="email" placeholder="이메일을 입력하세요" />
+            <InputField type="email" placeholder="  이메일을 입력하세요" />
         </Tabpanel>
         
         <Tabpanel1>
-            <InputField type="password" placeholder="비밀번호를 입력하세요" />
+            <InputField type="password" placeholder="  비밀번호를 입력하세요" />
         </Tabpanel1>
 
         <TabpanelButton>

@@ -1,25 +1,24 @@
 'use client';
 import React from 'react';
 
-
 import {
   styled
 } from '@mui/material/styles';
 
 const Q1 = styled("div")({
-    backgroundColor: `rgba(255, 255, 255, 1)`,
-    display: `flex`,
-    flexDirection: `column`,
-    alignItems: `center`, // Center horizontally
-    justifyContent: `center`, // Center vertically
-    position: `relative`,
-    width: `100vw`,
-    minHeight: `100vh`,
-    padding: `0px`,
-    boxSizing: `border-box`,
-    overflow: `auto`,
-  });
-
+  backgroundColor: `rgba(255, 255, 255, 1)`,
+  display: `flex`,
+  position: `relative`,
+  isolation: `isolate`,
+  flexDirection: `row`,
+  width: `100vw`,
+  height: `100vh`,
+  justifyContent: `center`,
+  alignItems: `center`,
+  padding: `0px`,
+  boxSizing: `border-box`,
+  overflow: `auto`
+});
 
 const Q2 = styled("div")({
   textAlign: `left`,
@@ -42,13 +41,12 @@ const Component2 = styled("div")({
   position: `absolute`,
   isolation: `isolate`,
   flexDirection: `row`,
-  justifyContent: `flex-start`,
-  alignItems: `flex-start`,
+  justifyContent: `center`,
+  alignItems: `center`,
   padding: `0px`,
   boxSizing: `border-box`,
   width: `320px`,
   height: `87px`,
-
   top: `183px`,
 });
 
@@ -77,7 +75,6 @@ const Q3 = styled("div")({
   textTransform: `none`,
   width: `306px`,
   position: `absolute`,
-  left: `4px`,
   top: `0px`,
 });
 
@@ -96,7 +93,7 @@ const Q4 = styled("div")({
   width: `304px`,
   height: `21px`,
   position: `absolute`,
-  left: `16px`,
+
   top: `46px`,
 });
 
@@ -105,12 +102,13 @@ const Component3 = styled("div")({
   position: `absolute`,
   isolation: `isolate`,
   flexDirection: `row`,
-  justifyContent: `flex-start`,
-  alignItems: `flex-start`,
+  justifyContent: `center`,
+  alignItems: `center`,
   padding: `0px`,
   boxSizing: `border-box`,
   width: `320px`,
   height: `87px`,
+
   top: `290px`,
 });
 
@@ -139,42 +137,34 @@ const Q5 = styled("div")({
   textTransform: `none`,
   width: `306px`,
   position: `absolute`,
-  left: `4px`,
   top: `0px`,
 });
 
-const Q6 = styled("div")({
-  textAlign: `left`,
-  whiteSpace: `pre-wrap`,
-  fontSynthesis: `none`,
-  color: `rgba(153, 153, 153, 1)`,
-  fontStyle: `normal`,
-  fontFamily: `Poppins`,
-  fontWeight: `300`,
-  fontSize: `14px`,
-  letterSpacing: `0px`,
-  textDecoration: `none`,
-  textTransform: `none`,
-  width: `304px`,
-  height: `21px`,
-  position: `absolute`,
-  left: `16px`,
-  top: `42px`,
+const Q6 = styled("input")({
+    border: `1px solid rgba(153, 153, 153, 0.25)`,
+    boxSizing: `border-box`,
+    borderRadius: `6px`,
+    width: `320px`,
+    height: `50px`,
+    position: `absolute`,
+    left: `0px`,
+    top: `32px`,
+    color: '#000', // 글자 색상을 검정색으로 설정
+    backgroundColor: '#fff', // 배경색을 흰색으로 설정
 });
 
-const Component4 = styled("div")({
+const Component7 = styled("div")({
   display: `flex`,
   position: `absolute`,
   isolation: `isolate`,
   flexDirection: `row`,
-  justifyContent: `flex-start`,
-  alignItems: `flex-start`,
+  justifyContent: `center`,
+  alignItems: `center`,
   padding: `0px`,
   boxSizing: `border-box`,
   width: `320px`,
   height: `87px`,
-
-  top: `397px`,
+  top: `795px`,
 });
 
 const Rectangle262 = styled("div")({
@@ -202,41 +192,37 @@ const Q7 = styled("div")({
   textTransform: `none`,
   width: `306px`,
   position: `absolute`,
-  left: `4px`,
+
   top: `0px`,
 });
 
-const Q8 = styled("div")({
-  textAlign: `left`,
-  whiteSpace: `pre-wrap`,
-  fontSynthesis: `none`,
-  color: `rgba(153, 153, 153, 1)`,
-  fontStyle: `normal`,
-  fontFamily: `Poppins`,
-  fontWeight: `300`,
-  fontSize: `14px`,
-  letterSpacing: `0px`,
-  textDecoration: `none`,
-  textTransform: `none`,
-  width: `304px`,
-  height: `21px`,
-  position: `absolute`,
-  left: `16px`,
-  top: `42px`,
+const Q8 = styled("input")({
+    textAlign: `left`,
+    border: `1px solid rgba(153, 153, 153, 0.25)`,
+    boxSizing: `border-box`,
+    borderRadius: `6px`,
+    width: `320px`,
+    height: `50px`,
+    position: `absolute`,
+    left: `0px`,
+    top: `32px`,
+    color: '#000', // 글자 색상을 검정색으로 설정
+    backgroundColor: '#fff', // 배경색을 흰색으로 설정
 });
 
-const Component6 = styled("div")({
+const Component10 = styled("div")({
   display: `flex`,
   position: `absolute`,
   isolation: `isolate`,
   flexDirection: `row`,
-  justifyContent: `flex-start`,
-  alignItems: `flex-start`,
+  justifyContent: `center`,
+  alignItems: `center`,
   padding: `0px`,
   boxSizing: `border-box`,
   width: `320px`,
   height: `87px`,
-  top: `507px`,
+
+  top: `676px`,
 });
 
 const Rectangle263 = styled("div")({
@@ -264,27 +250,135 @@ const Q9 = styled("div")({
   textTransform: `none`,
   width: `306px`,
   position: `absolute`,
-  left: `4px`,
+
   top: `0px`,
 });
 
-const Q10 = styled("div")({
+const Q10 = styled("input")({
+    border: `1px solid rgba(153, 153, 153, 0.25)`,
+    boxSizing: `border-box`,
+    borderRadius: `6px`,
+    width: `320px`,
+    height: `50px`,
+    position: `absolute`,
+    left: `0px`,
+    top: `32px`,
+    color: '#000', // 글자 색상을 검정색으로 설정
+    backgroundColor: '#fff', // 배경색을 흰색으로 설정
+});
+
+const Component4 = styled("div")({
+  display: `flex`,
+  position: `absolute`,
+  isolation: `isolate`,
+  flexDirection: `row`,
+  justifyContent: `center`,
+  alignItems: `center`,
+  padding: `0px`,
+  boxSizing: `border-box`,
+  width: `320px`,
+  height: `87px`,
+
+  top: `397px`,
+});
+
+const Rectangle264 = styled("div")({
+  border: `1px solid rgba(153, 153, 153, 0.25)`,
+  boxSizing: `border-box`,
+  borderRadius: `6px`,
+  width: `320px`,
+  height: `50px`,
+  position: `absolute`,
+  left: `0px`,
+  top: `27px`,
+});
+
+const Q11 = styled("div")({
   textAlign: `left`,
   whiteSpace: `pre-wrap`,
   fontSynthesis: `none`,
-  color: `rgba(153, 153, 153, 1)`,
+  color: `rgba(34, 34, 34, 1)`,
   fontStyle: `normal`,
-  fontFamily: `Poppins`,
-  fontWeight: `300`,
-  fontSize: `14px`,
+  fontFamily: `Roboto`,
+  fontWeight: `400`,
+  fontSize: `16px`,
   letterSpacing: `0px`,
   textDecoration: `none`,
   textTransform: `none`,
-  width: `304px`,
-  height: `21px`,
+  width: `306px`,
   position: `absolute`,
-  left: `16px`,
-  top: `42px`,
+
+  top: `0px`,
+});
+
+const Q12 = styled("input")({
+    border: `1px solid rgba(153, 153, 153, 0.25)`,
+    boxSizing: `border-box`,
+    borderRadius: `6px`,
+    width: `320px`,
+    height: `50px`,
+    position: `absolute`,
+    left: `0px`,
+    top: `32px`,
+    color: '#000', // 글자 색상을 검정색으로 설정
+    backgroundColor: '#fff', // 배경색을 흰색으로 설정
+});
+
+const Component6 = styled("div")({
+  display: `flex`,
+  position: `absolute`,
+  isolation: `isolate`,
+  flexDirection: `row`,
+  justifyContent: `center`,
+  alignItems: `center`,
+  padding: `0px`,
+  boxSizing: `border-box`,
+  width: `320px`,
+  height: `87px`,
+
+  top: `507px`,
+});
+
+const Rectangle265 = styled("div")({
+  border: `1px solid rgba(153, 153, 153, 0.25)`,
+  boxSizing: `border-box`,
+  borderRadius: `6px`,
+  width: `320px`,
+  height: `50px`,
+  position: `absolute`,
+  left: `0px`,
+  top: `27px`,
+});
+
+const Q13 = styled("div")({
+  textAlign: `left`,
+  whiteSpace: `pre-wrap`,
+  fontSynthesis: `none`,
+  color: `rgba(34, 34, 34, 1)`,
+  fontStyle: `normal`,
+  fontFamily: `Roboto`,
+  fontWeight: `400`,
+  fontSize: `16px`,
+  letterSpacing: `0px`,
+  textDecoration: `none`,
+  textTransform: `none`,
+  width: `306px`,
+  position: `absolute`,
+
+  top: `0px`,
+});
+
+const Q14 = styled("input")({
+    border: `1px solid rgba(153, 153, 153, 0.25)`,
+    boxSizing: `border-box`,
+    borderRadius: `6px`,
+    width: `320px`,
+    height: `50px`,
+    position: `absolute`,
+    left: `0px`,
+    top: `32px`,
+    color: '#000', // 글자 색상을 검정색으로 설정
+    backgroundColor: '#fff', // 배경색을 흰색으로 설정
 });
 
 const MdiEyeOff = styled("div")({
@@ -340,14 +434,13 @@ const Group101 = styled("div")({
   position: `absolute`,
   isolation: `isolate`,
   flexDirection: `row`,
-  justifyContent: `flex-start`,
-  alignItems: `flex-start`,
+  justifyContent: `center`,
+  alignItems: `center`,
   padding: `0px`,
   boxSizing: `border-box`,
   width: `320px`,
   height: `60px`,
   top: `953px`,
-  marginBottom : `10px`
 });
 
 const Rectangle31 = styled("div")({
@@ -360,8 +453,8 @@ const Rectangle31 = styled("div")({
   top: `0px`,
 });
 
-const Q11 = styled("div")({
-  textAlign: `center`,
+const Q15 = styled("div")({
+textAlign: `center`,
   whiteSpace: `pre-wrap`,
   fontSynthesis: `none`,
   color: `rgba(255, 255, 255, 1)`,
@@ -374,7 +467,6 @@ const Q11 = styled("div")({
   lineHeight: `24px`,
   textTransform: `none`,
   position: `absolute`,
-  left: `102px`,
   top: `18px`,
 });
 
@@ -428,18 +520,22 @@ const Vector3 = styled("img")({
 const Frame66 = styled("div")({
   display: `flex`,
   position: `absolute`,
+  isolation: `isolate`,
   flexDirection: `row`,
   justifyContent: `center`,
   alignItems: `center`,
   padding: `0px`,
   boxSizing: `border-box`,
   width: `320px`,
+
   top: `119px`,
   height: `31px`,
 });
 
 const Frame65 = styled("div")({
   backgroundColor: `rgba(48, 79, 254, 1)`,
+  border: `1px solid rgba(153, 153, 153, 0.6)`,
+  boxSizing: `border-box`,
   borderRadius: `4px`,
   display: `flex`,
   position: `relative`,
@@ -448,17 +544,16 @@ const Frame65 = styled("div")({
   justifyContent: `center`,
   alignItems: `center`,
   padding: `6px 16px`,
-  boxSizing: `border-box`,
   width: `96px`,
   margin: `0px`,
   height: `31px`,
 });
 
-const Q12 = styled("div")({
+const Q16 = styled("div")({
   textAlign: `left`,
   whiteSpace: `pre-wrap`,
   fontSynthesis: `none`,
-  color: `rgba(255, 255, 255, 1)`,
+  color: `#fff`,
   fontStyle: `normal`,
   fontFamily: `Roboto`,
   fontWeight: `400`,
@@ -467,12 +562,11 @@ const Q12 = styled("div")({
   textDecoration: `none`,
   textTransform: `none`,
   margin: `0px`,
-  justifyContent: `center`,
-  alignItems: `center`,
 });
 
 const Frame64 = styled("div")({
   backgroundColor: `rgba(255, 255, 255, 1)`,
+
   border: `1px solid rgba(153, 153, 153, 1)`,
   boxSizing: `border-box`,
   borderRadius: `4px`,
@@ -488,11 +582,11 @@ const Frame64 = styled("div")({
   height: `31px`,
 });
 
-const Q13 = styled("div")({
+const Q17 = styled("div")({
   textAlign: `left`,
   whiteSpace: `pre-wrap`,
   fontSynthesis: `none`,
-  color: `rgba(34, 34, 34, 1)`,
+  color: `#000`,
   fontStyle: `normal`,
   fontFamily: `Roboto`,
   fontWeight: `400`,
@@ -503,239 +597,101 @@ const Q13 = styled("div")({
   margin: `0px`,
 });
 
-const Component11 = styled("div")({
-  display: `flex`,
-  position: `absolute`,
-  isolation: `isolate`,
-  flexDirection: `row`,
-  justifyContent: `flex-start`,
-  alignItems: `flex-start`,
-  padding: `0px`,
-  boxSizing: `border-box`,
-  width: `320px`,
-  height: `87px`,
-  top: `803px`,
-});
-
-const Rectangle264 = styled("div")({
-  border: `1px solid rgba(153, 153, 153, 0.25)`,
-  boxSizing: `border-box`,
-  borderRadius: `6px`,
-  width: `320px`,
-  height: `50px`,
-  position: `absolute`,
-  left: `0px`,
-  top: `27px`,
-});
-
-const Q14 = styled("div")({
-  textAlign: `left`,
-  whiteSpace: `pre-wrap`,
-  fontSynthesis: `none`,
-  color: `rgba(34, 34, 34, 1)`,
-  fontStyle: `normal`,
-  fontFamily: `Roboto`,
-  fontWeight: `400`,
-  fontSize: `16px`,
-  letterSpacing: `0px`,
-  textDecoration: `none`,
-  textTransform: `none`,
-  width: `306px`,
-  position: `absolute`,
-  left: `4px`,
-  top: `0px`,
-});
-
-const Q15 = styled("div")({
-  textAlign: `left`,
-  whiteSpace: `pre-wrap`,
-  fontSynthesis: `none`,
-  color: `rgba(153, 153, 153, 1)`,
-  fontStyle: `normal`,
-  fontFamily: `Poppins`,
-  fontWeight: `300`,
-  fontSize: `14px`,
-  letterSpacing: `0px`,
-  textDecoration: `none`,
-  textTransform: `none`,
-  width: `304px`,
-  height: `21px`,
-  position: `absolute`,
-  left: `16px`,
-  top: `42px`,
-});
-
-const Component12 = styled("div")({
-  display: `flex`,
-  position: `absolute`,
-  isolation: `isolate`,
-  flexDirection: `row`,
-  justifyContent: `flex-start`,
-  alignItems: `flex-start`,
-  padding: `0px`,
-  boxSizing: `border-box`,
-  width: `320px`,
-  height: `87px`,
-  top: `684px`,
-});
-
-const Rectangle265 = styled("div")({
-  border: `1px solid rgba(153, 153, 153, 0.25)`,
-  boxSizing: `border-box`,
-  borderRadius: `6px`,
-  width: `320px`,
-  height: `50px`,
-  position: `absolute`,
-  left: `0px`,
-  top: `27px`,
-});
-
-const Q16 = styled("div")({
-  textAlign: `left`,
-  whiteSpace: `pre-wrap`,
-  fontSynthesis: `none`,
-  color: `rgba(34, 34, 34, 1)`,
-  fontStyle: `normal`,
-  fontFamily: `Roboto`,
-  fontWeight: `400`,
-  fontSize: `16px`,
-  letterSpacing: `0px`,
-  textDecoration: `none`,
-  textTransform: `none`,
-  width: `306px`,
-  position: `absolute`,
-  left: `4px`,
-  top: `0px`,
-});
-
-const Q17 = styled("div")({
-  textAlign: `left`,
-  whiteSpace: `pre-wrap`,
-  fontSynthesis: `none`,
-  color: `rgba(153, 153, 153, 1)`,
-  fontStyle: `normal`,
-  fontFamily: `Poppins`,
-  fontWeight: `300`,
-  fontSize: `14px`,
-  letterSpacing: `0px`,
-  textDecoration: `none`,
-  textTransform: `none`,
-  width: `304px`,
-  height: `21px`,
-  position: `absolute`,
-  left: `16px`,
-  top: `42px`,
-});
-
-const Line8 = styled("div")({
+const Line7 = styled("div")({
   border: `1px solid rgba(0, 0, 0, 0.12)`,
   width: `300px`,
   height: `0px`,
   position: `absolute`,
-  top: `640px`,
+
+  top: `644px`,
 });
 
 
-function Register() {
+
+  const InputField = styled('input')({
+    border: `1px solid rgba(153, 153, 153, 0.25)`,
+    boxSizing: `border-box`,
+    borderRadius: `6px`,
+    width: `320px`,
+    height: `50px`,
+    position: `absolute`,
+    left: `0px`,
+    top: `32px`,
+    color: '#000', // 글자 색상을 검정색으로 설정
+    backgroundColor: '#fff', // 배경색을 흰색으로 설정
+  });
+
+function domasticRegister1() {
+    const handleClick = () => {
+        alert('선택 완료 버튼이 클릭되었습니다!'); // 클릭 시 동작
+      };
+  
   return (
     <Q1>
       <Q2>
         {`회원가입`}
       </Q2>
       <Component2>
-        <Rectangle26>
-        </Rectangle26>
         <Q3>
           {`이름`}
         </Q3>
-        <Q4>
-          {`이름을 입력해 주세요`}
-        </Q4>
+        <InputField type="text" placeholder="  이름을 입력해 주세요"/> 
       </Component2>
-
       <Component3>
-        <Rectangle261>
-        </Rectangle261>
         <Q5>
           {`이메일`}
         </Q5>
-        <Q6>
-          {`이메일을 입력해 주세요`}
-        </Q6>
+        <Q6 type='text' placeholder="  이메일을 입력해 주세요"/>
       </Component3>
-
-      <Component4>
-        <Rectangle262>
-        </Rectangle262>
+      <Component7>
         <Q7>
-          {`비밀번호`}
+          {`사업자등록번호`}
         </Q7>
-        <Q8>
-          {`비밀번호를 입력해 주세요`}
-        </Q8>
-      </Component4>
-
-      <Component6>
-        <Rectangle263>
-        </Rectangle263>
+        <Q8 type='text' placeholder='  사업자등록번호를 입력해 주세요'></Q8>
+      </Component7>
+      <Component10>
+    
         <Q9>
-          {`비밀번호 확인`}
+          {`대표자 연락처`}
         </Q9>
-        <Q10>
-          {`비밀번호를 입력해 주세요`}
+        <Q10 type='text' placeholder='  가게 대표자 전화번호를 입력해 주세요'>
+        
         </Q10>
-      </Component6>
-
-      <Group101>
-        <Rectangle31>
-        </Rectangle31>
+      </Component10>
+      <Component4>
         <Q11>
-          {`가게 등록하기`}
+          {`비밀번호`}
         </Q11>
+        <Q12 type='password' placeholder='  비밀번호를 입력해 주세요'></Q12>
+      </Component4>
+      <Component6>
+        <Q13>
+          {`비밀번호 확인`}
+        </Q13>
+        <Q14 type='password' placeholder='  비밀번호를 입력해 주세요'></Q14>
+      </Component6>
+      <Group101>
+        <Rectangle31 onClick={() => handleClick()}></Rectangle31>
+        <Q15>{`회원가입 완료`}</Q15>
       </Group101>
-
       <Frame66>
         <Frame65>
-          <Q12>
+          <Q16>
             {`도매`}
-          </Q12>
+          </Q16>
         </Frame65>
         <Frame64>
-          <Q13>
+          <Q17>
             {`소매`}
-          </Q13>
+          </Q17>
         </Frame64>
       </Frame66>
-
-      <Component11>
-        <Rectangle264>
-        </Rectangle264>
-        <Q14>
-          {`사업자등록번호`}
-        </Q14>
-        <Q15>
-          {`이메일을 입력해 주세요 ( ‘-’ 없이 입력 )
-`}
-        </Q15>
-      </Component11>
-
-      <Component12>
-        <Rectangle265>
-        </Rectangle265>
-        <Q16>
-          {`대표자 연락처`}
-        </Q16>
-        <Q17>
-          {`가게 대표자 전화번호를 입력해 주세요`}
-        </Q17>
-      </Component12>
-      
-      <Line8>
-      </Line8>
+      <Line7>
+      </Line7>
     </Q1>);
 
   }
 
-export default Register;
+export default domasticRegister1;
 
   
