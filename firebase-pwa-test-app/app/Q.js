@@ -14,7 +14,7 @@ const Q1 = styled("div")(({ theme }) => ({
   width: `100vw`,  // viewport 너비에 맞추기
   height: `100dvh`, // viewport 높이에 맞추기
   overflow: `hidden`,
-
+  position: `fixed`,
   [theme.breakpoints.up('sm')]: {
     width: `360px`,
     height: `800px`,
