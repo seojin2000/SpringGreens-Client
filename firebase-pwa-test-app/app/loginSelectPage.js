@@ -15,28 +15,6 @@ const scaleUp = keyframes`
   }
 `;
 
-// 스타일 정의
-const Button = styled('button')({
-  backgroundColor: 'rgba(48, 79, 254, 1)',
-  border: 'none',
-  borderRadius: '6px',
-  width: '310px',
-  height: '60px',
-  color: 'rgba(255, 255, 255, 1)',
-  fontFamily: 'Arial',
-  fontWeight: '700',
-  fontSize: '20px',
-  textAlign: 'center',
-  lineHeight: '60px',
-  cursor: 'pointer',
-  transition: 'background-color 0.3s ease',
-  '&:hover': {
-    backgroundColor: 'rgba(38, 60, 254, 1)', // 버튼에 마우스를 올렸을 때 색상 변화
-  },
-  '&:active': {
-    backgroundColor: 'rgba(28, 50, 204, 1)', // 버튼을 클릭했을 때 색상 변화
-  },
-});
 
 const Q1 = styled("div")({
   backgroundColor: `rgba(255, 255, 255, 1)`,
@@ -523,9 +501,9 @@ function RegisterKind() {
       />
       <Q3>{`국내사업자`}</Q3>
       <Q4>{`일반사용자`}</Q4>
-      <Group101>
+      <Group101 onClick={() => handleClick()}>
         <Rectangle31></Rectangle31>
-        <Q5 onClick={() => handleClick()}>{`선택완료`}</Q5>
+        <Q5>{`선택완료`}</Q5>
       </Group101>
       <DomesticBusiness>{`Domestic business`}</DomesticBusiness>
       <GeneralUser>{`General user`}</GeneralUser>
