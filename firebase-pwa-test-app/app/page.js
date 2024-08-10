@@ -7,11 +7,13 @@ export const metadata = {
 import dynamic from 'next/dynamic';
 
 const ClientComponent = dynamic(() => import('./ClientComponent'), { ssr: false });
+const Q = dynamic(()=> import('./Q'), {ssr: false});
 
 export default function Page() {
   return (
     <div>
-      <ClientComponent />
+      <Q />
+      {/* <ClientComponent /> */}
     </div>
   );
 }
