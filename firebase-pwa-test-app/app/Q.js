@@ -167,6 +167,15 @@ const Q6 = styled("div")({
 });
 
 function Q() {
+    useEffect(() => {
+        // 페이지 로드 시 스크롤 비활성화
+        document.body.style.overflow = 'hidden';
+    
+        // 컴포넌트 언마운트 시 스크롤 재활성화
+        return () => {
+          document.body.style.overflow = '';
+        };
+      }, []);
   return (
     <Q1>
         <Q6>{`로그인`}</Q6>
