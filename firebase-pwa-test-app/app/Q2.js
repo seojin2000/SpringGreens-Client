@@ -22,7 +22,6 @@ const Rectangle47 = styled("div")({
   width: `310px`,
   height: `211px`,
   position: `absolute`,
-  left: `30px`,
   top: `134px`,
 });
 
@@ -32,7 +31,6 @@ const Rectangle48 = styled("div")({
   width: `310px`,
   height: `211px`,
   position: `absolute`,
-  left: `30px`,
   top: `391px`,
 });
 
@@ -49,7 +47,6 @@ const Q2 = styled("div")({
   textDecoration: `none`,
   textTransform: `none`,
   position: `absolute`,
-  left: `120px`,
   top: `52px`,
 });
 
@@ -115,7 +112,6 @@ const Q3 = styled("div")({
   width: `65px`,
   height: `20px`,
   position: `absolute`,
-  left: `56px`,
   top: `158px`,
 });
 
@@ -134,7 +130,6 @@ const Q4 = styled("div")({
   width: `65px`,
   height: `20px`,
   position: `absolute`,
-  left: `56px`,
   top: `415px`,
 });
 
@@ -149,7 +144,6 @@ const Group101 = styled("div")({
   boxSizing: `border-box`,
   width: `310px`,
   height: `60px`,
-  left: `30px`,
   top: `693px`,
 });
 
@@ -182,7 +176,7 @@ const Q5 = styled("div")({
 });
 
 const DomesticBusiness = styled("div")({
-  textAlign: `left`,
+  textAlign: `center`,
   whiteSpace: `pre-wrap`,
   fontSynthesis: `none`,
   color: `rgba(48, 79, 254, 1)`,
@@ -196,12 +190,11 @@ const DomesticBusiness = styled("div")({
   width: `145px`,
   height: `16px`,
   position: `absolute`,
-  left: `56px`,
   top: `178px`,
 });
 
 const GeneralUser = styled("div")({
-  textAlign: `left`,
+  textAlign: `center`,
   whiteSpace: `pre-wrap`,
   fontSynthesis: `none`,
   color: `rgba(255, 142, 60, 1)`,
@@ -215,7 +208,6 @@ const GeneralUser = styled("div")({
   width: `145px`,
   height: `16px`,
   position: `absolute`,
-  left: `56px`,
   top: `435px`,
 });
 
@@ -354,7 +346,6 @@ const Q6 = styled("div")({
   width: `266px`,
   height: `106px`,
   position: `absolute`,
-  left: `56px`,
   top: `224px`,
   lineHeight: `16px`
 });
@@ -446,7 +437,6 @@ const Q7 = styled("div")({
   width: `276px`,
   height: `106px`,
   position: `absolute`,
-  left: `56px`,
   top: `481px`,
   lineHeight: `16px`
 });
@@ -456,7 +446,6 @@ const Line8 = styled("div")({
   width: `266px`,
   height: `0px`,
   position: `absolute`,
-  left: `56px`,
   top: `201px`,
 });
 
@@ -465,7 +454,6 @@ const Line9 = styled("div")({
   width: `266px`,
   height: `0px`,
   position: `absolute`,
-  left: `56px`,
   top: `458px`,
 });
 

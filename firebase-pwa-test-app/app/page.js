@@ -14,7 +14,7 @@ const Q3 = dynamic(()=> import('./Q3'), {ssr: false});
 export default function Page() {
   return (
     <div>
-      <Q3 />
+      <Q2 />
       {/* <Q /> */}
       {/* <ClientComponent /> */}
     </div>
