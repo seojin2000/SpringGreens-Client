@@ -12,8 +12,8 @@ const Q1 = styled("div")(({ theme }) => ({
   padding: `20px`,
   boxSizing: `border-box`,
   width: `100vw`,  // viewport 너비에 맞추기
-  height: `100vh`, // viewport 높이에 맞추기
-  overflow: `hidden`, // 스크롤바를 숨깁니다
+  height: `100dvh`, // viewport 높이에 맞추기
+  overflow: `hidden`,
   [theme.breakpoints.up('sm')]: {
     width: `360px`,
     height: `800px`,
@@ -53,7 +53,6 @@ const ListItemLinkSignUp = styled("div")({
   textDecoration: `underline`,
   lineHeight: `17px`,
   marginTop: `30px`,
-  marginLeft: `10px`,
 });
 
 
@@ -167,7 +166,6 @@ const Q6 = styled("div")({
 });
 
 function Q() {
-
   return (
     <Q1>
         <Q6>{`로그인`}</Q6>
