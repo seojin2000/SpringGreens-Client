@@ -1,0 +1,201 @@
+.listSection {
+  flex-grow: 1;
+  overflow-y: auto;
+  width: 100%;
+}
+
+/* 축소된 상태의 스타일 */
+.listBox {
+  display: flex;
+  align-items: center;
+  width: 20rem;
+  height: 5rem;
+  margin: 0 auto 0.5rem;
+  background: #F6F6F6;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.sampleImg {
+  width: 5rem;
+  height: 5rem;
+  background-color: antiquewhite;
+  flex-shrink: 0;
+  margin-right: 0.75rem;
+}
+
+.contentWrapper {
+  flex-grow: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+}
+
+.textBox {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.title {
+  color: #4A4A4A;
+  font-family: Roboto;
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 0.875rem;
+  letter-spacing: -0.03125rem;
+  margin-bottom: 0.25rem;
+  width: 8rem;
+  height: 1.75rem;
+}
+
+.price {
+  color: #222;
+  font-family: Roboto;
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 0.875rem;
+  letter-spacing: -0.03125rem;
+}
+
+.countWrapper {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  position: relative;
+  width: 4rem; /* 화살표를 포함할 수 있는 충분한 너비 */
+}
+
+.count {
+  color: #304FFE;
+  font-family: Roboto;
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 0.875rem;
+  letter-spacing: -0.03125rem;
+}
+
+/* 확장된 상태의 스타일 */
+.ex_listBox {
+  width: 20rem;
+  height: 20rem;
+  margin: 0 auto 0.5rem;
+  border-radius: 0.25rem;
+  background: #F6F6F6;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.ex_sampleImg {
+  width: 20rem;
+  height: 13.6rem;
+  background-color: antiquewhite;
+  border-radius: 0.25rem;
+}
+
+.ex_contentWrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.ex_textBox {
+  color: #4A4A4A;
+  width: 8rem;
+  height: 1.75rem;
+  font-family: Roboto;
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 0.875rem;
+  letter-spacing: -0.03125rem;
+  margin-top: 0.63rem;
+  margin-left: 1.87rem;
+}
+
+.ex_title {
+  margin-bottom: 0.25rem;
+}
+
+.ex_price {
+  color: #222;
+  font-family: Roboto;
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 0.875rem;
+  letter-spacing: -0.03125rem;
+}
+
+.ex_storeMove {
+  color: #999;
+  font-family: Roboto;
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 0.875rem;
+  letter-spacing: -0.03125rem;
+  margin-top: 0.65rem;
+}
+
+.ex_viewCountWrapper {
+  display: flex;
+  align-items: center;
+  color: #304FFE;
+  font-family: Roboto;
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 0.875rem;
+  letter-spacing: -0.03125rem;
+  margin-top: 0.63rem;
+  margin-right: 1.87rem;
+}
+
+.ex_viewText {
+  margin-right: 0.5rem;
+}
+
+.ex_count {
+  color: #304FFE;
+  font-family: Roboto;
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 0.875rem;
+  letter-spacing: -0.03125rem;
+}
+
+.wishlistButton {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  padding: 5px 10px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* 화살표 스타일 */
+.arrowUp, .arrowDown {
+  font-weight: bold;
+  position: absolute;
+  right: 0;
+  width: 1rem;
+  text-align: center;
+}
+
+.arrowUp {
+  color: green;
+}
+
+.arrowDown {
+  color: red;
+}
+
