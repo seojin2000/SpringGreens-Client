@@ -668,7 +668,7 @@ const addStoreMarker = useCallback((lat, lng, name, id) => {
 
   useEffect(() => {
     const script = document.createElement('script');
-    script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=카카오앱키&libraries=services&autoload=false`;
+    script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=7b1f96f255bf7055e408cd2e6c47320d&libraries=services&autoload=false`;
     script.async = true;
     script.onload = () => {
       window.kakao.maps.load(initializeMap);

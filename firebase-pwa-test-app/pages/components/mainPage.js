@@ -1,13 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import styles from '@/styles/MainPage.module.css';
 import RepeatedList from './RepeatedList';
+import FiveSecondTimer from './resetTimer';
 
 const MainPage = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [items, setItems] = useState(generateItems());
+  const [prevItems, setPrevItems] = useState([]);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
+
+  const regenerateItems = useCallback(() => {
+    setPrevItems(items);
+    setItems(generateItems());
+  }, [items]);
+
+  function generateItems() {
+    return Array(10).fill(null).map((_, index) => ({
+      id: index,
+      title: "무신사 스탠다드 화이트/ 그래이/블랙 맨투맨",
+      price: "50,000원",
+      count: Math.floor(Math.random() * 99) + 1
+    })).sort((a, b) => b.count - a.count);
+  }
+
+  const handleTimerEnd = useCallback(() => {
+    setPrevItems(items);
+    setItems(prevItems => prevItems.map(item => ({
+      ...item,
+      count: Math.floor(Math.random() * 99) + 1
+    })).sort((a, b) => b.count - a.count));
+  }, [items]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setPrevItems([]);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [items]);
 
   return (
     <div className={styles.container}>
@@ -20,13 +53,13 @@ const MainPage = () => {
         
         <div className={styles.headBox}>
           <h3>실시간 급상승</h3>
-          <div className={styles.sampleTimer}></div>
-          <div className={styles.sampleRe}></div>
+          <FiveSecondTimer onTimerEnd={handleTimerEnd} />
+          <div className={styles.sampleRe} onClick={regenerateItems}></div>
         </div>
       </div>
 
       <div className={styles.listSection}>
-        <RepeatedList />
+        <RepeatedList items={items} prevItems={prevItems} />
       </div>
 
       {menuOpen && (

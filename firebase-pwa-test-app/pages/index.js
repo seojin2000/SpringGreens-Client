@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import dynamic from 'next/dynamic';
 import MainPage from "./components/mainPage";
+
 const inter = Inter({ subsets: ["latin"] });
 
 const MapWithNoSSR = dynamic(() => import('./components/map'), {
@@ -19,12 +20,12 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
         <script
           type="text/javascript"
-          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=카카오앱키&autoload=false`}
+          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=7b1f96f255bf7055e408cd2e6c47320d&autoload=false`}
           async
         />
       </Head>
       <main className={styles.main}>
-        {/* <MapWithNoSSR /> */}
+        <MapWithNoSSR />
       </main>
       <MainPage/>
     </>

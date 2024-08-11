@@ -2,8 +2,8 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 360px;
-  height: 640px;
+  width: 22.5rem;  /* 360px */
+  height: 100rem;   /* 640px */
   background-color: rgb(218, 218, 218);
   overflow: hidden;
   padding-top: 2.69rem;
@@ -51,22 +51,22 @@
 
 .menuButton {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 0.625rem;
+  right: 0.625rem;
   z-index: 1000;
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 24px;
+  font-size: 1.5rem;
 }
 
 .menuContent {
   position: absolute;
-  top: 50px;
-  right: 10px;
+  top: 3.125rem;
+  right: 0.625rem;
   background: white;
-  border: 1px solid #ccc;
-  padding: 10px;
+  border: 0.0625rem solid #ccc;
+  padding: 0.625rem;
   z-index: 999;
 }
 
@@ -74,68 +74,3 @@
   list-style: none;
   padding: 0;
 }
-
-.listSection {
-  flex-grow: 1;
-  overflow-y: auto;
-  width: 100%;
-}
-
-.listBox {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 22.5rem;
-  height: 5rem;
-  padding: 0 1.25rem;
-  margin: 0 auto 0.5rem;
-}
-
-.sampleImg {
-  width: 5rem;
-  height: 5rem;
-  background-color: antiquewhite;
-  flex-shrink: 0;
-}
-
-.textBox {
-  margin-left: 0.5rem;
-  flex-grow: 1;
-  overflow: hidden;
-}
-
-.title {
-  color: #4A4A4A;
-  font-family: Roboto;
-  font-size: 0.75rem;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 0.875rem;
-  letter-spacing: -0.03125rem;
-  width: 8rem;
-  height: 1.75rem;
-  margin-bottom: 0.38rem;
-}
-
-.price {
-  color: #222;
-  font-family: Roboto;
-  font-size: 0.75rem;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 0.875rem;
-  letter-spacing: -0.03125rem;
-}
-
-.count {
-  color: #304FFE;
-  font-family: Roboto;
-  font-size: 0.75rem;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 0.875rem;
-  letter-spacing: -0.03125rem;
-  margin-left: 0.5rem;
-  flex-shrink: 0;
-}
-
