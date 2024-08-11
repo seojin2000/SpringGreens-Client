@@ -45,7 +45,7 @@ export default function Home() {
       <main className={styles.main}>
         <MapWithNoSSR />
       </main>
-      <MainPage/>
+      {/* <MainPage/> */}
     </>
   );
 }
