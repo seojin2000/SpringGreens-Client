@@ -1,6 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import styles from '@/styles/MainPage.module.css';
-import RepeatedList from './RepeatedList';
 import FiveSecondTimer from './resetTimer';
 
 const MainPage = () => {
@@ -59,7 +58,7 @@ const MainPage = () => {
       </div>
 
       <div className={styles.listSection}>
-        <RepeatedList items={items} prevItems={prevItems} />
+        {/* <RepeatedList items={items} prevItems={prevItems} /> */}
       </div>
 
       {menuOpen && (

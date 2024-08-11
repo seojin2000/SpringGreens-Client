@@ -271,8 +271,8 @@ const Map = () => {
   const [showIcon, setShowIcon] = useState(false);
   const [distanceWorker, setDistanceWorker] = useState(null);
 
-  const R = 30;
-  const r = 30;
+  const R = 30; // distance 
+  const r = 5; // 사용자 반지름
 
   useEffect(() => {
     const worker = new Worker('distanceWorker.js');
@@ -625,6 +625,7 @@ const addStoreMarker = useCallback((lat, lng, name, id) => {
     setMap(kakaoMap);
     setKakao(window.kakao);
 
+    // 유저 원
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -642,7 +643,7 @@ const addStoreMarker = useCallback((lat, lng, name, id) => {
 
           const circle = new window.kakao.maps.Circle({
             center: userPosition,
-            radius: 30,
+            radius: r,
             strokeWeight: 2,
             strokeColor: '#304FFE',  // 원의 테두리 색상
             strokeOpacity: 0.8,
