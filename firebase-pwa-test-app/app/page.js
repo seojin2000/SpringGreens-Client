@@ -1,17 +1,15 @@
-// This is a server component
-export const metadata = {
-  title: 'Your App Title',
-  description: 'Your App Description',
-};
-
+'use client';
 import dynamic from 'next/dynamic';
+import { useState } from 'react';
 
-const ClientComponent = dynamic(() => import('./ClientComponent'), { ssr: false });
-
+const LOGIN = dynamic(() => import('./loginPage'), { ssr: false });
+const LOGINSELECTPAGE = dynamic(() => import('./loginSelectPage'), { ssr: false });
+const SOCIAL = dynamic(() => import('./socialLogin'), { ssr: false });
 export default function Page() {
+
   return (
     <div>
-      <ClientComponent />
+      <LOGIN/>
     </div>
   );
 }

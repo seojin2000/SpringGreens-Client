@@ -4,7 +4,7 @@ import { getMessaging } from 'firebase/messaging';
 
 // Firebase configuration object (from Firebase Console)
 const firebaseConfig = {
-  apiKey: "apikey",
+  apiKey: "AIzaSyBrSj3s4aMfy5Vd2CTVNtkGrOoBQjTz4qs",
   authDomain: "springgreens-afe09.firebaseapp.com",
   projectId: "springgreens-afe09",
   storageBucket: "springgreens-afe09.appspot.com",

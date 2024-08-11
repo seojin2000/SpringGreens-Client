@@ -6,7 +6,7 @@ import { initializeApp } from 'firebase/app';
 import { getMessaging } from 'firebase/messaging';
 
 const firebaseConfig = {
-  apiKey: "apikey",
+  apiKey: "AIzaSyBrSj3s4aMfy5Vd2CTVNtkGrOoBQjTz4qs",
   authDomain: "springgreens-afe09.firebaseapp.com",
   projectId: "springgreens-afe09",
   storageBucket: "springgreens-afe09.appspot.com",
@@ -35,27 +35,27 @@ export default function ClientComponent() {
         .catch((error) => {
           console.error('Service Worker registration failed:', error);
         });
+
+      // Handle foreground messages
+      const unsubscribe = onMessage(messaging, (payload) => {
+        console.log('Message received. ', payload);
+
+        // Extract data fields
+        const score = payload.data?.score || 'No Score';
+        const time = payload.data?.time || 'No Time';
+        console.log(score, time);
+
+        // Update notification state
+        setNotification({
+          title: `Score: ${score}`,
+          body: `Time: ${time}`
+        });
+      });
+
+      return () => unsubscribe();
     } else {
       console.log('Service Worker not supported in this browser.');
     }
-
-    // Handle foreground messages
-    const unsubscribe = onMessage(messaging, (payload) => {
-      console.log('Message received. ', payload);
-
-      // Extract data fields
-      const score = payload.data?.score || 'No Score';
-      const time = payload.data?.time || 'No Time';
-      console.log(score, time);
-
-      // Update notification state
-      setNotification({
-        title: `Score: ${score}`,
-        body: `Time: ${time}`
-      });
-    });
-
-    return () => unsubscribe();
   }, []);
 
   const requestPermission = async () => {
@@ -78,11 +78,13 @@ export default function ClientComponent() {
   };
 
   const getTokenHandler = async () => {
+    console.log("click");
     if (permissionGranted) {
       try {
         const currentToken = await getToken(messaging, {
-          vapidKey: 'vapid' // 환경 변수 사용 예시
+          vapidKey: 'BAW2Lra5NjdxGfNjJ0LJfg2o1qBVlVdtgeQ64GMzv28aBTdVEPj8EtTAfl3OKLW1dyytI0Sh9nGZy_T9aDJ40dA' // 환경 변수 사용 예시
         });
+        console.log(currentToken);
         if (currentToken) {
           setToken(currentToken);
           console.log('Token:', currentToken);
