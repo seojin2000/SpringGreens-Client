@@ -130,6 +130,17 @@ module.exports = require("next/head");
 
 /***/ }),
 
+/***/ "prop-types":
+/*!*****************************!*\
+  !*** external "prop-types" ***!
+  \*****************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("prop-types");
+
+/***/ }),
+
 /***/ "react":
 /*!************************!*\
   !*** external "react" ***!
