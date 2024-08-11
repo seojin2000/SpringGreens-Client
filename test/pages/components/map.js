@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import Navbar from './Navbar';
 import OverlayContent from './alart';
 import ImageSlider from './ImageSlider';
+import { createRoot } from 'react-dom/client';
 
 const Popup = ({ name, onSetDestination, storeData, error }) => {
   const baseUrl = "http://ec2-3-37-50-217.ap-northeast-2.compute.amazonaws.com:9090";
@@ -74,18 +75,21 @@ const Popup = ({ name, onSetDestination, storeData, error }) => {
           display: flex;
           flex-direction: column;
           width: 253px;
+          height: 400px;
           padding-top: 20px;
-          border-radius: 10px;
           background: rgba(34, 34, 34, 0.99);
           align-items: center;
+          overflow-y: auto;
+          border-radius: 10px;
         }
         .slider-container {
           width: 205px;
-          height: 132px;
+          height: 200px;
           display: flex;
           justify-content: center;
           align-items: center;
           margin-bottom: 10px;
+          border-radius : 10px;
         }
         .title {
           width: 200px;
@@ -94,6 +98,8 @@ const Popup = ({ name, onSetDestination, storeData, error }) => {
           font-size: 16px;
           font-weight: 500;
           letter-spacing: 1px;
+          margin-top: 20px;
+          margin-bottom: 20px;
         }
         .store-container {
           width: 207px;
@@ -128,6 +134,7 @@ const Popup = ({ name, onSetDestination, storeData, error }) => {
           font-size: 12px;
           text-align: center;
           margin: 4px 0;
+          
         }
         .enpoint-btn {
           display: flex;
@@ -203,7 +210,7 @@ const SearchBar = ({ onSearch }) => {
       top: '3.5rem',
       left: '10px',
       right: '10px',
-      zIndex: 11
+      zIndex: 11,
     }}>
       <form onSubmit={handleSubmit}>
         <input 
@@ -214,9 +221,11 @@ const SearchBar = ({ onSearch }) => {
           style={{
             width: '100%',
             padding: '10px',
-            borderRadius: '20px',
-            border: '0px solid #222222',
-            fontSize: '14px'
+            borderRadius: '10px',
+            border: '1px solid #dddd',
+            fontSize: '14px',
+            backgroundColor: 'white',
+            color: '#222'
           }}
         />
       </form>
@@ -228,7 +237,8 @@ const SearchBar = ({ onSearch }) => {
           backgroundColor: 'white',
           borderRadius: '0 0 20px 20px',
           boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-          zIndex: 11
+          zIndex: 11,
+          color: '#000'
         }}>
           {suggestions.map((suggestion, index) => (
             <li 
@@ -366,21 +376,25 @@ const fetchMallStreetData = async () => {
       overlapOverlay.setMap(null);
     }
 
-    const overlayContainer = document.createElement('div');
-    Object.assign(overlayContainer.style, {
-      width: '18rem',
-      height: '12.3125rem',
-      borderRadius: '0.9375rem',
-      backgroundColor: '#FFF',
-      position: 'relative',
-      zIndex: '10'
-    });
-    const newOverlay = new kakao.maps.CustomOverlay({
-      content: overlayContainer,
-      map: map,
-      position: userPosition,
-      zIndex: 10000 // 높은 zIndex 값 설정
-    });
+    // 오버레이 컨테이너 생성
+    // const overlayContainer = document.createElement('overlaybox');
+    // overlayContainer.className = 'overlaybox'; // CSS 클래스 추가
+
+    // // 스타일 설정
+    // Object.assign(overlayContainer.style, {
+    //   position: 'relative',
+    //   width: '360px',
+    //   height: '350px',
+    //   padding: '15px 10px',
+    // });
+
+    // // 카카오 맵 CustomOverlay 생성
+    // const newOverlay = new kakao.maps.CustomOverlay({
+    //   content: overlayContainer,
+    //   map: map,
+    //   position: userPosition,
+    // });
+
 
     ReactDOM.render(
       <OverlayContent 
@@ -392,7 +406,7 @@ const fetchMallStreetData = async () => {
           console.log("Move button clicked");
         }}
       />,
-      overlayContainer
+
     );
 
     setOverlapOverlay(newOverlay);
@@ -507,7 +521,7 @@ const fetchMallStreetData = async () => {
     setWatchId(newWatchId);
 
     if (activeInfoWindowRef.current) {
-      activeInfoWindowRef.current.close();
+      // activeInfoWindowRef.current.close();
       activeInfoWindowRef.current = null;
     }
 
@@ -539,29 +553,43 @@ const addStoreMarker = useCallback((lat, lng, name, id) => {
     zIndex: 1
   });
 
+
   const content = document.createElement('div');
-  const infowindow = new kakao.maps.InfoWindow({
+  content.style.borderRadius = '10px';
+  content.style.backgroundColor = 'rgba(34, 34, 34, 0.99);';
+  content.style.padding = '10px';
+  content.style.color = 'white';
+
+  // React 컴포넌트를 렌더링할 컨테이너로 사용
+  const root = createRoot(content);
+
+  // CustomOverlay 생성
+  const infowindow = new kakao.maps.CustomOverlay({
     content: content,
-    zIndex: 2
+    position: marker.getPosition(), // 마커 위치에 오버레이 표시
+    zIndex: 2,
+    xAnchor: 0.5, // xAnchor 값을 0.5로 하여 오버레이의 가로 중심을 기준으로 설정
+    yAnchor: 1.0, // yAnchor 값을 1로 하여 오버레이의 하단을 기준으로 설정
+
   });
 
   kakao.maps.event.addListener(marker, 'click', function() {
     if (activeInfoWindowRef.current) {
-      activeInfoWindowRef.current.close();
+      activeInfoWindowRef.current.setMap(null); // 기존 오버레이 제거
     }
-    
-    ReactDOM.render(
+
+    // React 컴포넌트 렌더링
+    root.render(
       <Popup 
         name={name} 
         lat={lat} 
         lng={lng} 
         onSetDestination={setDestination}
         storeData={null}
-      />,
-      content
+      />
     );
 
-    infowindow.open(map, marker);
+    infowindow.setMap(map); // 오버레이 지도에 추가
     activeInfoWindowRef.current = infowindow;
 
     // 마커 클릭 후 짧은 시간 동안 지도 클릭 이벤트를 무시
@@ -577,20 +605,19 @@ const addStoreMarker = useCallback((lat, lng, name, id) => {
         return response.json();
       })
       .then(data => {
-        ReactDOM.render(
+        root.render(
           <Popup 
             name={name} 
             lat={lat} 
             lng={lng} 
             onSetDestination={setDestination}
             storeData={data}
-          />,
-          content
+          />
         );
       })
       .catch(error => {
         console.error("Error fetching store data:", error);
-        ReactDOM.render(
+        root.render(
           <Popup 
             name={name} 
             lat={lat} 
@@ -598,13 +625,12 @@ const addStoreMarker = useCallback((lat, lng, name, id) => {
             onSetDestination={setDestination}
             storeData={null}
             error="데이터를 불러오는 데 실패했습니다."
-          />,
-          content
+          />
         );
       });
 
     function closeInfoWindow() {
-      infowindow.close();
+      infowindow.setMap(null); // 오버레이를 지도에서 제거
       activeInfoWindowRef.current = null;
       kakao.maps.event.removeListener(map, 'click', closeInfoWindow);
       clearTimeout(clickTimeout);
@@ -632,27 +658,57 @@ const addStoreMarker = useCallback((lat, lng, name, id) => {
           const userLat = position.coords.latitude;
           const userLng = position.coords.longitude;
           const userPosition = new window.kakao.maps.LatLng(userLat, userLng);
-
+    
           kakaoMap.setCenter(userPosition);
-
+    
           const marker = new window.kakao.maps.Marker({
             position: userPosition,
             map: kakaoMap
           });
           setUserMarker(marker);
-
+          const initialRadius = r; // 초기 반경
+          const maxRadius = r + 2; // 최대 반경
+          const minRadius = r; // 최소 반경
+          let radius = initialRadius;
+          let expanding = true;
+    
           const circle = new window.kakao.maps.Circle({
             center: userPosition,
-            radius: r,
+            radius: initialRadius,
             strokeWeight: 2,
-            strokeColor: '#304FFE',  // 원의 테두리 색상
+            strokeColor: '#304FFE',
             strokeOpacity: 0.8,
             strokeStyle: 'solid',
-            fillColor: '#304FFE',    // 원의 내부 색상
-            fillOpacity: 0.3,        // 투명도 조정
+            fillColor: '#304FFE',
+            fillOpacity: 0.3,
             map: kakaoMap
           });
           setUserCircle(circle);
+          const updateInterval = 16; // 약 60 FPS (1000ms / 60 ≈ 16ms)
+          function animateCircle(timestamp) {
+            // 애니메이션 속도 조절 (0.5은 속도 조절 계수, 필요에 따라 조정 가능)
+            const speed = 0.055;
+          
+            if (expanding) {
+              radius += speed;
+              if (radius >= maxRadius) {
+                expanding = false;
+              }
+            } else {
+              radius -= speed;
+              if (radius <= minRadius) {
+                expanding = true;
+              }
+            }
+          
+            circle.setRadius(radius);
+          
+            // 다음 애니메이션 프레임 요청
+            setTimeout(() => requestAnimationFrame(animateCircle), updateInterval);
+          }
+        
+          // 애니메이션 시작
+          requestAnimationFrame(animateCircle);
         },
         (error) => {
           console.error("Error getting user location:", error);
@@ -661,9 +717,6 @@ const addStoreMarker = useCallback((lat, lng, name, id) => {
     } else {
       console.error("Geolocation is not supported by this browser.");
     }
-
-    // 지도 클릭 이벤트 리스너 제거
-    // kakaoMap.addListener('click', function(mouseEvent) { ... }); 부분 삭제
   }
 }, []);
 
@@ -684,7 +737,7 @@ const addStoreMarker = useCallback((lat, lng, name, id) => {
     if (map && kakao) {
       Object.values(markersRef.current).forEach(({ marker, infowindow }) => {
         if (marker) marker.setMap(null);
-        if (infowindow) infowindow.close();
+        // if (infowindow) infowindow.close();
       });
       markersRef.current = {};
 
@@ -729,7 +782,7 @@ const addStoreMarker = useCallback((lat, lng, name, id) => {
       const distance = await calculateDistanceAsync(lat, lng, destPosition.getLat(), destPosition.getLng());
       if (distanceOverlay) {
         distanceOverlay.setPosition(new kakao.maps.LatLng((lat + destPosition.getLat()) / 2, (lng + destPosition.getLng()) / 2));
-        distanceOverlay.setContent(`<div style="padding:5px;background:rgba(255,255,255,0.7);border-radius:5px;color:black;">${(distance * 1000).toFixed(0)}m</div>`);
+        distanceOverlay.setContent(`<div style="padding:5px;background:transparent;border-radius:5px;color:black;">${(distance * 1000).toFixed(0)}m</div>`);
       }
 
       // 지도 범위 재설정
@@ -866,6 +919,7 @@ const addStoreMarker = useCallback((lat, lng, name, id) => {
           maximumAge: 0,
         }
       );
+      map.setLevel(1);
     } else {
       console.error('Geolocation is not supported by this browser.');
     }
@@ -886,11 +940,11 @@ const addStoreMarker = useCallback((lat, lng, name, id) => {
           position: 'absolute',
           top: '6.5rem',
           padding: '0.38rem, 0.44rem',
-          left: '20px',
+          left: '12px',
           backgroundColor: '#304FFE',
           color: 'white',
           border: '1px solid rgba(0, 0, 0, 0.25)',
-          borderRadius: '0.3125rem',
+          borderRadius: '0.5rem',
           cursor: 'pointer',
           zIndex: 10
         }}

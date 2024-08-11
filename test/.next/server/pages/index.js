@@ -163,6 +163,17 @@ module.exports = require("react-dom");
 
 /***/ }),
 
+/***/ "react-dom/client":
+/*!***********************************!*\
+  !*** external "react-dom/client" ***!
+  \***********************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("react-dom/client");
+
+/***/ }),
+
 /***/ "react/jsx-dev-runtime":
 /*!****************************************!*\
   !*** external "react/jsx-dev-runtime" ***!
