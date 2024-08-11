@@ -30,7 +30,7 @@ const Popup = ({ name, onSetDestination, storeData, error }) => {
 
       if (data.status_code === 200) {
         onSetDestination(data.data.latitude, data.data.longitude);
-        console.log('목적지 설정:', data.data.latitude, data.data.longitude);
+        console.log('destincatino setting 설정:', data.data.latitude, data.data.longitude);
       } else {
         throw new Error(`목적지 설정 실패: ${data.message}`);
       }
