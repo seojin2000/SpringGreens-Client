@@ -1,1 +1,6 @@
-{"/_document":"pages/_document.js","/_app":"pages/_app.js","/api/hello":"pages/api/hello.js","/components/MapComponent":"pages/components/MapComponent.html","/api/store/[id]":"pages/api/store/[id].js","/components/ImageSlider":"pages/components/ImageSlider.html","/_error":"pages/_error.js","/components/Navbar":"pages/components/Navbar.html","/components/alart":"pages/components/alart.html","/components/mainPage":"pages/components/mainPage.html","/components/map":"pages/components/map.html","/components/resetTimer":"pages/components/resetTimer.html","/":"pages/index.html","/api/proxy":"pages/api/proxy.js","/404":"pages/404.html"}
+{
+  "/_app": "pages/_app.js",
+  "/_error": "pages/_error.js",
+  "/_document": "pages/_document.js",
+  "/": "pages/index.js"
+}
