@@ -702,6 +702,7 @@ const addStoreMarker = useCallback((lat, lng, name, id) => {
     }
   }, [map, kakao, stores, addStoreMarker]);
 
+  // 사용자 위치 이동
   const moveUserLocation = useCallback(async (lat, lng) => {
   if (map && kakao && userMarker && userCircle) {
     const newPosition = new kakao.maps.LatLng(lat, lng);
@@ -848,6 +849,28 @@ const addStoreMarker = useCallback((lat, lng, name, id) => {
     addMarkersByStoreNameList();
   };  
 
+
+  const fetchUserLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          moveUserLocation(latitude, longitude);
+        },
+        (error) => {
+          console.error('Error fetching user location:', error);
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 5000,
+          maximumAge: 0,
+        }
+      );
+    } else {
+      console.error('Geolocation is not supported by this browser.');
+    }
+  };
+
   return (
     <div style={{ position: 'relative', width: '360px', height: '640px' }}>
       <div id="map" style={{ width: '100%', height: '100%' }}></div>
@@ -871,8 +894,10 @@ const addStoreMarker = useCallback((lat, lng, name, id) => {
       >
         상가거리이동
       </button>
+      
       <Navbar />
-      <button onClick={() => moveUserLocation(37.5678,127.014)} style={{
+
+      <button onClick={() => fetchUserLocation()} style={{
         position: 'absolute',
         bottom: '20px',
         left: '20px',
