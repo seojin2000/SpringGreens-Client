@@ -97,7 +97,7 @@ const Popup = ({ name, onSetDestination, storeData, error }) => {
           font-size: 16px;
           font-weight: 500;
           letter-spacing: 1px;
-          margin-top: 20px;
+          margin-top: 60px;
           margin-bottom: 20px;
         }
         .store-container {

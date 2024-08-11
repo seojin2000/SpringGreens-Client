@@ -1,31 +1,57 @@
-import React, { useState, useCallback } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useCallback, useRef } from 'react';
 import styles from '@/styles/ImageSlider.module.css';
 
-const ImageSlider = ({ images = [] }) => {
+const ImageSlider = ({ images }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  const touchStartX = useRef(0); // 터치 시작 위치
+  const touchEndX = useRef(0); // 터치 끝 위치
+
 
   const nextSlide = useCallback(() => {
     setCurrentIndex((prevIndex) =>
-      images.length > 0 ? (prevIndex === images.length - 1 ? 0 : prevIndex + 1) : 0
+      prevIndex === images.length - 1 ? 0 : prevIndex + 1
     );
-  }, [images, images.length]);
+  }, [images.length]);
 
   const prevSlide = useCallback(() => {
     setCurrentIndex((prevIndex) =>
-      images.length > 0 ? (prevIndex === 0 ? images.length - 1 : prevIndex - 1) : 0
+      prevIndex === 0 ? images.length - 1 : prevIndex - 1
     );
-  }, [images, images.length]);
+  }, [images.length]);
 
-  if (images.length === 0) {
-    return <div>No images available</div>;
-  }
+  const handleTouchStart = (e) => {
+    if (e.touches.length > 0) {
+      touchStartX.current = e.touches[0].clientX;
+      console.log('Touch start:', touchStartX.current); // 디버깅
+    }
+  };
+
+  const handleTouchEnd = (e) => {
+    if (e.changedTouches.length > 0) {
+      touchEndX.current = e.changedTouches[0].clientX;
+      console.log('Touch end:', touchEndX.current); // 디버깅
+      const touchDifference = touchStartX.current - touchEndX.current;
+
+      if (Math.abs(touchDifference) > 50) { // 터치 이동 거리가 50px 이상일 때 슬라이드 전환
+        if (touchDifference > 0) {
+          nextSlide();
+        } else {
+          prevSlide();
+        }
+      }
+    }
+  };
 
   return (
     <div className={styles.sliderWrapper}>
       <button onClick={prevSlide} className={`${styles.sliderButton} ${styles.prev}`}>&#10094;</button>
       <div className={styles.sliderContainer}>
-        <div className={styles.imageContainer}>
+        <div 
+          className={styles.imageContainer}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+        >
           <img src={images[currentIndex].url} alt={images[currentIndex].name} />
           <div className={styles.productName}>{images[currentIndex].name}</div>
         </div>
@@ -33,16 +59,6 @@ const ImageSlider = ({ images = [] }) => {
       <button onClick={nextSlide} className={`${styles.sliderButton} ${styles.next}`}>&#10095;</button>
     </div>
   );
-};
-
-// PropTypes를 사용해 prop 검증
-ImageSlider.propTypes = {
-  images: PropTypes.arrayOf(
-    PropTypes.shape({
-      url: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired
-    })
-  )
 };
 
 export default ImageSlider;
