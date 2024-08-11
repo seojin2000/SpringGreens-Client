@@ -872,8 +872,11 @@ const addStoreMarker = useCallback((lat, lng, name, id) => {
   };
 
   return (
-    <div style={{ position: 'relative', width: '360px', height: '640px' }}>
-      <div id="map" style={{ width: '100%', height: '100%' }}></div>
+    <div style={{ position: 'relative', width: '100vw', height: '100vh', overflow : 'auto' }}>
+      <div id="map" style={{ 
+        width: '100vw', 
+        height: '100vh',
+        overflow: 'auto' }}></div>
       <SearchBar onSearch={handleSearch} />
       <button 
         onClick={handleMallStreetButtonClick}

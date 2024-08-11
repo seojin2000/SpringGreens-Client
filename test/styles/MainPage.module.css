@@ -1,14 +1,15 @@
+
 .container {
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 22.5rem;  /* 360px */
-  height: 100rem;   /* 640px */
+  width: 100vw; /* Viewport width */
+  height: 100vh; /* Viewport height */
   background-color: rgb(218, 218, 218);
   overflow: hidden;
-  padding-top: 2.69rem;
+  padding-top: 2.69rem; /* Adjust padding as needed */
+  box-sizing: border-box; /* Ensure padding is included in the width and height */
 }
-
 .topSection {
   flex-shrink: 0;
   width: 100%;
