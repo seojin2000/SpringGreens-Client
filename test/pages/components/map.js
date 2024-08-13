@@ -943,17 +943,26 @@ const fetchMallStreetData = async () => {
     if (map && kakao && kakao.maps.services) {
       try {
         const mallStreetData = await fetchMallStreetData();
-        
+  
+        // 기존 마커와 인포윈도우 제거
         Object.values(markersRef.current).forEach(({ marker, infowindow }) => {
           marker.setMap(null);
           infowindow.close();
         });
         markersRef.current = {};
-
+  
+        // 기준 좌표로 지도 이동
+        const latitude = mallStreetData.data.standard_position.latitude;  // 'latitude'와 'longitude'가 실제 데이터 속성과 일치하는지 확인
+        const longitude = mallStreetData.data.standard_position.longitude;
+        console.log("Center Coordinates:", latitude, longitude);
+  
+        const centerPosition = new kakao.maps.LatLng(latitude, longitude);
+        map.setCenter(centerPosition);
+        map.setLevel(3.5, { animate: true }); // 5는 예시 값, 필요에 따라 조정
         const bounds = new kakao.maps.LatLngBounds();
         const ps = new kakao.maps.services.Places();
         
-        // 검색
+        // 검색 및 마커 추가
         const searchAndAddMarker = async (storeName, index) => {
           return new Promise((resolve) => {
             ps.keywordSearch(storeName, (data, status) => {
@@ -962,33 +971,34 @@ const fetchMallStreetData = async () => {
                 const lat = place.y;
                 const lng = place.x;
                 const position = new kakao.maps.LatLng(lat, lng);
-
+  
                 const markerInfo = addStoreMarker(lat, lng, storeName, index.toString());
                 markersRef.current[index.toString()] = markerInfo;
-
+  
                 bounds.extend(position);
               } else {
                 console.log(`No results found for ${storeName}`);
               }
               resolve();
             }, {
-              location: new kakao.maps.LatLng(mallStreetData.data.standard_position.Latitude, mallStreetData.data.standard_position.longitude),
+              location: centerPosition, // 기준 좌표를 검색 위치로 사용
               radius: 5000
             });
           });
         };
-
+  
         const chunks = chunkArray(mallStreetData.data.mall_name_list, 5);
         for (const chunk of chunks) {
           await Promise.all(chunk.map((storeName, index) => searchAndAddMarker(storeName, index)));
         }
-
+  
         map.setBounds(bounds);
       } catch (error) {
         console.error("Error in addMarkersByStoreNameList:", error);
       }
     }
   }, [map, kakao, addStoreMarker, fetchMallStreetData]);
+  
 
   
   const chunkArray = (array, size) => {
@@ -1038,8 +1048,10 @@ const fetchMallStreetData = async () => {
     <div style={{ position: 'relative', width: '100vw', height: '100vh', overflow : 'auto' }}>
       <div id="map" style={{ 
         width: '100vw', 
-        height: '100vh',
-        overflow: 'auto' }}></div>
+        height: 'calc(100% - 60px)',
+        overflow: 'auto' }}>
+          
+        </div>
       <SearchBar onSearch={handleSearch} />
       <button 
         onClick={handleMallStreetButtonClick}
@@ -1065,8 +1077,8 @@ const fetchMallStreetData = async () => {
 
       <button onClick={() => fetchUserLocation()} style={{
         position: 'absolute',
-        bottom: '20px',
-        left: '20px',
+        bottom: '100px',
+        left: '12px',
         padding: '10px',
         backgroundColor: '#304FFE',
         color: 'white',
@@ -1075,12 +1087,12 @@ const fetchMallStreetData = async () => {
         cursor: 'pointer',
         zIndex: 10
       }}>
+        {/* 이건 적용이 안되는데 */}
         사용자 위치 이동
-      </button>
-      {showIcon && (
+        {/* {showIcon && (
         <div style={{
           position: 'absolute',
-          bottom: '20px',
+          bottom: '50px',
           right: '20px',
           cursor: 'pointer',
           zIndex: 10
@@ -1098,7 +1110,8 @@ const fetchMallStreetData = async () => {
             </g>
           </svg>
         </div>
-      )}
+      )} */}
+      </button>      
     </div>
   );
 };
