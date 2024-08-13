@@ -4,6 +4,9 @@ import Navbar from './Navbar';
 import OverlayContent from './alart';
 import ImageSlider from './ImageSlider';
 
+let R; // distance // 이건 고정되어 있음 안되는거
+const r = 5; // 사용자 반지름
+
 const Popup = ({ name, onSetDestination, storeData, error }) => {
   const baseUrl = "http://ec2-3-37-50-217.ap-northeast-2.compute.amazonaws.com:9090";
 
@@ -29,6 +32,16 @@ const Popup = ({ name, onSetDestination, storeData, error }) => {
       console.log('API 응답 status_code:', data.status_code);
 
       if (data.status_code === 200) {
+        // 여기가 위도, 경도, width를 받는곳
+        // 근데 이거 어디서 쓰는거?
+        // 목적지 설정을 누르면, 이 handle 메서드가 호출이 되고
+        // response로 받아오는게 width, latitude, longitude라는 값들인데
+        // status_code가 200이라는 것은, 정상적인 값을 호출 했다는거고
+        // 그 값을 onSetDestination이라는것으로 인수로 보내게 되는데
+        // 이게 호출되는 곳이 없는데?
+        // 그럼 이렇게 수동으로 업데이트해서 써야지.
+        R = data.data.width / 2;
+        console.log(R);
         onSetDestination(data.data.latitude, data.data.longitude, data.data.width);
         console.log('destincatino setting 설정:', data.data.latitude, data.data.longitude);
       } else {
@@ -62,6 +75,7 @@ const Popup = ({ name, onSetDestination, storeData, error }) => {
         <p>상점 정보 로딩 중...</p>
       )}
 
+      // 이게 목적지를 설정
       <button
         className="enpoint-btn"
         onClick={handleSetDestination}
@@ -279,9 +293,6 @@ const Map = () => {
   const [overlapOverlay, setOverlapOverlay] = useState(null);
   const [showIcon, setShowIcon] = useState(false);
   const [distanceWorker, setDistanceWorker] = useState(null);
-
-  const R = 30; // distance // 이건 고정되어 있음 안되는거
-  const r = 5; // 사용자 반지름
 
   useEffect(() => {
     // 워커 초기화

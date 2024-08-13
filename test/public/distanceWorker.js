@@ -3,7 +3,7 @@ self.onmessage = function(e) {
   // 그러면 데이터를 받아서 caculateDistance를 호출한다.
   const { lat1, lon1, lat2, lon2 } = e.data;
   const distance = calculateDistance(lat1, lon1, Number(lat2), Number(lon2));
-  // 계산한 값을 가지고 
+  // 계산한 값을 가지고, 메인 스레드로 전송
   self.postMessage(distance);
 };
 
