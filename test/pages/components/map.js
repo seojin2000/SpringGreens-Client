@@ -597,7 +597,7 @@ const fetchMallStreetData = async () => {
       }, 100);
   
       // 데이터를 가져와서 Popup 컴포넌트를 업데이트합니다.
-      fetch(`/api/map/get/products/map/${encodeURIComponent(name)}`)
+      fetch(baseUrl + `/api/map/get/products/map/${encodeURIComponent(name)}`)
         .then(response => {
           if (!response.ok) {
             throw new Error('Network response was not ok');
