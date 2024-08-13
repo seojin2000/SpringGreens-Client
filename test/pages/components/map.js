@@ -408,7 +408,7 @@ const fetchMallStreetData = async () => {
   //   fillOpacity: 0.3
   // });
 
-  setIsCirclesOverlapping(isOverlapping);
+  // setIsCirclesOverlapping(isOverlapping);
 
   if (isOverlapping) {
     // 모든 마커 제거
@@ -530,7 +530,7 @@ const fetchMallStreetData = async () => {
     const newPolyline = new kakao.maps.Polyline({
       path: [userPosition, destPosition],
       strokeWeight: 3,
-      strokeColor: '#686D76',
+      strokeColor: '#00008B',
       strokeOpacity: 0.7,
       strokeStyle: 'solid'
     });
@@ -602,6 +602,9 @@ const fetchMallStreetData = async () => {
           });
         } else {
           console.warn('destinationCircle is not initialized');
+        }
+        if(isOverlapping) {
+          newPolyline.strokeColor = '#DC143C';
         }
 
       },
@@ -952,13 +955,13 @@ const fetchMallStreetData = async () => {
         markersRef.current = {};
   
         // 기준 좌표로 지도 이동
-        const latitude = mallStreetData.data.standard_position.latitude;  // 'latitude'와 'longitude'가 실제 데이터 속성과 일치하는지 확인
+        const latitude = mallStreetData.data.standard_position.latitude;  
         const longitude = mallStreetData.data.standard_position.longitude;
         console.log("Center Coordinates:", latitude, longitude);
   
         const centerPosition = new kakao.maps.LatLng(latitude, longitude);
         map.setCenter(centerPosition);
-        map.setLevel(3.5, { animate: true }); // 5는 예시 값, 필요에 따라 조정
+        map.setLevel(4, { animate: true }); // 5는 예시 값, 필요에 따라 조정
         const bounds = new kakao.maps.LatLngBounds();
         const ps = new kakao.maps.services.Places();
         
