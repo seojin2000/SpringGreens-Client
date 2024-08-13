@@ -834,55 +834,94 @@ const fetchMallStreetData = async () => {
     }
   }, [map, kakao, setStores, addStoreMarker]);
   
+  // const addMarkersByStoreNameList = useCallback(async () => {
+  //   if (map && kakao && kakao.maps.services) {
+  //     try {
+  //       const mallStreetData = await fetchMallStreetData();
+        
+  //       Object.values(markersRef.current).forEach(({ marker, infowindow }) => {
+  //         marker.setMap(null);
+  //         infowindow.close();
+  //       });
+  //       markersRef.current = {};
+
+  //       const bounds = new kakao.maps.LatLngBounds();
+  //       const ps = new kakao.maps.services.Places();
+        
+  //       const searchAndAddMarker = async (storeName, index) => {
+  //         return new Promise((resolve) => {
+  //           ps.keywordSearch(storeName, (data, status) => {
+  //             if (status === kakao.maps.services.Status.OK) {
+  //               const place = data[0];
+  //               const lat = place.y;
+  //               const lng = place.x;
+  //               const position = new kakao.maps.LatLng(lat, lng);
+
+  //               const markerInfo = addStoreMarker(lat, lng, storeName, index.toString());
+  //               markersRef.current[index.toString()] = markerInfo;
+
+  //               bounds.extend(position);
+  //             } else {
+  //               console.log(`No results found for ${storeName}`);
+  //             }
+  //             resolve();
+  //           }, {
+  //             location: new kakao.maps.LatLng(mallStreetData.data.standard_position.Latitude, mallStreetData.data.standard_position.longitude),
+  //             radius: 5000
+  //           });
+  //         });
+  //       };
+
+  //       const chunks = chunkArray(mallStreetData.data.mall_name_list, 5);
+  //       for (const chunk of chunks) {
+  //         await Promise.all(chunk.map((storeName, index) => searchAndAddMarker(storeName, index)));
+  //       }
+
+  //       map.setBounds(bounds);
+  //     } catch (error) {
+  //       console.error("Error in addMarkersByStoreNameList:", error);
+  //     }
+  //   }
+  // }, [map, kakao, addStoreMarker, fetchMallStreetData]);
   const addMarkersByStoreNameList = useCallback(async () => {
-    if (map && kakao && kakao.maps.services) {
-      try {
-        const mallStreetData = await fetchMallStreetData();
-        
-        Object.values(markersRef.current).forEach(({ marker, infowindow }) => {
-          marker.setMap(null);
-          infowindow.close();
-        });
-        markersRef.current = {};
+    if (map && kakao) {
+        try {
+            const mallStreetData = await fetchMallStreetData();
 
-        const bounds = new kakao.maps.LatLngBounds();
-        const ps = new kakao.maps.services.Places();
-        
-        const searchAndAddMarker = async (storeName, index) => {
-          return new Promise((resolve) => {
-            ps.keywordSearch(storeName, (data, status) => {
-              if (status === kakao.maps.services.Status.OK) {
-                const place = data[0];
-                const lat = place.y;
-                const lng = place.x;
+            // 기존 마커와 인포윈도우 제거
+            Object.values(markersRef.current).forEach(({ marker, infowindow }) => {
+                marker.setMap(null);
+                infowindow.close();
+            });
+            markersRef.current = {};
+
+            // 카카오 지도 서비스 및 LatLngBounds 설정
+            const bounds = new kakao.maps.LatLngBounds();
+            
+            // 위도와 경도 목록을 기반으로 마커 추가
+            const addMarker = (lat, lng, storeName, index) => {
                 const position = new kakao.maps.LatLng(lat, lng);
-
                 const markerInfo = addStoreMarker(lat, lng, storeName, index.toString());
                 markersRef.current[index.toString()] = markerInfo;
-
                 bounds.extend(position);
-              } else {
-                console.log(`No results found for ${storeName}`);
-              }
-              resolve();
-            }, {
-              location: new kakao.maps.LatLng(mallStreetData.data.standard_position.Latitude, mallStreetData.data.standard_position.longitude),
-              radius: 5000
+            };
+
+            // 위도와 경도 데이터를 사용하여 마커 추가
+            const { mall_name_list, location_list } = mallStreetData.data;
+
+            location_list.forEach((location, index) => {
+                const { Latitude, Longitude, StoreName } = location;
+                addMarker(Latitude, Longitude, StoreName, index);
             });
-          });
-        };
 
-        const chunks = chunkArray(mallStreetData.data.mall_name_list, 5);
-        for (const chunk of chunks) {
-          await Promise.all(chunk.map((storeName, index) => searchAndAddMarker(storeName, index)));
+            // 지도 뷰 조정
+            map.setBounds(bounds);
+
+        } catch (error) {
+            console.error("Error in addMarkersByStoreNameList:", error);
         }
-
-        map.setBounds(bounds);
-      } catch (error) {
-        console.error("Error in addMarkersByStoreNameList:", error);
-      }
     }
-  }, [map, kakao, addStoreMarker, fetchMallStreetData]);
+}, [map, kakao, addStoreMarker, fetchMallStreetData]);
   
   const chunkArray = (array, size) => {
     const chunked = [];
