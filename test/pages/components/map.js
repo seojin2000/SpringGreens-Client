@@ -4,7 +4,7 @@ import Navbar from './Navbar';
 import OverlayContent from './alart';
 import ImageSlider from './ImageSlider';
 
-let R; // distance // 이건 고정되어 있음 안되는거
+let R = 0; // distance // 이건 고정되어 있음 안되는거
 const r = 5; // 사용자 반지름
 
 const Popup = ({ name, onSetDestination, storeData, error }) => {
@@ -40,7 +40,7 @@ const Popup = ({ name, onSetDestination, storeData, error }) => {
         // 그 값을 onSetDestination이라는것으로 인수로 보내게 되는데
         // 이게 호출되는 곳이 없는데?
         // 그럼 이렇게 수동으로 업데이트해서 써야지.
-        R = data.data.width / 2;
+        R = (data.data.width / 2).toFixed(0);
         console.log(R);
         onSetDestination(data.data.latitude, data.data.longitude, data.data.width);
         console.log('destincatino setting 설정:', data.data.latitude, data.data.longitude);
@@ -364,36 +364,36 @@ const fetchMallStreetData = async () => {
   // const fillColor = isOverlapping ? '#FF0000' : '#304FFE';
 
 
-  // 원 객체 생성
-  useEffect(() => {
-    const circle = new window.kakao.maps.Circle({
-      center: userPosition,
-      radius: r,
-      strokeWeight: 2,
-      strokeColor: '#304FFE',
-      strokeOpacity: 0.8,
-      strokeStyle: 'solid',
-      fillColor: '#304FFE',
-      fillOpacity: 0.3,
-      map: kakaoMap
-    });
-    setUserCircle(circle);
-  }, [userPosition, kakaoMap]);
+  // // 원 객체 생성
+  // useEffect(() => {
+  //   const circle = new window.kakao.maps.Circle({
+  //     center: userPosition,
+  //     radius: r,
+  //     strokeWeight: 2,
+  //     strokeColor: '#304FFE',
+  //     strokeOpacity: 0.8,
+  //     strokeStyle: 'solid',
+  //     fillColor: '#304FFE',
+  //     fillOpacity: 0.3,
+  //     map: kakaoMap
+  //   });
+  //   setUserCircle(circle);
+  // }, [userPosition, kakaoMap]);
 
-  useEffect(() => {
-    const destCircle = new window.kakao.maps.Circle({
-      center: destPosition,
-      radius: R,
-      strokeWeight: 2,
-      strokeColor: '#304FFE',
-      strokeOpacity: 0.8,
-      strokeStyle: 'solid',
-      fillColor: '#304FFE',
-      fillOpacity: 0.3,
-      map: kakaoMap
-    });
-    setDestinationCircle(destCircle);
-  }, [destPosition, kakaoMap]);
+  // useEffect(() => {
+  //   const destCircle = new window.kakao.maps.Circle({
+  //     center: destPosition,
+  //     radius: R,
+  //     strokeWeight: 2,
+  //     strokeColor: '#304FFE',
+  //     strokeOpacity: 0.8,
+  //     strokeStyle: 'solid',
+  //     fillColor: '#304FFE',
+  //     fillOpacity: 0.3,
+  //     map: kakaoMap
+  //   });
+  //   setDestinationCircle(destCircle);
+  // }, [destPosition, kakaoMap]);
 
   // userCircle.setOptions({ 
   //   strokeColor: strokeColor, 
@@ -502,7 +502,7 @@ const fetchMallStreetData = async () => {
     // 여기서 상가 원을 만드는데 R로 고정되어 있었음
     const newDestCircle = new kakao.maps.Circle({
       center: destPosition,
-      radius: 10, // 이거 width / 2로 바껴야함.
+      radius: R,
       strokeWeight: 2,
       strokeColor: '#304FFE',  // 원의 테두리 색상
       strokeOpacity: 0.8,
@@ -522,7 +522,7 @@ const fetchMallStreetData = async () => {
     if (distanceOverlay) distanceOverlay.setMap(null);
     const newDistanceOverlay = new kakao.maps.CustomOverlay({
       position: new kakao.maps.LatLng((userLat + destLat) / 2, (userLng + destLng) / 2),
-      content: `<div style="padding:5px;background:rgba(255,255,255,0.7);border-radius:5px;color:black;">${(distance * 1000).toFixed(0)}m</div>`,
+      content: `<div style="padding:5px;background:transparent;border-radius:5px;color:black;">${(distance * 1000).toFixed(0)}m</div>`,
       map: map
     });
     setDistanceOverlay(newDistanceOverlay);
@@ -568,10 +568,14 @@ const fetchMallStreetData = async () => {
         // 그럼 이걸 가지고 값을 설정할테고
         console.log("새로운 거리", newDistance);
         newDistanceOverlay.setPosition(new kakao.maps.LatLng((newUserLat + destLat) / 2, (newUserLng + destLng) / 2));
-        newDistanceOverlay.setContent(`<div style="padding:5px;background:white;border-radius:5px;color: black;">${(newDistance * 1000).toFixed(0)}m</div>`);
+        newDistanceOverlay.setContent(`<div style="padding:5px;background:transparent;border-radius:5px;color: black;">${(newDistance * 1000).toFixed(0)}m</div>`);
 
-        console.log("계산후 d", newDistance * 1000);
-        const isOverlapping = newDistance * 1000 <= R + r;
+        // r = 5, R = 21
+        console.log("계산후 d", (newDistance * 1000).toFixed(0), Number(R) + r, R);
+        // R = string, r = number였음. 그러니 R + r의 계산값이 이상하지
+        // string + number = stringNumber가 되니까 그래서 21 + 5 = 215가 되는 이상한 값이 나오지
+        console.log(typeof R, typeof r);
+        const isOverlapping = (newDistance * 1000).toFixed(0) <= Number(R) + r;
         console.log("overlayping");
         console.log(isOverlapping);
         const strokeColor = isOverlapping ? '#FF0000' : '#304FFE';
