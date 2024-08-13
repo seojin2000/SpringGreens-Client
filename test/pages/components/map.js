@@ -29,7 +29,7 @@ const Popup = ({ name, onSetDestination, storeData, error }) => {
       console.log('API 응답 status_code:', data.status_code);
 
       if (data.status_code === 200) {
-        onSetDestination(data.data.latitude, data.data.longitude);
+        onSetDestination(data.data.latitude, data.data.longitude, data.data.width);
         console.log('destincatino setting 설정:', data.data.latitude, data.data.longitude);
       } else {
         throw new Error(`목적지 설정 실패: ${data.message}`);
@@ -280,10 +280,11 @@ const Map = () => {
   const [showIcon, setShowIcon] = useState(false);
   const [distanceWorker, setDistanceWorker] = useState(null);
 
-  const R = 30; // distance 
+  const R = 30; // distance // 이건 고정되어 있음 안되는거
   const r = 5; // 사용자 반지름
 
   useEffect(() => {
+    // 워커 초기화
     const worker = new Worker('distanceWorker.js');
     setDistanceWorker(worker);
     return () => worker.terminate();
@@ -292,8 +293,12 @@ const Map = () => {
   // 비동기 계산
   const calculateDistanceAsync = useCallback((lat1, lon1, lat2, lon2) => {
     return new Promise((resolve) => {
-      distanceWorker.onmessage = (e) => resolve(e.data);
+      // postMessage -> 워커에게 데이터 보내는거.
       distanceWorker.postMessage({ lat1, lon1, lat2, lon2 });
+
+      // 워커가 작업을 완료하고, 메인 스레드로 결과를 받을때 호출되는 이벤트 핸들러
+      distanceWorker.onmessage = (e) => resolve(e.data);
+      
     });
   }, [distanceWorker]);
 
@@ -335,28 +340,62 @@ const fetchMallStreetData = async () => {
       console.error('User circle or destination circle is not initialized');
       return;
     }
-    // 여기가 계산지점인데
-  const d = await calculateDistanceAsync(
-    userPosition.getLat(), userPosition.getLng(),
-    destPosition.getLat(), destPosition.getLng()
-  ) * 1000;
-  console.log("계산후 d", d);
-  const isOverlapping = d <= R + r;
-  const strokeColor = isOverlapping ? '#FF0000' : '#304FFE';
-  const fillColor = isOverlapping ? '#FF0000' : '#304FFE';
+  //   // 여기가 계산지점인데
+  // const d = await calculateDistanceAsync(
+  //   userPosition.getLat(), userPosition.getLng(),
+  //   destPosition.getLat(), destPosition.getLng()
+  // ) * 1000;
+  // console.log("계산후 d", d);
+  // const isOverlapping = d <= R + r;
+  // console.log("overlayping");
+  // console.log(isOverlapping);
+  // const strokeColor = isOverlapping ? '#FF0000' : '#304FFE';
+  // const fillColor = isOverlapping ? '#FF0000' : '#304FFE';
 
-  userCircle.setOptions({ 
-    strokeColor: strokeColor, 
-    fillColor: fillColor,
-    strokeOpacity: 0.8,
-    fillOpacity: 0.3
-  });
-  destinationCircle.setOptions({ 
-    strokeColor: strokeColor, 
-    fillColor: fillColor,
-    strokeOpacity: 0.8,
-    fillOpacity: 0.3
-  });
+
+  // 원 객체 생성
+  useEffect(() => {
+    const circle = new window.kakao.maps.Circle({
+      center: userPosition,
+      radius: r,
+      strokeWeight: 2,
+      strokeColor: '#304FFE',
+      strokeOpacity: 0.8,
+      strokeStyle: 'solid',
+      fillColor: '#304FFE',
+      fillOpacity: 0.3,
+      map: kakaoMap
+    });
+    setUserCircle(circle);
+  }, [userPosition, kakaoMap]);
+
+  useEffect(() => {
+    const destCircle = new window.kakao.maps.Circle({
+      center: destPosition,
+      radius: R,
+      strokeWeight: 2,
+      strokeColor: '#304FFE',
+      strokeOpacity: 0.8,
+      strokeStyle: 'solid',
+      fillColor: '#304FFE',
+      fillOpacity: 0.3,
+      map: kakaoMap
+    });
+    setDestinationCircle(destCircle);
+  }, [destPosition, kakaoMap]);
+
+  // userCircle.setOptions({ 
+  //   strokeColor: strokeColor, 
+  //   fillColor: fillColor,
+  //   strokeOpacity: 0.8,
+  //   fillOpacity: 0.3
+  // });
+  // destinationCircle.setOptions({ 
+  //   strokeColor: strokeColor, 
+  //   fillColor: fillColor,
+  //   strokeOpacity: 0.8,
+  //   fillOpacity: 0.3
+  // });
 
   setIsCirclesOverlapping(isOverlapping);
 
@@ -449,9 +488,10 @@ const fetchMallStreetData = async () => {
       setDestinationMarker(newDestMarker);
     }
 
+    // 여기서 상가 원을 만드는데 R로 고정되어 있었음
     const newDestCircle = new kakao.maps.Circle({
       center: destPosition,
-      radius: 10,
+      radius: 10, // 이거 width / 2로 바껴야함.
       strokeWeight: 2,
       strokeColor: '#304FFE',  // 원의 테두리 색상
       strokeOpacity: 0.8,
@@ -508,15 +548,47 @@ const fetchMallStreetData = async () => {
         userMarker.setPosition(newUserPosition);
         userCircle.setPosition(newUserPosition);
         
-        updateCircleColors(newUserPosition, destPosition);
+        // updateCircleColors(newUserPosition, destPosition);
         
         newPolyline.setPath([newUserPosition, destPosition]);
         
         const newDistance = await calculateDistanceAsync(newUserLat, newUserLng, destLat, destLng);
         // 그럼 여기서 값을 받게 될테고
         // 그럼 이걸 가지고 값을 설정할테고
+        console.log("새로운 거리", newDistance);
         newDistanceOverlay.setPosition(new kakao.maps.LatLng((newUserLat + destLat) / 2, (newUserLng + destLng) / 2));
         newDistanceOverlay.setContent(`<div style="padding:5px;background:white;border-radius:5px;color: black;">${(newDistance * 1000).toFixed(0)}m</div>`);
+
+        console.log("계산후 d", newDistance * 1000);
+        const isOverlapping = newDistance * 1000 <= R + r;
+        console.log("overlayping");
+        console.log(isOverlapping);
+        const strokeColor = isOverlapping ? '#FF0000' : '#304FFE';
+        const fillColor = isOverlapping ? '#FF0000' : '#304FFE';
+
+        // 사용자 원과 목적지 원의 스타일 업데이트
+        if (userCircle) {
+          userCircle.setOptions({ 
+            strokeColor: strokeColor, 
+            fillColor: fillColor,
+            strokeOpacity: 0.8,
+            fillOpacity: 0.3
+          });
+        } else {
+          console.warn('userCircle is not initialized');
+        }
+        
+        if (newDestCircle) {
+          newDestCircle.setOptions({ 
+            strokeColor: strokeColor, 
+            fillColor: fillColor,
+            strokeOpacity: 0.8,
+            fillOpacity: 0.3
+          });
+        } else {
+          console.warn('destinationCircle is not initialized');
+        }
+
       },
       (error) => {
         console.error("Error watching user location:", error);
@@ -866,6 +938,7 @@ const fetchMallStreetData = async () => {
         const bounds = new kakao.maps.LatLngBounds();
         const ps = new kakao.maps.services.Places();
         
+        // 검색
         const searchAndAddMarker = async (storeName, index) => {
           return new Promise((resolve) => {
             ps.keywordSearch(storeName, (data, status) => {
