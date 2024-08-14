@@ -1071,7 +1071,7 @@ const fetchMallStreetData = async () => {
     <div style={{ position: 'relative', width: '100vw', height: '100vh', overflow : 'auto' }}>
       <div id="map" style={{ 
         width: '100vw', 
-        height: 'calc(100% - 60px)',
+        height: 'calc(100% - 70px)',
         overflow: 'auto' }}>
           
         </div>
@@ -1080,7 +1080,7 @@ const fetchMallStreetData = async () => {
         onClick={handleMallStreetButtonClick}
         style={{
           width: '6rem',
-          height: '1.5rem',
+          height: '2rem',
           position: 'absolute',
           top: '5rem',
           padding: '0.38rem, 0.44rem',
@@ -1090,6 +1090,7 @@ const fetchMallStreetData = async () => {
           border: '1px solid rgba(0, 0, 0, 0.25)',
           borderRadius: '0.5rem',
           cursor: 'pointer',
+          boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
           zIndex: 10
         }}
       >
@@ -1108,6 +1109,7 @@ const fetchMallStreetData = async () => {
         border: 'none',
         borderRadius: '5px',
         cursor: 'pointer',
+        boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
         zIndex: 10
       }}>
         {/* 이건 적용이 안되는데 */}
