@@ -330,7 +330,7 @@ const Map = () => {
     }
   };
 
-const fetchMallStreetData = async () => {
+  const fetchMallStreetData = async () => {
   try {
     const response = await fetch('/api/map/get/mall/street');
     if (!response.ok) {
@@ -341,10 +341,10 @@ const fetchMallStreetData = async () => {
     console.error("Error fetching mall street data:", error);
     throw error;
   }
-};
+  };
 
   const removeAllMarkers = useCallback(() => {
-    Object.values(markersRef.current).forEach(({ marker }) => marker.setMap(null));
+    Object.values(markersRef.current).forEach(({ arriveMarker }) => arriveMarker.setMap(null));
     markersRef.current = {};
     if (userMarker) userMarker.setMap(null);
     if (destinationMarker) destinationMarker.setMap(null);
@@ -354,7 +354,7 @@ const fetchMallStreetData = async () => {
     if (!userCircle || !destinationCircle) {
       console.error('User circle or destination circle is not initialized');
       return;
-    }
+  }
   //   // 여기가 계산지점인데
   const d = await calculateDistanceAsync(
     userPosition.getLat(), userPosition.getLng(),
@@ -487,7 +487,7 @@ const fetchMallStreetData = async () => {
 
   const setDestination = useCallback(async (destLat, destLng) => {
   if (map && kakao) {
-    Object.values(markersRef.current).forEach(({ marker }) => marker.setMap(null));
+    Object.values(markersRef.current).forEach(({ arriveMarker }) => arriveMarker.setMap(null));
     markersRef.current = {};
 
     [destinationCircle, polyline].forEach(item => item && item.setMap(null));
@@ -526,10 +526,10 @@ const fetchMallStreetData = async () => {
       center: destPosition,
       radius: R,
       strokeWeight: 2,
-      strokeColor: '#304FFE',  // 원의 테두리 색상
+      strokeColor: '#F08080',  // 원의 테두리 색상
       strokeOpacity: 0.8,
       strokeStyle: 'solid',
-      fillColor: '#304FFE',    // 원의 내부 색상
+      fillColor: '#F08080',    // 원의 내부 색상
       fillOpacity: 0.3,        // 투명도 조정
       map: map
     });
@@ -552,7 +552,7 @@ const fetchMallStreetData = async () => {
     const newPolyline = new kakao.maps.Polyline({
       path: [userPosition, destPosition],
       strokeWeight: 3,
-      strokeColor: '#00008B',
+      strokeColor: '#F08080',
       strokeOpacity: 0.7,
       strokeStyle: 'solid'
     });
@@ -600,8 +600,9 @@ const fetchMallStreetData = async () => {
         const isOverlapping = (newDistance * 1000).toFixed(0) <= Number(R) + r;
         console.log("overlayping");
         console.log(isOverlapping);
-        const strokeColor = isOverlapping ? '#FF0000' : '#304FFE';
-        const fillColor = isOverlapping ? '#FF0000' : '#304FFE';
+        
+        const strokeColor = isOverlapping ? '#FF0000' : '#F08080';
+        const fillColor = isOverlapping ? '#FF0000' : '#F08080';
 
         // 사용자 원과 목적지 원의 스타일 업데이트
         if (userCircle) {
@@ -659,14 +660,32 @@ const fetchMallStreetData = async () => {
       console.error('Map or Kakao object is not initialized');
       return null;
     }
+    // 상가 이미지
+    var arriveSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/blue_b.png', // 도착 마커이미지 주소입니다    
+    arriveSize = new window.kakao.maps.Size(50, 45), // 도착 마커이미지의 크기입니다 
+    arriveOption = { 
+        offset: new window.kakao.maps.Point(15, 43) // 도착 마커이미지에서 마커의 좌표에 일치시킬 좌표를 설정합니다 (기본값은 이미지의 가운데 아래입니다)
+    };
+
+    // 도착 마커 이미지를 생성합니다
+    var arriveImage = new window.kakao.maps.MarkerImage(arriveSrc, arriveSize, arriveOption);
     
-    // 여기가 상가 마커 찍는곳
-    const position = new kakao.maps.LatLng(lat, lng);
-    const marker = new kakao.maps.Marker({
-      position: position,
-      map: map,
-      zIndex: 1
+    // 여기 포지션
+    const position = new window.kakao.maps.LatLng(lat, lng);
+    
+    // 도착 마커를 생성합니다 
+    var arriveMarker = new window.kakao.maps.Marker({  
+        map: map, // 도착 마커가 지도 위에 표시되도록 설정합니다
+        position: position,
+        image: arriveImage, // 도착 마커이미지를 설정합니다
+        zIndex: 1,
     });
+    
+    // const marker = new window.kakao.maps.Marker({
+    //   position: position,
+    //   map: map,
+    //   zIndex: 1
+    // });
   
     // 외부 div 스타일 설정
     const style = document.createElement('style');
@@ -688,7 +707,7 @@ const fetchMallStreetData = async () => {
       zIndex: 2,
     });
   
-    kakao.maps.event.addListener(marker, 'click', function() {
+    kakao.maps.event.addListener(arriveMarker, 'click', function() {
       if (activeInfoWindowRef.current) {
         activeInfoWindowRef.current.close();
       }
@@ -704,7 +723,7 @@ const fetchMallStreetData = async () => {
         content
       );
   
-      infowindow.open(map, marker);
+      infowindow.open(map, arriveMarker);
       activeInfoWindowRef.current = infowindow;
   
       // 마커 클릭 후 짧은 시간 동안 지도 클릭 이벤트를 무시
@@ -755,7 +774,7 @@ const fetchMallStreetData = async () => {
       }
     });
   
-    return { marker, infowindow };
+    return { arriveMarker, infowindow };
   }, [map, kakao, setDestination]);
 
   const initializeMap = useCallback(() => {
@@ -786,14 +805,14 @@ const fetchMallStreetData = async () => {
             kakaoMap.setCenter(userPosition);
             
             const imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png', // 마커이미지의 주소입니다    
-                imageSize = new kakao.maps.Size(64, 69), // 마커이미지의 크기입니다
-                imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+                imageSize = new window.kakao.maps.Size(64, 69), // 마커이미지의 크기입니다
+                imageOption = {offset: new window.kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
 
             // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
-            const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+            const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
 
             // 마커를 생성합니다
-            const marker = new kakao.maps.Marker({
+            const marker = new window.kakao.maps.Marker({
                 position: userPosition, 
                 image: markerImage, // 마커이미지 설정 
                 map: kakaoMap,
@@ -807,51 +826,22 @@ const fetchMallStreetData = async () => {
             setUserMarker(marker);
   
             // 원의 초기 반경 및 설정
-            const initialRadius = r; // 초기 반경
-            const maxRadius = initialRadius + 5; // 최대 반경
-            const minRadius = initialRadius; // 최소 반경
-            let radius = initialRadius;
-            let expanding = true;
+            // const initialRadius = r; // 초기 반경
   
             // 유저 원 객체 생성
             const circle = new window.kakao.maps.Circle({
               center: userPosition,
               radius: r,
               strokeWeight: 2,
-              strokeColor: '#304FFE',
+              strokeColor: '#F08080',
               strokeOpacity: 0.8,
               strokeStyle: 'solid',
-              fillColor: '#304FFE',
+              fillColor: '#F08080',
               fillOpacity: 0.3,
               map: kakaoMap
             });
             setUserCircle(circle);
   
-            // // 원 애니메이션 함수
-            // const updateInterval = 16; // 애니메이션 속도 (약 60 FPS)
-            // function animateCircle() {
-            //   const speed = 0.07; // 애니메이션 속도 조절
-  
-            //   if (expanding) {
-            //     radius += speed;
-            //     if (radius >= maxRadius) {
-            //       expanding = false;
-            //     }
-            //   } else {
-            //     radius -= speed;
-            //     if (radius <= minRadius) {
-            //       expanding = true;
-            //     }
-            //   }
-  
-            //   circle.setRadius(radius);
-  
-            //   // 애니메이션을 계속 반복
-            //   setTimeout(() => requestAnimationFrame(animateCircle), updateInterval);
-            // }
-  
-            // // 애니메이션 시작
-            // requestAnimationFrame(animateCircle);
           },
           (error) => {
             console.error("Error getting user location:", error);
@@ -879,8 +869,8 @@ const fetchMallStreetData = async () => {
 
   useEffect(() => {
     if (map && kakao) {
-      Object.values(markersRef.current).forEach(({ marker, infowindow }) => {
-        if (marker) marker.setMap(null);
+      Object.values(markersRef.current).forEach(({ arriveMarker, infowindow }) => {
+        if (arriveMarker) arriveMarker.setMap(null);
         if (infowindow) infowindow.close();
       });
       markersRef.current = {};
@@ -946,8 +936,8 @@ const fetchMallStreetData = async () => {
           const bounds = new kakao.maps.LatLngBounds();
           let newStores = [];
 
-          Object.values(markersRef.current).forEach(({ marker, infowindow }) => {
-            marker.setMap(null);
+          Object.values(markersRef.current).forEach(({ arriveMarker, infowindow }) => {
+            arriveMarker.setMap(null);
             infowindow.close();
           });
           markersRef.current = {};
@@ -982,8 +972,8 @@ const fetchMallStreetData = async () => {
         const mallStreetData = await fetchMallStreetData();
   
         // 기존 마커와 인포윈도우 제거
-        Object.values(markersRef.current).forEach(({ marker, infowindow }) => {
-          marker.setMap(null);
+        Object.values(markersRef.current).forEach(({ arriveMarker, infowindow }) => {
+          arriveMarker.setMap(null);
           infowindow.close();
         });
         markersRef.current = {};
