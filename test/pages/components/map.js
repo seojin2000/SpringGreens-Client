@@ -352,48 +352,48 @@ const fetchMallStreetData = async () => {
       return;
     }
   //   // 여기가 계산지점인데
-  // const d = await calculateDistanceAsync(
-  //   userPosition.getLat(), userPosition.getLng(),
-  //   destPosition.getLat(), destPosition.getLng()
-  // ) * 1000;
+  const d = await calculateDistanceAsync(
+    userPosition.getLat(), userPosition.getLng(),
+    destPosition.getLat(), destPosition.getLng()
+  ) * 1000;
   // console.log("계산후 d", d);
-  // const isOverlapping = d <= R + r;
+  const isOverlapping = d <= R + r;
   // console.log("overlayping");
   // console.log(isOverlapping);
-  // const strokeColor = isOverlapping ? '#FF0000' : '#304FFE';
-  // const fillColor = isOverlapping ? '#FF0000' : '#304FFE';
+  const strokeColor = isOverlapping ? '#FF0000' : '#304FFE';
+  const fillColor = isOverlapping ? '#FF0000' : '#304FFE';
 
 
   // // 원 객체 생성
-  // useEffect(() => {
-  //   const circle = new window.kakao.maps.Circle({
-  //     center: userPosition,
-  //     radius: r,
-  //     strokeWeight: 2,
-  //     strokeColor: '#304FFE',
-  //     strokeOpacity: 0.8,
-  //     strokeStyle: 'solid',
-  //     fillColor: '#304FFE',
-  //     fillOpacity: 0.3,
-  //     map: kakaoMap
-  //   });
-  //   setUserCircle(circle);
-  // }, [userPosition, kakaoMap]);
+  useEffect(() => {
+    const circle = new window.kakao.maps.Circle({
+      center: userPosition,
+      radius: r,
+      strokeWeight: 2,
+      strokeColor: strokeColor,
+      strokeOpacity: 0.8,
+      strokeStyle: 'solid',
+      fillColor: fillColor,
+      fillOpacity: 0.3,
+      map: kakaoMap
+    });
+    setUserCircle(circle);
+  }, [userPosition, kakaoMap]);
 
-  // useEffect(() => {
-  //   const destCircle = new window.kakao.maps.Circle({
-  //     center: destPosition,
-  //     radius: R,
-  //     strokeWeight: 2,
-  //     strokeColor: '#304FFE',
-  //     strokeOpacity: 0.8,
-  //     strokeStyle: 'solid',
-  //     fillColor: '#304FFE',
-  //     fillOpacity: 0.3,
-  //     map: kakaoMap
-  //   });
-  //   setDestinationCircle(destCircle);
-  // }, [destPosition, kakaoMap]);
+  useEffect(() => {
+    const destCircle = new window.kakao.maps.Circle({
+      center: destPosition,
+      radius: R,
+      strokeWeight: 2,
+      strokeColor: strokeColor,
+      strokeOpacity: 0.8,
+      strokeStyle: 'solid',
+      fillColor: fillColor,
+      fillOpacity: 0.3,
+      map: kakaoMap
+    });
+    setDestinationCircle(destCircle);
+  }, [destPosition, kakaoMap]);
 
   // userCircle.setOptions({ 
   //   strokeColor: strokeColor, 
@@ -408,7 +408,7 @@ const fetchMallStreetData = async () => {
   //   fillOpacity: 0.3
   // });
 
-  // setIsCirclesOverlapping(isOverlapping);
+  setIsCirclesOverlapping(isOverlapping);
 
   if (isOverlapping) {
     // 모든 마커 제거
@@ -492,14 +492,32 @@ const fetchMallStreetData = async () => {
     if (destinationMarker) {
       destinationMarker.setPosition(destPosition);
     } else {
-      const newDestMarker = new kakao.maps.Marker({
-        position: destPosition,
-        map: map
-      });
-      setDestinationMarker(newDestMarker);
+      // 마커가 존재하지 않으면 생성.
+
+      // var arriveSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/blue_b.png', // 도착 마커이미지 주소입니다    
+      // arriveSize = new kakao.maps.Size(50, 45), // 도착 마커이미지의 크기입니다 
+      // arriveOption = { 
+      //     offset: new kakao.maps.Point(15, 43) // 도착 마커이미지에서 마커의 좌표에 일치시킬 좌표를 설정합니다 (기본값은 이미지의 가운데 아래입니다)
+      // };
+
+      // 도착 마커 이미지를 생성합니다
+    //   var arriveImage = new kakao.maps.MarkerImage(arriveSrc, arriveSize, arriveOption);
+    //   var arriveMarker = new kakao.maps.Marker({  
+    //     map: map, // 도착 마커가 지도 위에 표시되도록 설정합니다
+    //     position: destPosition,
+    //     draggable: false, // 도착 마커가 드래그 가능하도록 설정합니다
+    //     image: arriveImage // 도착 마커이미지를 설정합니다
+    // });
+
+      // const newDestMarker = new kakao.maps.Marker({
+      //   position: destPosition,
+      //   map: map
+      // });
+      // setDestinationMarker(arriveMarker);
     }
 
-    // 여기서 상가 원을 만드는데 R로 고정되어 있었음
+    // // 상가원
+    // // 여기서 상가 원을 만드는데 R로 고정되어 있었음
     const newDestCircle = new kakao.maps.Circle({
       center: destPosition,
       radius: R,
@@ -568,7 +586,7 @@ const fetchMallStreetData = async () => {
         // 그럼 이걸 가지고 값을 설정할테고
         console.log("새로운 거리", newDistance);
         newDistanceOverlay.setPosition(new kakao.maps.LatLng((newUserLat + destLat) / 2, (newUserLng + destLng) / 2));
-        newDistanceOverlay.setContent(`<div style="padding:5px;background:transparent;border-radius:5px;color: black;">${(newDistance * 1000).toFixed(0)}m</div>`);
+        newDistanceOverlay.setContent(`<div style="padding:5px;background:transparent;border-radius:5px;color:black;">${(newDistance * 1000).toFixed(0)}m</div>`);
 
         // r = 5, R = 21
         console.log("계산후 d", (newDistance * 1000).toFixed(0), Number(R) + r, R);
@@ -602,9 +620,6 @@ const fetchMallStreetData = async () => {
           });
         } else {
           console.warn('destinationCircle is not initialized');
-        }
-        if(isOverlapping) {
-          newPolyline.strokeColor = '#DC143C';
         }
 
       },
@@ -640,7 +655,8 @@ const fetchMallStreetData = async () => {
       console.error('Map or Kakao object is not initialized');
       return null;
     }
-  
+    
+    // 여기가 상가 마커 찍는곳
     const position = new kakao.maps.LatLng(lat, lng);
     const marker = new kakao.maps.Marker({
       position: position,
@@ -779,7 +795,7 @@ const fetchMallStreetData = async () => {
             let radius = initialRadius;
             let expanding = true;
   
-            // 원 객체 생성
+            // 유저 원 객체 생성
             const circle = new window.kakao.maps.Circle({
               center: userPosition,
               radius: r,

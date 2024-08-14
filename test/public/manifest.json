@@ -1,8 +1,10 @@
 {
-    "display": "standalone",
+    "display": "fullscreen",
     "scope": "/",
     "start_url": "/",
     "name": "다훑어",
+    "background_color": "#ffffff",
+    "theme_color": "#ffffff",
     "short_name": "다훑어",
     "description": "다훑어",
     "icons": [
