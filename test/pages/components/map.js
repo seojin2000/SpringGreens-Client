@@ -601,8 +601,8 @@ const Map = () => {
         console.log("overlayping");
         console.log(isOverlapping);
         
-        const strokeColor = isOverlapping ? '#FF0000' : '#F08080';
-        const fillColor = isOverlapping ? '#FF0000' : '#F08080';
+        const strokeColor = isOverlapping ? '#0077ff' : '#F08080';
+        const fillColor = isOverlapping ? '#0077ff' : '#F08080';
 
         // 사용자 원과 목적지 원의 스타일 업데이트
         if (userCircle) {
