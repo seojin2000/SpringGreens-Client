@@ -4,7 +4,8 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-      <meta name="apple-mobile-web-app-capable" content="black-translucent"/>
+      <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+      <meta name="apple-mobile-web-app-capable" content="yes"/>
       </Head>
       <body>
         <Main />
