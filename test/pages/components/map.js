@@ -784,17 +784,31 @@ const fetchMallStreetData = async () => {
   
             // 사용자의 위치를 지도 중심으로 설정
             kakaoMap.setCenter(userPosition);
-  
-            // 사용자 위치에 마커 추가
-            const marker = new window.kakao.maps.Marker({
-              position: userPosition,
-              map: kakaoMap
+            
+            const imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png', // 마커이미지의 주소입니다    
+                imageSize = new kakao.maps.Size(64, 69), // 마커이미지의 크기입니다
+                imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+
+            // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+            const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+
+            // 마커를 생성합니다
+            const marker = new kakao.maps.Marker({
+                position: userPosition, 
+                image: markerImage, // 마커이미지 설정 
+                map: kakaoMap,
             });
+            
+            // 사용자 위치에 마커 추가
+            // const marker = new window.kakao.maps.Marker({
+            //   position: userPosition,
+            //   map: kakaoMap
+            // });
             setUserMarker(marker);
   
             // 원의 초기 반경 및 설정
-            const initialRadius = 100; // 초기 반경
-            const maxRadius = initialRadius + 20; // 최대 반경
+            const initialRadius = r; // 초기 반경
+            const maxRadius = initialRadius + 5; // 최대 반경
             const minRadius = initialRadius; // 최소 반경
             let radius = initialRadius;
             let expanding = true;
@@ -813,10 +827,10 @@ const fetchMallStreetData = async () => {
             });
             setUserCircle(circle);
   
-            // 원 애니메이션 함수
+            // // 원 애니메이션 함수
             // const updateInterval = 16; // 애니메이션 속도 (약 60 FPS)
             // function animateCircle() {
-            //   const speed = 0.5; // 애니메이션 속도 조절
+            //   const speed = 0.07; // 애니메이션 속도 조절
   
             //   if (expanding) {
             //     radius += speed;
@@ -1080,17 +1094,17 @@ const fetchMallStreetData = async () => {
         onClick={handleMallStreetButtonClick}
         style={{
           width: '6rem',
-          height: '2rem',
+          height: '1.8rem',
           position: 'absolute',
           top: '5rem',
           padding: '0.38rem, 0.44rem',
           left: '10px',
           backgroundColor: '#304FFE',
           color: 'white',
-          border: '1px solid rgba(0, 0, 0, 0.25)',
-          borderRadius: '0.5rem',
+          borderRadius: '5px',
+          border: 'none',
           cursor: 'pointer',
-          boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+          boxShadow: '0 2px 4px rgba(0,0,0,0.5)',
           zIndex: 10
         }}
       >
@@ -1109,7 +1123,7 @@ const fetchMallStreetData = async () => {
         border: 'none',
         borderRadius: '5px',
         cursor: 'pointer',
-        boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+        boxShadow: '0 2px 4px rgba(0,0,0,0.0.6)',
         zIndex: 10
       }}>
         {/* 이건 적용이 안되는데 */}
