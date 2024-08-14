@@ -232,13 +232,17 @@ const SearchBar = ({ onSearch }) => {
           onChange={handleInputChange}
           placeholder="장소를 검색하세요"
           style={{
+            position: 'fixed',
             width: '100%',
             padding: '10px',
             borderRadius: '10px',
             border: '1px solid #dddd',
             fontSize: '14px',
             backgroundColor: 'white',
-            color: '#222'
+            color: '#222',
+            boxShadow: '0 2px 4px rgba(0,0,0,0.1)', 
+            top: '30px',           // 페이지 맨 위로 설정
+            left: '0',          // 왼쪽으로 고정
           }}
         />
       </form>
@@ -1078,9 +1082,9 @@ const fetchMallStreetData = async () => {
           width: '6rem',
           height: '1.5rem',
           position: 'absolute',
-          top: '6.5rem',
+          top: '5rem',
           padding: '0.38rem, 0.44rem',
-          left: '12px',
+          left: '10px',
           backgroundColor: '#304FFE',
           color: 'white',
           border: '1px solid rgba(0, 0, 0, 0.25)',
@@ -1097,7 +1101,7 @@ const fetchMallStreetData = async () => {
       <button onClick={() => fetchUserLocation()} style={{
         position: 'absolute',
         bottom: '100px',
-        left: '12px',
+        left: '10px',
         padding: '10px',
         backgroundColor: '#304FFE',
         color: 'white',
