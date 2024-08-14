@@ -1,18 +1,29 @@
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import loginPage from '../loginPage';
 import { useRouter } from 'next/router';
 
 const Navbar = () => {
   const router = useRouter();
   const [activeIcon, setActiveIcon] = useState('map');
+  const [navigateToLogin, setNavigateToLogin] = useState(false);
 
   const handleClick = (iconName) => {
-    if(iconName === "user") {
-      router.push("/loginPage");
+    if (iconName === 'user') {
+      setActiveIcon(iconName);
+      setNavigateToLogin(true);
+    } else {
+      setActiveIcon(iconName);
+      setNavigateToLogin(false);
     }
-    setActiveIcon(iconName);
   };
+
+  useEffect(() => {
+    if (navigateToLogin) {
+      router.push('/loginPage');
+    }
+  }, [navigateToLogin, router]);
+
 
   return (
     <nav className="navbar">

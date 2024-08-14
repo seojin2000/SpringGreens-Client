@@ -2,9 +2,9 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
+  "/": "pages/index.js",
   "/loginPage": "pages/loginPage.js",
   "/domestic": "pages/domestic.js",
-  "/salar": "pages/salar.js",
-  "/": "pages/index.js",
-  "/loginSelectPage": "pages/loginSelectPage.js"
+  "/loginSelectPage": "pages/loginSelectPage.js",
+  "/salar": "pages/salar.js"
 }
