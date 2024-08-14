@@ -23,6 +23,7 @@ const Popup = ({ name, onSetDestination, storeData, error }) => {
 
   const handleSetDestination = async () => {
     try {
+      // axios는 의존성 추가되어 있는데 왜 안쓰지?
       const response = await fetch(`/api/map/set/destination/${encodeURIComponent(name)}`, {
         method: 'GET',
       });
@@ -32,14 +33,6 @@ const Popup = ({ name, onSetDestination, storeData, error }) => {
       console.log('API 응답 status_code:', data.status_code);
 
       if (data.status_code === 200) {
-        // 여기가 위도, 경도, width를 받는곳
-        // 근데 이거 어디서 쓰는거?
-        // 목적지 설정을 누르면, 이 handle 메서드가 호출이 되고
-        // response로 받아오는게 width, latitude, longitude라는 값들인데
-        // status_code가 200이라는 것은, 정상적인 값을 호출 했다는거고
-        // 그 값을 onSetDestination이라는것으로 인수로 보내게 되는데
-        // 이게 호출되는 곳이 없는데?
-        // 그럼 이렇게 수동으로 업데이트해서 써야지.
         R = (data.data.width / 2).toFixed(0);
         console.log(R);
         onSetDestination(data.data.latitude, data.data.longitude, data.data.width);
@@ -891,6 +884,7 @@ const Map = () => {
 
   // 사용자 위치 이동
   const moveUserLocation = useCallback(async (lat, lng) => {
+    console.log(lat,lng);
   if (map && kakao && userMarker && userCircle) {
     const newPosition = new kakao.maps.LatLng(lat, lng);
 

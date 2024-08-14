@@ -1,10 +1,16 @@
 import Link from 'next/link';
 import { useState } from 'react';
+import loginPage from '../loginPage';
+import { useRouter } from 'next/router';
 
 const Navbar = () => {
+  const router = useRouter();
   const [activeIcon, setActiveIcon] = useState('map');
 
   const handleClick = (iconName) => {
+    if(iconName === "user") {
+      router.push("/loginPage");
+    }
     setActiveIcon(iconName);
   };
 
@@ -12,7 +18,7 @@ const Navbar = () => {
     <nav className="navbar">
       <ul className="navLinks">
         <li>
-          <Link href="/" onClick={() => handleClick('map')}>
+          <Link href="" onClick={() => handleClick('map')}>
             <svg
               width="32"
               height="32"
