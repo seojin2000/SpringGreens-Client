@@ -15,6 +15,7 @@ const Popup = ({ name, onSetDestination, storeData, error }) => {
     return products.reduce((sum, product) => sum + product.product_view_count, 0);
   };
   
+  
   const handleSetDestination = async () => {
     try {
       const response = await fetch(`/api/map/set/destination/${encodeURIComponent(name)}`, {
@@ -22,7 +23,9 @@ const Popup = ({ name, onSetDestination, storeData, error }) => {
       });
       const data = await response.json();
       if (data.status_code === 200) {
-        onSetDestination(data.data.latitude, data.data.longitude);
+        // 이거를 보내고 싶어요
+        const divideWidth = (data.data.width /2).toFixed(0);
+        onSetDestination(data.data.latitude, data.data.longitude, divideWidth);
       } else {
         throw new Error(`목적지 설정 실패: ${data.message}`);
       }
@@ -62,32 +65,38 @@ const Popup = ({ name, onSetDestination, storeData, error }) => {
           display: flex;
           flex-direction: column;
           width: 253px;
+          height: 400px;
           padding-top: 20px;
-          border-radius: 10px;
           background: rgba(34, 34, 34, 0.99);
           align-items: center;
+          overflow-y: auto;
+          border-radius: 10px;
         }
         .slider-container {
           width: 205px;
-          height: 132px;
+          height: 200px;
           display: flex;
           justify-content: center;
           align-items: center;
           margin-bottom: 10px;
+          border-radius : 10px;
+          margin-top : 30px;
         }
-        .title {
+       .title {
           width: 200px;
           color: #FFF;
           font-family: Roboto;
           font-size: 16px;
           font-weight: 500;
           letter-spacing: 1px;
+          margin-top: 80px;
+          margin-bottom: 20px;
         }
         .store-container {
           width: 207px;
           border-radius: 2px;
           background: #4C4C4C;
-          margin-bottom: 8px;
+          margin-bottom: 20px;
           padding-bottom: 8px;
         }
         .store-title {

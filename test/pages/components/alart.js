@@ -1,9 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 
 const OverlayContent = ({  onClose, onMove  }) => {
-  const handleMove = () => {
-    window.location.href = '/mainPage';
-  };
   return (
     <div className="alert-container">
       <div className="text-container">

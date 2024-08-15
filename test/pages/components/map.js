@@ -4,7 +4,12 @@ import Navbar from './Navbar';
 import OverlayContent from './alart';
 import Popup from './Popup';
 import SearchBar from './SearchBar';
-import ImageSlider from './ImageSlider';
+
+
+
+let R = 0; // distance // 이건 고정되어 있음 안되는거
+const r = 5; // 사용자 원 반지름
+
 
 // 유틸리티 함수
 // 배열을 지정된 크기의 청크로 나누는 함수
@@ -37,11 +42,9 @@ const Map = () => {
   const [distanceWorker, setDistanceWorker] = useState(null);  // 거리 계산 워커
   const [selectedStore, setSelectedStore] = useState(null);  // 선택된 상점
   const [customPosition, setCustomPosition] = useState({ lat: 36.9694, lng: 127.8673 });  // 사용자 지정 위치
-  const [mapSize, setMapSize] = useState({ width: '100%', height: '100%' });  // 지도 크기
+  const [mapSize, setMapSize] = useState({ width: '100vw', height: '100vh' });  // 지도 크기
   // 사용자 이동 버튼 활성화 상태
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
-  let R = 0; // distance // 이건 고정되어 있음 안되는거
-  const r = 5; // 사용자 원 반지름
 
   // 지도 크기 동적 조절
   useEffect(() => {
@@ -118,7 +121,7 @@ const Map = () => {
   
   // 모든 마커 제거
   const removeAllMarkers = useCallback(() => {
-    Object.values(markersRef.current).forEach(({ marker }) => marker.setMap(null));
+    Object.values(markersRef.current).forEach(({ arriveMarker }) => arriveMarker.setMap(null));
     markersRef.current = {};
   }, []);
 
@@ -135,15 +138,17 @@ const Map = () => {
       destPosition.getLat(), destPosition.getLng()
     ) * 1000;
 
-    const isOverlapping = d <= R + r;
-    const strokeColor = isOverlapping ? '#FF0000' : '#304FFE';
-    const fillColor = isOverlapping ? '#FF0000' : '#304FFE';
+  
+    const isOverlapping = d <= Number(R) + r;
+    const strokeColor = isOverlapping ? '#0000FF' : '#304FFE';
+    const fillColor = isOverlapping ? '#0000FF' : '#304FFE';
 
     userCircle.setOptions({ strokeColor, fillColor, strokeOpacity: 0.8, fillOpacity: 0.3 });
     destinationCircle.setOptions({ strokeColor, fillColor, strokeOpacity: 0.8, fillOpacity: 0.3 });
 
     setIsCirclesOverlapping(isOverlapping);
 
+    // 겹치면
     if (isOverlapping) {
       // 원이 겹칠 때의 로직
       removeAllMarkers();
@@ -187,7 +192,7 @@ const Map = () => {
   }, [map, kakao, userCircle, destinationCircle, R, r, overlapOverlay, removeAllMarkers, calculateDistanceAsync, userMarker]);
 
   // 목적지 설정 함수
-  const setDestination = useCallback(async (destLat, destLng, storeName = null) => {
+  const setDestination = useCallback(async (destLat, destLng, storeName = null, width) => {
     if (map && kakao) {
       // 기존 목적지 관련 오버레이 제거
       [destinationCircle, polyline, distanceOverlay].forEach(item => item && item.setMap(null));
@@ -197,17 +202,13 @@ const Map = () => {
       if (destinationMarker) {
         destinationMarker.setPosition(destPosition);
       } else {
-        const newDestMarker = new kakao.maps.Marker({
-          position: destPosition,
-          map: map
-        });
-        setDestinationMarker(newDestMarker);
       }
+      R = width;
 
       // 목적지 원 생성
       const newDestCircle = new kakao.maps.Circle({
         center: destPosition,
-        radius: R,
+        radius: width,
         strokeWeight: 2,
         strokeColor: '#304FFE',
         strokeOpacity: 0.8,
@@ -226,7 +227,7 @@ const Map = () => {
       const distance = await calculateDistanceAsync(userLat, userLng, destLat, destLng);
       const newDistanceOverlay = new kakao.maps.CustomOverlay({
         position: new kakao.maps.LatLng((userLat + destLat) / 2, (userLng + destLng) / 2),
-        content: `<div style="padding:5px;background:rgba(255,255,255,0.7);border-radius:5px;color:black;">${(distance * 1000).toFixed(0)}m</div>`,
+        content: `<div style="padding:5px;background:transparent;border-radius:5px;color:black;">${(distance * 1000).toFixed(0)}m</div>`,
         map: map
       });
       setDistanceOverlay(newDistanceOverlay);
@@ -235,7 +236,7 @@ const Map = () => {
       const newPolyline = new kakao.maps.Polyline({
         path: [userPosition, destPosition],
         strokeWeight: 3,
-        strokeColor: '#686D76',
+        strokeColor: '#F08080',
         strokeOpacity: 0.7,
         strokeStyle: 'solid'
       });
@@ -259,12 +260,45 @@ const Map = () => {
         async (position) => {
           const newUserPosition = new kakao.maps.LatLng(position.coords.latitude, position.coords.longitude);
           userMarker.setPosition(newUserPosition);
-          userCircle.setCenter(newUserPosition);
+          // userCircle.setCenter(newUserPosition);
           updateCircleColors(newUserPosition, destPosition);
           newPolyline.setPath([newUserPosition, destPosition]);
           const newDistance = await calculateDistanceAsync(newUserPosition.getLat(), newUserPosition.getLng(), destLat, destLng);
           newDistanceOverlay.setPosition(new kakao.maps.LatLng((newUserPosition.getLat() + destLat) / 2, (newUserPosition.getLng() + destLng) / 2));
-          newDistanceOverlay.setContent(`<div style="padding:5px;background:white;border-radius:5px;color: black;">${(newDistance * 1000).toFixed(0)}m</div>`);
+          newDistanceOverlay.setContent(`<div style="padding:5px;background:transparent;border-radius:5px;color: black;">${(newDistance * 1000).toFixed(0)}m</div>`);
+
+
+          const isOverlapping = (newDistance * 1000).toFixed(0) <= Number(R) + r;
+
+          const strokeColor = isOverlapping ? '#0077ff' : '#F08080';
+          const fillColor = isOverlapping ? '#0077ff' : '#F08080';
+  
+          // 사용자 원과 목적지 원의 스타일 업데이트
+          if (userCircle) {
+            userCircle.setOptions({ 
+              strokeColor: strokeColor, 
+              fillColor: fillColor,
+              strokeOpacity: 0.8,
+              fillOpacity: 0.3
+            });
+          } else {
+            console.warn('userCircle is not initialized');
+          }
+          
+          if (newDestCircle) {
+            newDestCircle.setOptions({ 
+              strokeColor: strokeColor, 
+              fillColor: fillColor,
+              strokeOpacity: 0.8,
+              fillOpacity: 0.3
+            });
+          } else {
+            console.warn('destinationCircle is not initialized');
+          }
+
+
+
+
         },
         (error) => {
           console.error("Error watching user location:", error);
@@ -307,28 +341,22 @@ const Map = () => {
       return null;
     }
     // 상가 이미지
-    var arriveSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/blue_b.png', // 도착 마커이미지 주소입니다    
+    const arriveSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/blue_b.png', // 도착 마커이미지 주소입니다    
     arriveSize = new window.kakao.maps.Size(50, 45), // 도착 마커이미지의 크기입니다 
     arriveOption = { 
         offset: new window.kakao.maps.Point(15, 43) // 도착 마커이미지에서 마커의 좌표에 일치시킬 좌표를 설정합니다 (기본값은 이미지의 가운데 아래입니다)
     };
-
+    
+    const position = new kakao.maps.LatLng(lat, lng);
     // 도착 마커 이미지를 생성합니다
-    var arriveImage = new window.kakao.maps.MarkerImage(arriveSrc, arriveSize, arriveOption);
+    const arriveImage = new window.kakao.maps.MarkerImage(arriveSrc, arriveSize, arriveOption);
     
     // 도착 마커를 생성합니다 
-    var arriveMarker = new window.kakao.maps.Marker({  
+    const arriveMarker = new window.kakao.maps.Marker({  
         map: map, // 도착 마커가 지도 위에 표시되도록 설정합니다
         position: position,
         image: arriveImage, // 도착 마커이미지를 설정합니다
         zIndex: 1,
-    });
-
-    const position = new kakao.maps.LatLng(lat, lng);
-    const marker = new kakao.maps.Marker({
-      position: position,
-      map: map,
-      zIndex: 1
     });
 
     const content = document.createElement('div');
@@ -337,16 +365,17 @@ const Map = () => {
       zIndex: 2
     });
 
-    kakao.maps.event.addListener(marker, 'click', function() {
+    kakao.maps.event.addListener(arriveMarker, 'click', function() {
       if (activeInfoWindowRef.current) {
         activeInfoWindowRef.current.close();
       }
       
       const renderPopup = (storeData = null, error = null) => {
+        // 팝업창 setDestination
         ReactDOM.render(
           <Popup 
             name={name} 
-            onSetDestination={(lat, lng) => setDestination(lat, lng, name)}
+            onSetDestination={(lat, lng, width) => setDestination(lat, lng, name, width)}
             storeData={storeData}
             error={error}
             isDestination={selectedStore && selectedStore.name === name}
@@ -356,7 +385,7 @@ const Map = () => {
       };
 
       renderPopup();
-      infowindow.open(map, marker);
+      infowindow.open(map, arriveMarker);
       activeInfoWindowRef.current = infowindow;
 
       const clickTimeout = setTimeout(() => {
@@ -389,7 +418,7 @@ const Map = () => {
       }
     });
 
-    return { marker, infowindow };
+    return { arriveMarker, infowindow };
   }, [map, kakao, setDestination, selectedStore]);
 
   // 지도 초기화 함수
@@ -548,7 +577,7 @@ const Map = () => {
   
         const centerPosition = new kakao.maps.LatLng(latitude, longitude);
         map.setCenter(centerPosition);
-        map.setLevel(4, { animate: true }); // 5는 예시 값, 필요에 따라 조정
+        map.setLevel(3, { animate: true }); // 5는 예시 값, 필요에 따라 조정
         const bounds = new kakao.maps.LatLngBounds();
         const ps = new kakao.maps.services.Places();
         
@@ -602,7 +631,7 @@ const Map = () => {
       userMarker.setPosition(newPosition);
       userCircle.setPosition(newPosition);
       map.setCenter(newPosition);
-
+      map.setLevel(1);
       
       // 목적지가 설정되어 있다면 경로와 거리 정보 업데이트
       if (destinationMarker) {
@@ -610,7 +639,7 @@ const Map = () => {
         const newPolyline = new kakao.maps.Polyline({
           path: [newPosition, destPosition],
           strokeWeight: 3,
-          strokeColor: '#686D76',
+          strokeColor: '#F08080',
           strokeOpacity: 0.7,
           strokeStyle: 'solid'
         });
@@ -635,54 +664,56 @@ const Map = () => {
 
   // 컴포넌트 렌더링
   return (
-    <div style={{ position: 'relative', width: mapSize.width, height: mapSize.height }}>
-      <div id="map" style={{ width: '100%', height: '100%' }}></div>
-      <SearchBar onSearch={handleSearch} />
-      <button 
-        onClick={handleMallStreetButtonClick}
-        style={{
-          width: '6rem',
-          height: '1.8rem',
-          position: 'absolute',
-          top: '5rem',
-          padding: '0.38rem, 0.44rem',
-          left: '10px',
-          backgroundColor: '#304FFE',
-          color: 'white',
-          borderRadius: '5px',
-          border: 'none',
-          cursor: 'pointer',
-          boxShadow: '0 2px 4px rgba(0,0,0,0.5)',
-          zIndex: 10
-        }}
-      >
-        상가거리이동
-      </button>
-      {/* 사용자 이동 버튼 */}
-      <button 
-        onClick={moveToCustomPosition}
-        style={{
-          position: 'absolute',
-          top: '9rem',
-          left: '20px',
-          padding: '0.5rem 1rem',
-          backgroundColor: isButtonEnabled ? '#304FFE' : '#A0A0A0',
-          color: 'white',
-          border: 'none',
-          borderRadius: '0.3125rem',
-          cursor: isButtonEnabled ? 'pointer' : 'not-allowed',
-          zIndex: 10
-        }}
-        disabled={!isButtonEnabled}
-      >
-        사용자 이동
-      </button>
-      <Navbar />
+    <div style={{ position: 'relative', width: '100vw', height: '100vh', overflow : 'auto' }}>
+    <div id="map" style={{ 
+      width: '100vw', 
+      height: 'calc(100% - 70px)',
+      overflow: 'auto' }}>
+        
+      </div>
+    <SearchBar onSearch={handleSearch} />
+    <button 
+      onClick={handleMallStreetButtonClick}
+      style={{
+        width: '6rem',
+        height: '1.8rem',
+        position: 'absolute',
+        top: '5rem',
+        padding: '0.38rem, 0.44rem',
+        left: '10px',
+        backgroundColor: '#304FFE',
+        color: 'white',
+        borderRadius: '5px',
+        border: 'none',
+        cursor: 'pointer',
+        boxShadow: '0 2px 4px rgba(0,0,0,0.5)',
+        zIndex: 10
+      }}
+    >
+      상가거리이동
+    </button>
+    
+    <Navbar />
+
+    <button onClick={() => moveToCustomPosition()} style={{
+      position: 'absolute',
+      bottom: '100px',
+      left: '10px',
+      padding: '10px',
+      backgroundColor: '#304FFE',
+      color: 'white',
+      border: 'none',
+      borderRadius: '5px',
+      cursor: 'pointer',
+      boxShadow: '0 2px 4px rgba(0,0,0,0.0.6)',
+      zIndex: 10
+    }}>
+      사용자 위치 이동
       {showIcon && (
         <div style={{
           position: 'absolute',
-          bottom: '20px',
-          right: '20px',
+          bottom: '-1px',
+          right: '-350px',
           cursor: 'pointer',
           zIndex: 10
         }} onClick={() => {
@@ -700,8 +731,9 @@ const Map = () => {
           </svg>
         </div>
       )}
-    </div>
-  );
+    </button>      
+  </div>
+);
 };
 
 export default Map;

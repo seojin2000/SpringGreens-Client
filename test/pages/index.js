@@ -1,16 +1,11 @@
 import Head from "next/head";
-import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import dynamic from 'next/dynamic';
-import MainPage from "./components/mainPage";
 import Script from 'next/script';
-const inter = Inter({ subsets: ["latin"] });
-
 
 const MapWithNoSSR = dynamic(() => import('./components/map'), {
   ssr: false,
 });
-const LoginSocial = dynamic(()=>import('./socialLogin'), {ssr:false})
 
 export default function Home() {
   return (

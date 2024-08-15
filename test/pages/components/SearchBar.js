@@ -47,18 +47,38 @@ const SearchBar = ({ onSearch }) => {
   }, 300), []);
 
   return (
-    <div style={{ position: 'absolute', top: '3.5rem', left: '10px', right: '10px', zIndex: 11 }}>
+    <div style={{ position: 'absolute', top: '4.0rem', left: '0', right: '10px', zIndex: 11, color:'black' }}>
       <form onSubmit={handleSubmit}>
-        <input 
+      <input 
           type="text"
           value={query}
           onChange={handleInputChange}
           placeholder="장소를 검색하세요"
-          style={{ width: '100%', padding: '10px', borderRadius: '20px', border: '0px solid #222222', fontSize: '14px' }}
+          style={{
+            position: 'fixed',
+            width: '100%',
+            padding: '10px',
+            borderRadius: '10px',
+            border: '1px solid #dddd',
+            fontSize: '14px',
+            backgroundColor: 'white',
+            color: '#222',
+            boxShadow: '0 2px 4px rgba(0,0,0,0.1)', 
+            top: '30px',           // 페이지 맨 위로 설정
+            left: '0',          // 왼쪽으로 고정
+          }}
         />
       </form>
       {showSuggestions && suggestions.length > 0 && (
-        <ul style={{ listStyle: 'none', padding: 0, margin: 0, backgroundColor: 'white', borderRadius: '0 0 20px 20px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)', zIndex: 11 }}>
+        <ul style={{ 
+          listStyle: 'none', 
+        padding: 0, 
+        margin: 0, 
+        backgroundColor: 'white', 
+        borderRadius: '0 0 20px 20px', 
+        boxShadow: '0 2px 4px rgba(0,0,0,0.1)', 
+        zIndex: 11 }}>
+
           {suggestions.map((suggestion, index) => (
             <li 
               key={index}

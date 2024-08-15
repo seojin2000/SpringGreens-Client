@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import loginPage from '../loginPage';
 import { useRouter } from 'next/router';
 
 const Navbar = () => {
@@ -113,6 +112,7 @@ const Navbar = () => {
           </Link>
         </li>
       </ul>
+
       <style jsx>{`
         .navbar {
           display: flex;
