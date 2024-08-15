@@ -316,9 +316,6 @@ const Map = () => {
     // 도착 마커 이미지를 생성합니다
     var arriveImage = new window.kakao.maps.MarkerImage(arriveSrc, arriveSize, arriveOption);
     
-    // 여기 포지션
-    const position = new window.kakao.maps.LatLng(lat, lng);
-    
     // 도착 마커를 생성합니다 
     var arriveMarker = new window.kakao.maps.Marker({  
         map: map, // 도착 마커가 지도 위에 표시되도록 설정합니다
