@@ -1,0 +1,86 @@
+.pop-up-container {
+          display: flex;
+          flex-direction: column;
+          width: 253px;
+          padding-top: 20px;
+          border-radius: 10px;
+          background: rgba(34, 34, 34, 0.99);
+          align-items: center;
+        }
+        .slider-container {
+          width: 205px;
+          height: 132px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-bottom: 10px;
+        }
+        .title {
+          width: 200px;
+          color: #FFF;
+          font-family: Roboto;
+          font-size: 16px;
+          font-weight: 500;
+          letter-spacing: 1px;
+        }
+        .store-container {
+          width: 207px;
+          border-radius: 2px;
+          background: #4C4C4C;
+          margin-bottom: 8px;
+          padding-bottom: 8px;
+        }
+        .store-title {
+          width: 207px;
+          padding: 4px 0;
+          background: #304FFE;
+          color: #FFF;
+          font-family: NanumSquare_ac;
+          font-size: 12px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+        .shop-name {
+          flex-grow: 1;
+          text-align: left;
+          padding-left: 10px;
+        }
+        .view-count {
+          flex-shrink: 0;
+          padding-right: 10px;
+        }
+        .store-info {
+          color: #FFF;
+          font-family: NanumSquare_ac;
+          font-size: 12px;
+          text-align: center;
+          margin: 4px 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .address, .contact {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        .address {
+          margin-right: 3.5rem; /* 주소와 연락처 사이의 간격 */
+        }
+        .enpoint-btn {
+          display: flex;
+          padding: 10px;
+          justify-content: center;
+          align-items: center;
+          border-radius: 6px;
+          background: #304FFE;
+          color: #FFF;
+          border: none;
+          cursor: pointer;
+          margin-bottom: 20px;
+        }
+        .error {
+          color: red;
+          font-size: 12px;
+        }
