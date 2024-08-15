@@ -113,7 +113,6 @@ const Navbar = () => {
           </Link>
         </li>
       </ul>
-
       <style jsx>{`
         .navbar {
           display: flex;
@@ -159,3 +158,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+

@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import styles from '@/styles/MainPage.module.css';
+import RepeatedList from './RepeatedList';
 import FiveSecondTimer from './resetTimer';
 
 const MainPage = () => {
@@ -48,17 +49,19 @@ const MainPage = () => {
           <button onClick={toggleMenu} className={styles.menuButton}>
             ☰
           </button>
+          <span className={styles.menuText}>나의 현재 위치</span>
+          <span>APM플레이스</span>
         </div>
         
         <div className={styles.headBox}>
-          <h3>실시간 급상승</h3>
+          <h3>apm 급상승</h3>
           <FiveSecondTimer onTimerEnd={handleTimerEnd} />
           <div className={styles.sampleRe} onClick={regenerateItems}></div>
         </div>
       </div>
 
       <div className={styles.listSection}>
-        {/* <RepeatedList items={items} prevItems={prevItems} /> */}
+        <RepeatedList items={items} prevItems={prevItems} />
       </div>
 
       {menuOpen && (

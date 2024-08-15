@@ -45,7 +45,6 @@ const ImageSlider = ({ images = [] }) => {
       }
     }
   };
-
   return (
     <div className={styles.sliderWrapper}>
       <button onClick={prevSlide} className={`${styles.sliderButton} ${styles.prev}`}>&#10094;</button>
@@ -59,6 +58,7 @@ const ImageSlider = ({ images = [] }) => {
     </div>
   );
 };
+
 
 ImageSlider.propTypes = {
   images: PropTypes.arrayOf(

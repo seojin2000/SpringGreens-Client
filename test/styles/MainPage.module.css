@@ -1,15 +1,14 @@
-
 .container {
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 100vw; /* Viewport width */
-  height: 100vh; /* Viewport height */
-  background-color: rgb(218, 218, 218);
+  width: 22.5rem;  /* 360px */
+  height: 100rem;  /* 640px */
+  background-color: white;
   overflow: hidden;
-  padding-top: 2.69rem; /* Adjust padding as needed */
-  box-sizing: border-box; /* Ensure padding is included in the width and height */
+  padding-top: 2.69rem;
 }
+
 .topSection {
   flex-shrink: 0;
   width: 100%;
@@ -20,6 +19,8 @@
   height: 3.5rem;
   position: relative;
   margin: 0 auto;
+  display: flex;
+  align-items: center;
 }
 
 .headBox {
@@ -59,6 +60,21 @@
   border: none;
   cursor: pointer;
   font-size: 1.5rem;
+}
+
+.menuText {
+  margin-left: 1.25rem; /* 메뉴 버튼과의 간격 조정 */
+  margin-right: 0.25rem;
+  padding: 0.2rem 0.62rem; /* 텍스트 주변에 여백 추가 */ 
+  border-radius: 4px; /* 모서리 둥글게 */
+  font-size: 0.9rem; /* 글자 크기 조정 */
+  border-radius: 0.25rem;
+  background: #D9DFFF;
+  color: #304FFE;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
 }
 
 .menuContent {
