@@ -4,6 +4,7 @@ import Navbar from './Navbar';
 import OverlayContent from './alart';
 import Popup from './Popup';
 import SearchBar from './SearchBar';
+import ImageSlider from './ImageSlider';
 
 // 유틸리티 함수
 // 배열을 지정된 크기의 청크로 나누는 함수
@@ -39,8 +40,7 @@ const Map = () => {
   const [mapSize, setMapSize] = useState({ width: '100%', height: '100%' });  // 지도 크기
   // 사용자 이동 버튼 활성화 상태
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
-
-  const R = 30; // 가게 반지름
+  let R = 0; // distance // 이건 고정되어 있음 안되는거
   const r = 5; // 사용자 원 반지름
 
   // 지도 크기 동적 조절
@@ -127,6 +127,7 @@ const Map = () => {
     if (!userCircle || !destinationCircle) {
       console.error('User circle or destination circle is not initialized');
       return;
+
     }
 
     const d = await calculateDistanceAsync(
@@ -300,12 +301,31 @@ const Map = () => {
     };
   }, [watchId, distanceOverlay]);
 
-  // 상점 마커 추가 함수
   const addStoreMarker = useCallback((lat, lng, name, id) => {
     if (!map || !kakao) {
       console.error('Map or Kakao object is not initialized');
       return null;
     }
+    // 상가 이미지
+    var arriveSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/blue_b.png', // 도착 마커이미지 주소입니다    
+    arriveSize = new window.kakao.maps.Size(50, 45), // 도착 마커이미지의 크기입니다 
+    arriveOption = { 
+        offset: new window.kakao.maps.Point(15, 43) // 도착 마커이미지에서 마커의 좌표에 일치시킬 좌표를 설정합니다 (기본값은 이미지의 가운데 아래입니다)
+    };
+
+    // 도착 마커 이미지를 생성합니다
+    var arriveImage = new window.kakao.maps.MarkerImage(arriveSrc, arriveSize, arriveOption);
+    
+    // 여기 포지션
+    const position = new window.kakao.maps.LatLng(lat, lng);
+    
+    // 도착 마커를 생성합니다 
+    var arriveMarker = new window.kakao.maps.Marker({  
+        map: map, // 도착 마커가 지도 위에 표시되도록 설정합니다
+        position: position,
+        image: arriveImage, // 도착 마커이미지를 설정합니다
+        zIndex: 1,
+    });
 
     const position = new kakao.maps.LatLng(lat, lng);
     const marker = new kakao.maps.Marker({
@@ -347,6 +367,7 @@ const Map = () => {
       }, 100);
 
       // 상점 데이터 가져오기
+
       fetch(`/api/map/get/products/map/${encodeURIComponent(name)}`)
         .then(response => {
           if (!response.ok) {
@@ -393,23 +414,33 @@ const Map = () => {
             const userLat = position.coords.latitude;
             const userLng = position.coords.longitude;
             const userPosition = new window.kakao.maps.LatLng(userLat, userLng);
-
+  
+            // 사용자의 위치를 지도 중심으로 설정
             kakaoMap.setCenter(userPosition);
+            
+            const imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png', // 마커이미지의 주소입니다    
+                imageSize = new window.kakao.maps.Size(64, 69), // 마커이미지의 크기입니다
+                imageOption = {offset: new window.kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
 
+            // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+            const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+
+            // 마커를 생성합니다
             const marker = new window.kakao.maps.Marker({
-              position: userPosition,
-              map: kakaoMap
+                position: userPosition, 
+                image: markerImage, // 마커이미지 설정 
+                map: kakaoMap,
             });
+          
             setUserMarker(marker);
-
             const circle = new window.kakao.maps.Circle({
               center: userPosition,
               radius: r,
               strokeWeight: 2,
-              strokeColor: '#304FFE',
+              strokeColor: '#F08080',
               strokeOpacity: 0.8,
               strokeStyle: 'solid',
-              fillColor: '#304FFE',
+              fillColor: '#F08080',
               fillOpacity: 0.3,
               map: kakaoMap
             });
@@ -424,11 +455,11 @@ const Map = () => {
       }
     }
   }, [r]);
-
   // 카카오 맵 스크립트 로드
   useEffect(() => {
     const script = document.createElement('script');
     script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=7b1f96f255bf7055e408cd2e6c47320d&libraries=services&autoload=false`;
+  
     script.async = true;
     script.onload = () => {
       window.kakao.maps.load(initializeMap);
@@ -439,17 +470,14 @@ const Map = () => {
     };
   }, [initializeMap]);
 
-  // 상점 마커 업데이트
   useEffect(() => {
     if (map && kakao) {
-      // 기존 마커 제거
-      Object.values(markersRef.current).forEach(({ marker, infowindow }) => {
-        if (marker) marker.setMap(null);
+      Object.values(markersRef.current).forEach(({ arriveMarker, infowindow }) => {
+        if (arriveMarker) arriveMarker.setMap(null);
         if (infowindow) infowindow.close();
       });
       markersRef.current = {};
 
-      // 새 마커 추가
       stores.forEach(store => {
         const markerInfo = addStoreMarker(store.lat, store.lng, store.name, store.id);
         if (markerInfo) {
@@ -457,7 +485,6 @@ const Map = () => {
         }
       });
 
-      // 활성 정보 창 닫기
       if (activeInfoWindowRef.current) {
         activeInfoWindowRef.current.close();
         activeInfoWindowRef.current = null;
@@ -474,14 +501,12 @@ const Map = () => {
           const bounds = new kakao.maps.LatLngBounds();
           let newStores = [];
 
-          // 기존 마커 제거
-          Object.values(markersRef.current).forEach(({ marker, infowindow }) => {
-            marker.setMap(null);
+          Object.values(markersRef.current).forEach(({ arriveMarker, infowindow }) => {
+            arriveMarker.setMap(null);
             infowindow.close();
           });
           markersRef.current = {};
 
-          // 검색 결과로 새 마커 생성
           for (let i = 0; i < data.length; i++) {
             const markerPosition = new kakao.maps.LatLng(data[i].y, data[i].x);
             const newStore = {
@@ -499,7 +524,6 @@ const Map = () => {
             markersRef.current[newStore.id] = markerInfo;
           }
 
-          // 지도 범위 조정 및 상점 목록 업데이트
           map.setBounds(bounds);
           setStores(newStores);
         }
@@ -512,18 +536,26 @@ const Map = () => {
     if (map && kakao && kakao.maps.services) {
       try {
         const mallStreetData = await fetchMallStreetData();
-        
-        // 기존 마커 제거
-        Object.values(markersRef.current).forEach(({ marker, infowindow }) => {
-          marker.setMap(null);
+  
+        // 기존 마커와 인포윈도우 제거
+        Object.values(markersRef.current).forEach(({ arriveMarker, infowindow }) => {
+          arriveMarker.setMap(null);
           infowindow.close();
         });
         markersRef.current = {};
-
+  
+        // 기준 좌표로 지도 이동
+        const latitude = mallStreetData.data.standard_position.latitude;  
+        const longitude = mallStreetData.data.standard_position.longitude;
+        console.log("Center Coordinates:", latitude, longitude);
+  
+        const centerPosition = new kakao.maps.LatLng(latitude, longitude);
+        map.setCenter(centerPosition);
+        map.setLevel(4, { animate: true }); // 5는 예시 값, 필요에 따라 조정
         const bounds = new kakao.maps.LatLngBounds();
         const ps = new kakao.maps.services.Places();
         
-        // 상점별 마커 추가 함수
+        // 검색 및 마커 추가
         const searchAndAddMarker = async (storeName, index) => {
           return new Promise((resolve) => {
             ps.keywordSearch(storeName, (data, status) => {
@@ -535,25 +567,23 @@ const Map = () => {
 
                 const markerInfo = addStoreMarker(lat, lng, storeName, index.toString());
                 markersRef.current[index.toString()] = markerInfo;
-
                 bounds.extend(position);
               } else {
                 console.log(`No results found for ${storeName}`);
               }
               resolve();
             }, {
-              location: new kakao.maps.LatLng(mallStreetData.data.standard_position.Latitude, mallStreetData.data.standard_position.longitude),
+              location: centerPosition, // 기준 좌표를 검색 위치로 사용
               radius: 5000
             });
           });
         };
-
+        
         // 청크 단위로 마커 추가
         const chunks = chunkArray(mallStreetData.data.mall_name_list, 5);
         for (const chunk of chunks) {
           await Promise.all(chunk.map((storeName, index) => searchAndAddMarker(storeName, index)));
         }
-
         // 지도 범위 조정
         map.setBounds(bounds);
       } catch (error) {
@@ -561,7 +591,6 @@ const Map = () => {
       }
     }
   }, [map, kakao, addStoreMarker, fetchMallStreetData]);
-
   // 상가 거리 버튼 클릭 핸들러
   const handleMallStreetButtonClick = () => {
     addMarkersByStoreNameList();
@@ -615,15 +644,18 @@ const Map = () => {
       <button 
         onClick={handleMallStreetButtonClick}
         style={{
+          width: '6rem',
+          height: '1.8rem',
           position: 'absolute',
-          top: '6.5rem',
-          left: '20px',
-          padding: '0.5rem 1rem',
+          top: '5rem',
+          padding: '0.38rem, 0.44rem',
+          left: '10px',
           backgroundColor: '#304FFE',
           color: 'white',
+          borderRadius: '5px',
           border: 'none',
-          borderRadius: '0.3125rem',
           cursor: 'pointer',
+          boxShadow: '0 2px 4px rgba(0,0,0,0.5)',
           zIndex: 10
         }}
       >

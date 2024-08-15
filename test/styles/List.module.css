@@ -45,6 +45,7 @@
   flex-direction: column;
   justify-content: center;
   color: #4A4A4A;
+
 }
 
 .title {
@@ -75,7 +76,7 @@
   align-items: center;
   height: 100%;
   position: relative;
-  width: 4rem;
+  width: 4rem; /* 화살표를 포함할 수 있는 충분한 너비 */
 }
 
 .count {
@@ -196,7 +197,6 @@
 .arrowDown {
   color: red;
 }
-
 .bottomRightButton {
   position: absolute;
   bottom: 1.06rem;

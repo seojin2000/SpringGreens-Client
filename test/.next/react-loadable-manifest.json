@@ -1,0 +1,14 @@
+{
+  "pages/index.js -> ./components/map": {
+    "id": "pages/index.js -> ./components/map",
+    "files": [
+      "static/chunks/pages_components_map_js.js"
+    ]
+  },
+  "pages/index.js -> ./socialLogin": {
+    "id": "pages/index.js -> ./socialLogin",
+    "files": [
+      "static/chunks/pages_socialLogin_js.js"
+    ]
+  }
+}
