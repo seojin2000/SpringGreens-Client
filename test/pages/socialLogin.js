@@ -1,259 +1,82 @@
-'use client';
 import React from 'react';
+import Image from 'next/image';
+import { styled } from '@mui/material/styles';
 
-import {
-  styled
-} from '@mui/material/styles';
-
+// 전체 컴포넌트 컨테이너
 const Q1 = styled("div")({
   backgroundColor: `rgba(255, 255, 255, 1)`,
   display: `flex`,
-  position: `relative`,
-  isolation: `isolate`,
-  flexDirection: `row`,
+  flexDirection: `column`, // 수직 정렬을 위해 column 사용
+  justifyContent: `center`, // 수직 중앙 정렬
+  alignItems: `center`, // 수평 중앙 정렬
   width: `100vw`,
   height: `100vh`,
-  justifyContent: `center`,
-  alignItems: `center`,
-  padding: `0px`,
   boxSizing: `border-box`,
-  overflow: `auto`
+  margin: `0 auto`, // 화면 중앙에 위치하도록 추가
+  overflow: 'auto',
 });
 
-
+// 타이틀 텍스트 스타일링
 const Q2 = styled("div")({
-  textAlign: `left`,
+  textAlign: `center`,
   whiteSpace: `pre-wrap`,
   fontSynthesis: `none`,
   color: `rgba(0, 0, 0, 1)`,
   fontStyle: `normal`,
-  fontFamily: `Noto Sans KR`,
+  fontFamily: `Arial`,
   fontWeight: `400`,
   fontSize: `20px`,
-  letterSpacing: `0px`,
   textDecoration: `none`,
-  textTransform: `none`,
-  position: `absolute`,
-  left: `132px`,
-  top: `52px`,
+  marginBottom: `20px`, // 타이틀과 버튼 사이에 간격 추가
 });
 
-const MingcuteLeftLine = styled("div")({
-  display: `flex`,
-  position: `absolute`,
-  isolation: `isolate`,
-  flexDirection: `row`,
-  justifyContent: `flex-start`,
-  alignItems: `flex-start`,
-  padding: `0px`,
-  boxSizing: `border-box`,
-  width: `32px`,
-  height: `32px`,
-  left: `9px`,
-  top: `52px`,
-  overflow: `hidden`,
-});
-
-const Group = styled("div")({
-  display: `flex`,
-  position: `absolute`,
-  isolation: `isolate`,
-  flexDirection: `row`,
-  justifyContent: `flex-start`,
-  alignItems: `flex-start`,
-  padding: `0px`,
-  boxSizing: `border-box`,
-  width: `32px`,
-  height: `32px`,
-  left: `0px`,
-  top: `0px`,
-});
-
-const Vector = styled("img")({
-  height: `32px`,
-  width: `32px`,
-  position: `absolute`,
-  left: `0px`,
-  top: `0px`,
-});
-
-const Vector1 = styled("img")({
-  height: `17.75px`,
-  width: `10.23px`,
-  position: `absolute`,
-  left: `11px`,
-  top: `7px`,
-});
-
-
-const Group81 = styled("div")({
-  boxShadow: `0px 0px 16.100000381469727px rgba(0, 0, 0, 0.1)`,
-  display: `flex`,
-  position: `absolute`,
-  isolation: `isolate`,
-  flexDirection: `row`,
-  justifyContent: `flex-start`,
-  alignItems: `flex-start`,
-  padding: `0px`,
-  boxSizing: `border-box`,
-  width: `300px`,
-  height: `45px`,
-  left: `30px`,
-  top: `416px`,
-});
-
-const Rectangle24 = styled("div")({
-  backgroundColor: `rgba(255, 255, 255, 1)`,
-  borderRadius: `6px`,
-  width: `300px`,
-  height: `45px`,
-  position: `absolute`,
-  left: `0px`,
-  top: `0px`,
-});
-
+// 버튼 그룹 스타일링
 const Group80 = styled("div")({
-  display: `flex`,
-  position: `absolute`,
-  isolation: `isolate`,
-  flexDirection: `row`,
-  justifyContent: `flex-start`,
-  alignItems: `flex-start`,
-  padding: `0px`,
-  boxSizing: `border-box`,
-  width: `99px`,
-  height: `18px`,
-  left: `100px`,
-  top: `13px`,
+  marginBottom: '35px',
 });
 
-const Group79 = styled("div")({
-  display: `flex`,
-  position: `absolute`,
-  isolation: `isolate`,
-  flexDirection: `row`,
-  justifyContent: `flex-start`,
-  alignItems: `flex-start`,
-  padding: `0px`,
-  boxSizing: `border-box`,
-  width: `18px`,
-  height: `18px`,
-  left: `0px`,
-  top: `0px`,
+// 포인터 커서를 위한 이미지 스타일링
+const StyledImage = styled(Image)({
+  cursor: 'pointer',
 });
 
-const LogoGoogleg48Dp = styled("div")({
-  display: `flex`,
-  position: `absolute`,
-  isolation: `isolate`,
-  flexDirection: `row`,
-  justifyContent: `flex-start`,
-  alignItems: `flex-start`,
-  padding: `0px`,
-  boxSizing: `border-box`,
-  width: `18px`,
-  height: `18px`,
-  left: `0px`,
-  top: `0px`,
-});
-
-const Shape = styled("img")({
-  height: `8.46px`,
-  width: `8.64px`,
-  position: `absolute`,
-  left: `9px`,
-  top: `7px`,
-});
-
-const Shape1 = styled("img")({
-  height: `7.29px`,
-  width: `14px`,
-  position: `absolute`,
-  left: `1px`,
-  top: `11px`,
-});
-
-const Shape2 = styled("img")({
-  height: `8.08px`,
-  width: `3.96px`,
-  position: `absolute`,
-  left: `0px`,
-  top: `5px`,
-});
-
-const Shape3 = styled("img")({
-  height: `7.29px`,
-  width: `14.06px`,
-  position: `absolute`,
-  left: `1px`,
-  top: `0px`,
-});
-
-const Shape4 = styled("img")({
-  height: `18px`,
-  width: `18px`,
-  position: `absolute`,
-  left: `0px`,
-  top: `0px`,
-});
-
-const Group791 = styled("div")({
-  display: `flex`,
-  position: `absolute`,
-  isolation: `isolate`,
-  flexDirection: `row`,
-  justifyContent: `flex-start`,
-  alignItems: `flex-start`,
-  padding: `0px`,
-  boxSizing: `border-box`,
-  width: `73px`,
-  height: `18px`,
-  left: `26px`,
-  top: `0px`,
-});
-
-const Q4 = styled("div")({
-  textAlign: `left`,
-  whiteSpace: `pre-wrap`,
-  fontSynthesis: `none`,
-  color: `rgba(0, 0, 0, 0.54)`,
-  fontStyle: `normal`,
-  fontFamily: `Roboto`,
-  fontWeight: `600`,
-  fontSize: `15px`,
-  letterSpacing: `0px`,
-  textDecoration: `none`,
-  textTransform: `none`,
-  position: `absolute`,
-  left: `0px`,
-  top: `0px`,
-});
-
-
-function Social() {
+function SocialLogin() {
   return (
     <Q1>
-      <Q2>
-        {`소셜 로그인`}
-      </Q2>
-    
-      <Group81>
-        <Rectangle24>
-        </Rectangle24>
-        <Group80>
-          <Group79>
-          </Group79>
-          <Group791>
-            <Q4>
-              {`구글 로그인`}
-            </Q4>
-          </Group791>
-        </Group80>
-      </Group81>
-    </Q1>);
+      {/* 네이버 로그인 버튼 */}
+      <Group80>
+        <StyledImage 
+          src="/images/login/naver_login.png" 
+          alt="Naver Login" 
+          width={350} 
+          height={60} 
+          loading="lazy" 
+        />
+      </Group80>
 
-  }
+      {/* 카카오 로그인 버튼 */}
+      <Group80>
+        <StyledImage 
+          src="/images/login/kakao_login.png" 
+          alt="Kakao Login" 
+          width={350} 
+          height={60} 
+          loading="lazy" 
+        />
+      </Group80>
 
-export default Social;
+      {/* 구글 로그인 버튼 */}
+      <Group80>
+        <StyledImage 
+          src="/images/login/google_login.png" 
+          alt="Google Login" 
+          width={350} 
+          height={60} 
+          loading="lazy" 
+        />
+      </Group80>
+    </Q1>
+  );
+}
 
-  
+export default SocialLogin;

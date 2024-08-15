@@ -27,10 +27,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/domestic": [
+    "/general": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/domestic.js"
+      "static/chunks/pages/general.js"
     ],
     "/loginPage": [
       "static/chunks/webpack.js",
@@ -41,11 +41,6 @@
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/loginSelectPage.js"
-    ],
-    "/salar": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/salar.js"
     ]
   },
   "ampFirstPages": []
