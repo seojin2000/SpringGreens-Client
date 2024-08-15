@@ -1,0 +1,93 @@
+.container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 22.5rem;  /* 360px */
+  height: 100rem;  /* 640px */
+  background-color: white;
+  overflow: hidden;
+  padding-top: 2.69rem;
+}
+
+.topSection {
+  flex-shrink: 0;
+  width: 100%;
+}
+
+.menuBox {
+  width: 22.5rem;
+  height: 3.5rem;
+  position: relative;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+}
+
+.headBox {
+  display: flex;
+  align-items: center;
+  width: 22.5rem;
+  height: 2.6rem;
+  justify-content: space-between;
+  margin: 0 auto 1.25rem;
+}
+
+.headBox h3 {
+  margin-left: 1.56rem;
+}
+
+.sampleTimer {
+  width: 5.25rem;
+  height: 1.25rem;
+  background-color: grey;
+  margin-left: auto;
+  margin-right: 1.12rem;
+}
+
+.sampleRe {
+  width: 2rem;
+  height: 2rem;
+  margin-right: 1.56rem;
+  background-color: grey;
+}
+
+.menuButton {
+  position: absolute;
+  top: 0.625rem;
+  right: 0.625rem;
+  z-index: 1000;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+
+.menuText {
+  margin-left: 1.25rem; /* 메뉴 버튼과의 간격 조정 */
+  margin-right: 0.25rem;
+  padding: 0.2rem 0.62rem; /* 텍스트 주변에 여백 추가 */ 
+  border-radius: 4px; /* 모서리 둥글게 */
+  font-size: 0.9rem; /* 글자 크기 조정 */
+  border-radius: 0.25rem;
+  background: #D9DFFF;
+  color: #304FFE;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+}
+
+.menuContent {
+  position: absolute;
+  top: 3.125rem;
+  right: 0.625rem;
+  background: white;
+  border: 0.0625rem solid #ccc;
+  padding: 0.625rem;
+  z-index: 999;
+}
+
+.menuList {
+  list-style: none;
+  padding: 0;
+}
