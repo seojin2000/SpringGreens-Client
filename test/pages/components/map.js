@@ -711,9 +711,10 @@ const Map = () => {
       사용자 위치 이동
       {showIcon && (
         <div style={{
-          position: 'absolute',
-          bottom: '-1px',
-          right: '-350px',
+          position: 'fixed',  // 'absolute' 대신 'fixed'를 사용해 화면에 고정
+          bottom: '10%',  // 화면 아래쪽에서 약간 띄움
+          left: '90%',  // 화면의 수평 가운데로 이동
+          transform: 'translateX(-50%)',  // 정확한 가운데 정렬을 위해 사용
           cursor: 'pointer',
           zIndex: 10
         }} onClick={() => {
