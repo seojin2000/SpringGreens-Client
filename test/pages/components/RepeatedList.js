@@ -79,7 +79,7 @@ const ListItem = ({ title, price, count, direction }) => {
   }
 };
 
-const RepeatedList = ({ items, prevItems }) => {
+const RepeatedList = ({ items = [], prevItems = [] }) => {
   const getDirection = (currentItem) => {
     if (prevItems.length === 0) return null;
     const prevIndex = prevItems.findIndex(item => item.id === currentItem.id);
