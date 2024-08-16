@@ -137,9 +137,9 @@ const Map = () => {
     
 
 
-    const isOverlapping = (distance).toFixed(0) <= R+r+2;
+    const isOverlapping = (distance).toFixed(0) <= R+r;
     console.log("isOverlapping", isOverlapping);
-    console.log("distance and R+r : ", (distance).toFixed(0), R+r+2);
+    console.log("distance and R+r : ", (distance).toFixed(0), R+r);
     // overlapping이 true라는 것은 원이 겹친상태.
     const strokeColor = isOverlapping ? '#0051ff' : '#F08080';
     const fillColor = isOverlapping ? '#0051ff' : '#F08080';
@@ -270,6 +270,24 @@ const Map = () => {
           // map.setCenter(newUserPosition);
           updateCircleColors(newUserPosition, destPosition);
           newPolyline.setPath([newUserPosition, destPosition]);
+          const distance = await calculateDistanceAsync(
+            userPosition.getLat(), userPosition.getLng(),
+            destPosition.getLat(), destPosition.getLng()
+          ) * 1000;
+          
+      
+  
+          const isOverlapping = (distance).toFixed(0) <= R+r;
+          console.log("isOverlapping", isOverlapping);
+          console.log("distance and R+r : ", (distance).toFixed(0), R+r);
+          // overlapping이 true라는 것은 원이 겹친상태.
+          const strokeColor = isOverlapping ? '#0051ff' : '#F08080';
+          const fillColor = isOverlapping ? '#0051ff' : '#F08080';
+          // 겹치면
+          if (isOverlapping) {
+            userCircle.setOptions({ strokeColor, fillColor, strokeOpacity: 0.8, fillOpacity: 0.3 });
+            destinationCircle.setOptions({ strokeColor, fillColor, strokeOpacity: 0.8, fillOpacity: 0.3 });
+          }
         },
         (error) => {
           console.error("Error watching user location:", error);
