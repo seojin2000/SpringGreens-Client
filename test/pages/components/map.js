@@ -5,8 +5,6 @@ import OverlayContent from './alart';
 import Popup from './Popup';
 import SearchBar from './SearchBar';
 
-
-
 let R = 0; // distance // 이건 고정되어 있음 안되는거
 const r = 5; // 사용자 원 반지름
 
@@ -41,7 +39,6 @@ const Map = () => {
   const [showIcon, setShowIcon] = useState(false);  // 아이콘 표시 여부
   const [distanceWorker, setDistanceWorker] = useState(null);  // 거리 계산 워커
   const [selectedStore, setSelectedStore] = useState(null);  // 선택된 상점
-  const [customPosition, setCustomPosition] = useState({ lat: 36.9694, lng: 127.8673 });  // 사용자 지정 위치
   const [mapSize, setMapSize] = useState({ width: '100vw', height: '100vh' });  // 지도 크기
   // 사용자 이동 버튼 활성화 상태
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
@@ -192,6 +189,7 @@ const Map = () => {
   }, [map, kakao, userCircle, destinationCircle, R, r, overlapOverlay, removeAllMarkers, calculateDistanceAsync, userMarker]);
 
   // 목적지 설정 함수
+  // 목적지를 설정한 다음, 사용자 우치로 이동하지 않아.
   const setDestination = useCallback(async (destLat, destLng, storeName = null, width) => {
     if (map && kakao) {
       // 기존 목적지 관련 오버레이 제거
@@ -203,7 +201,7 @@ const Map = () => {
         destinationMarker.setPosition(destPosition);
       } else {
       }
-      R = width;
+
 
       // 목적지 원 생성
       const newDestCircle = new kakao.maps.Circle({
@@ -259,8 +257,12 @@ const Map = () => {
       const newWatchId = navigator.geolocation.watchPosition(
         async (position) => {
           const newUserPosition = new kakao.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+          // 새 위치를 추적하게 되면, 유저 마커와 원을 새로운 유저의 위치로 변경해준다. 
           userMarker.setPosition(newUserPosition);
-          // userCircle.setCenter(newUserPosition);
+          userCircle.setPosition(newUserPosition);
+
+          // map.setCenter(newUserPosition);
           updateCircleColors(newUserPosition, destPosition);
           newPolyline.setPath([newUserPosition, destPosition]);
           const newDistance = await calculateDistanceAsync(newUserPosition.getLat(), newUserPosition.getLng(), destLat, destLng);
@@ -295,10 +297,6 @@ const Map = () => {
           } else {
             console.warn('destinationCircle is not initialized');
           }
-
-
-
-
         },
         (error) => {
           console.error("Error watching user location:", error);
@@ -624,43 +622,54 @@ const Map = () => {
 
   // 사용자 지정 위치로 이동 함수
   const moveToCustomPosition = useCallback(() => {
+    map.setLevel(1);
+    
     if (map && kakao && userMarker && userCircle) {
-      const newPosition = new kakao.maps.LatLng(customPosition.lat, customPosition.lng);
-      
-      // 사용자 마커 및 원 이동
-      userMarker.setPosition(newPosition);
-      userCircle.setPosition(newPosition);
-      map.setCenter(newPosition);
-      map.setLevel(1);
-      
-      // 목적지가 설정되어 있다면 경로와 거리 정보 업데이트
-      if (destinationMarker) {
-        const destPosition = destinationMarker.getPosition();
-        const newPolyline = new kakao.maps.Polyline({
-          path: [newPosition, destPosition],
-          strokeWeight: 3,
-          strokeColor: '#F08080',
-          strokeOpacity: 0.7,
-          strokeStyle: 'solid'
-        });
-        if (polyline) polyline.setMap(null);
-        newPolyline.setMap(map);
-        setPolyline(newPolyline);
+      console.log("click custom postion");
+      // 사용자 위치를 customPosition으로 받아오는게 아니라, 실시간으로 받아 와야함.
+      navigator.geolocation.getCurrentPosition((position) => {
+        const newPosition = new kakao.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        // 사용자 마커 및 원 이동
+        userMarker.setPosition(newPosition);
+        userCircle.setPosition(newPosition);
 
-        // 거리 계산 및 표시 업데이트
-        calculateDistanceAsync(newPosition.getLat(), newPosition.getLng(), destPosition.getLat(), destPosition.getLng())
-          .then(distance => {
-            if (distanceOverlay) {
-              distanceOverlay.setPosition(new kakao.maps.LatLng((newPosition.getLat() + destPosition.getLat()) / 2, (newPosition.getLng() + destPosition.getLng()) / 2));
-              distanceOverlay.setContent(`<div style="padding:5px;background:white;border-radius:5px;color:black;">${(distance * 1000).toFixed(0)}m</div>`);
-            }
+        
+        map.setCenter(newPosition);
+        map.setLevel(1);
+        
+        // 목적지가 설정되어 있다면 경로와 거리 정보 업데이트
+        if (destinationCircle && destinationMarker) {
+          const destPosition = destinationMarker.getPosition();
+
+          // 원 색상 업데이트
+          updateCircleColors(newPosition, destPosition);
+
+          const newPolyline = new kakao.maps.Polyline({
+            path: [newPosition, destPosition],
+            strokeWeight: 3,
+            strokeColor: '#F08080',
+            strokeOpacity: 0.7,
+            strokeStyle: 'solid'
           });
 
-        // 원 색상 업데이트
-        updateCircleColors(newPosition, destPosition);
-      }
+          if (polyline) polyline.setMap(null);
+          newPolyline.setMap(map);
+          setPolyline(newPolyline);
+
+          // 거리 계산 및 표시 업데이트
+          calculateDistanceAsync(newPosition.getLat(), newPosition.getLng(), destPosition.getLat(), destPosition.getLng())
+            .then(distance => {
+              if (distanceOverlay) {
+                distanceOverlay.setPosition(new kakao.maps.LatLng((newPosition.getLat() + destPosition.getLat()) / 2, (newPosition.getLng() + destPosition.getLng()) / 2));
+                distanceOverlay.setContent(`<div style="padding:5px;background:white;border-radius:5px;color:black;">${(distance * 1000).toFixed(0)}m</div>`);
+              }
+            });
+        }
+      })
+    } else {
+      console.log("custom position not initialized");
     }
-  }, [map, kakao, userMarker, userCircle, customPosition, destinationMarker, polyline, distanceOverlay, calculateDistanceAsync, updateCircleColors]);
+  }, [map, kakao, userMarker, userCircle, destinationMarker, polyline, distanceOverlay, calculateDistanceAsync, updateCircleColors]);
 
   // 컴포넌트 렌더링
   return (
