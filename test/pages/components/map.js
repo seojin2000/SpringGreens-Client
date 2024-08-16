@@ -306,43 +306,43 @@ const Map = () => {
             removeAllMarkers();
             // 이미 있다면, 그럼 무시
             // 없으면 생성 
-            if(!overlapOverlay) {
-              const overlayContainer = document.createElement('div');
-              Object.assign(overlayContainer.style, {
-                width: '18rem',
-                height: '12.3125rem',
-                borderRadius: '0.9375rem',
-                backgroundColor: '#FFF',
-                position: 'relative',
-                zIndex: '10'
-              });
-              const newOverlay = new kakao.maps.CustomOverlay({
-                content: overlayContainer,
-                map: map,
-                position: userPosition,
-                zIndex: 10000
-              });
-              ReactDOM.render(
-                <OverlayContent 
-                  onClose={() => {
-                    newOverlay.setMap(null);
-                    setShowIcon(true);
-                    if (userMarker) userMarker.setMap(map);
-                    if (userCircle) userCircle.setMap(map);
-                  }}
-                  onMove={() => {
-                    console.log("Move button clicked");
-                  }}
-                />,
-                overlayContainer
-              );
-              setOverlapOverlay(newOverlay);
-            } else {
-              if(overlapOverlay) {
-                overlapOverlay.setMap(null);
-                setOverlapOverlay(null);
-              }
-            }   
+            // if(!overlapOverlay) {
+            //   const overlayContainer = document.createElement('div');
+            //   Object.assign(overlayContainer.style, {
+            //     width: '18rem',
+            //     height: '12.3125rem',
+            //     borderRadius: '0.9375rem',
+            //     backgroundColor: '#FFF',
+            //     position: 'relative',
+            //     zIndex: '10'
+            //   });
+            //   const newOverlay = new kakao.maps.CustomOverlay({
+            //     content: overlayContainer,
+            //     map: map,
+            //     position: userPosition,
+            //     zIndex: 10000
+            //   });
+            //   ReactDOM.render(
+            //     <OverlayContent 
+            //       onClose={() => {
+            //         newOverlay.setMap(null);
+            //         setShowIcon(true);
+            //         if (userMarker) userMarker.setMap(map);
+            //         if (userCircle) userCircle.setMap(map);
+            //       }}
+            //       onMove={() => {
+            //         console.log("Move button clicked");
+            //       }}
+            //     />,
+            //     overlayContainer
+            //   );
+            //   setOverlapOverlay(newOverlay);
+            // } else {
+            //   if(overlapOverlay) {
+            //     overlapOverlay.setMap(null);
+            //     setOverlapOverlay(null);
+            //   }
+            // }   
           }
         },
         (error) => {
