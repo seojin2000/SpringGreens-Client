@@ -276,7 +276,7 @@ const Map = () => {
           console.log("새로운 거리", newDistance);
           newDistanceOverlay.setPosition(new kakao.maps.LatLng((newUserLat + destLat) / 2, (newUserLng + destLng) / 2));
           newDistanceOverlay.setContent(`<div style="padding:5px;background:transparent;border-radius:5px;color:black;">${(newDistance * 1000).toFixed(0)}m</div>`);
-
+          newPolyline.setOptions({strokeColor});
           // r = 5, R = 21
           console.log("계산후 d", (newDistance * 1000).toFixed(0), Number(R) + r, R);
           // R = string, r = number였음. 그러니 R + r의 계산값이 이상하지
