@@ -258,39 +258,47 @@ const Map = () => {
       // 새 위치 추적 설정
       const newWatchId = navigator.geolocation.watchPosition(
         async (position) => {
-          const newUserPosition = new kakao.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
-          // 새 위치를 추적하게 되면, 유저 마커와 원을 새로운 유저의 위치로 변경해준다. 
+          const newUserLat = position.coords.latitude;
+          const newUserLng = position.coords.longitude;
+          const newUserPosition = new kakao.maps.LatLng(newUserLat, newUserLng);
+          
           userMarker.setPosition(newUserPosition);
           userCircle.setPosition(newUserPosition);
+          
+          // updateCircleColors(newUserPosition, destPosition);
+          
           newPolyline.setPath([newUserPosition, destPosition]);
+          
+          const newDistance = await calculateDistanceAsync(newUserLat, newUserLng, destLat, destLng);
+          // 그럼 여기서 값을 받게 될테고
+          // 그럼 이걸 가지고 값을 설정할테고
+          console.log("새로운 거리", newDistance);
+          newDistanceOverlay.setPosition(new kakao.maps.LatLng((newUserLat + destLat) / 2, (newUserLng + destLng) / 2));
+          newDistanceOverlay.setContent(`<div style="padding:5px;background:transparent;border-radius:5px;color:black;">${(newDistance * 1000).toFixed(0)}m</div>`);
 
-          // 거리 측정
-          const distance = await calculateDistanceAsync(
-            userPosition.getLat(), userPosition.getLng(),
-            destPosition.getLat(), destPosition.getLng()
-          ) * 1000;
-          newDistanceOverlay.setPosition(new kakao.maps.LatLng((position.coords.latitude + destLat) / 2, (position.coords.longitude + destLng) / 2));
-          newDistanceOverlay.setContent(`<div style="padding:5px;background:transparent;border-radius:5px;color:black;">${(distance * 1000).toFixed(0)}m</div>`);
-    
-          const isOverlapping = (distance).toFixed(0) <= R+r;
-          console.log("isOverlapping", isOverlapping);
-          console.log("distance and R+r : ", (distance).toFixed(0), R+r);
-          // overlapping이 true라는 것은 원이 겹친상태.
-          const strokeColor = isOverlapping ? '#0051ff' : '#F08080';
-          const fillColor = isOverlapping ? '#0051ff' : '#F08080';
-          // 겹치면
-          if (isOverlapping) {
-            // 사용자 원과 목적지 원의 스타일 업데이트
-            if (userCircle) {
-              userCircle.setOptions({ 
-                strokeColor: strokeColor, 
-                fillColor: fillColor,
+          // r = 5, R = 21
+          console.log("계산후 d", (newDistance * 1000).toFixed(0), Number(R) + r, R);
+          // R = string, r = number였음. 그러니 R + r의 계산값이 이상하지
+          // string + number = stringNumber가 되니까 그래서 21 + 5 = 215가 되는 이상한 값이 나오지
+          console.log(typeof R, typeof r);
+          const isOverlapping = (newDistance * 1000).toFixed(0) <= Number(R) + r;
+          console.log("overlayping");
+          console.log(isOverlapping);
+          
+          const strokeColor = isOverlapping ? '#0077ff' : '#F08080';
+          const fillColor = isOverlapping ? '#0077ff' : '#F08080';
+
+          // 사용자 원과 목적지 원의 스타일 업데이트
+          if (userCircle) {
+            userCircle.setOptions({ 
+              strokeColor: strokeColor, 
+              fillColor: fillColor,
                 strokeOpacity: 0.8,
                 fillOpacity: 0.3
               });
             } else {
-              console.warn('userCircle is not initialized');
+            console.warn('userCircle is not initialized');
             }
 
             if (newDestCircle) {
@@ -304,96 +312,30 @@ const Map = () => {
               console.warn('destinationCircle is not initialized');
             }
 
-            removeAllMarkers();
-            // 이미 있다면, 그럼 무시
-            // 없으면 생성 
-            // if(!overlapOverlay) {
-            //   const overlayContainer = document.createElement('div');
-            //   Object.assign(overlayContainer.style, {
-            //     width: '18rem',
-            //     height: '12.3125rem',
-            //     borderRadius: '0.9375rem',
-            //     backgroundColor: '#FFF',
-            //     position: 'relative',
-            //     zIndex: '10'
-            //   });
-            //   const newOverlay = new kakao.maps.CustomOverlay({
-            //     content: overlayContainer,
-            //     map: map,
-            //     position: userPosition,
-            //     zIndex: 10000
-            //   });
-            //   ReactDOM.render(
-            //     <OverlayContent 
-            //       onClose={() => {
-            //         newOverlay.setMap(null);
-            //         setShowIcon(true);
-            //         if (userMarker) userMarker.setMap(map);
-            //         if (userCircle) userCircle.setMap(map);
-            //       }}
-            //       onMove={() => {
-            //         console.log("Move button clicked");
-            //       }}
-            //     />,
-            //     overlayContainer
-            //   );
-            //   setOverlapOverlay(newOverlay);
-            // } else {
-            //   if(overlapOverlay) {
-            //     overlapOverlay.setMap(null);
-            //     setOverlapOverlay(null);
-            //   }
-            // }   
-          } else {
-            if (userCircle) {
-              userCircle.setOptions({ 
-                strokeColor: strokeColor, 
-                fillColor: fillColor,
-                strokeOpacity: 0.8,
-                fillOpacity: 0.3
-              });
-            } else {
-              console.warn('userCircle is not initialized');
-            }
+          },
+          (error) => {
+            console.error("Error watching user location:", error);
+          },
+          { enableHighAccuracy: true, maximumAge: 0, timeout: 5000 }
+        );
+        setWatchId(newWatchId);
 
-            if (newDestCircle) {
-              newDestCircle.setOptions({ 
-                strokeColor: strokeColor, 
-                fillColor: fillColor,
-                strokeOpacity: 0.8,
-                fillOpacity: 0.3
-              });
-            } else {
-              console.warn('destinationCircle is not initialized');
-            }
+        if (activeInfoWindowRef.current) {
+          activeInfoWindowRef.current.close();
+          activeInfoWindowRef.current = null;
+        }
 
-            removeAllMarkers();
-          }
-        },
-        (error) => {
-          console.error("Error watching user location:", error);
-        },
-        { enableHighAccuracy: true, maximumAge: 0, timeout: 5000 }
-      );
-      setWatchId(newWatchId);
+        // 선택된 상점 설정
+        if (storeName) {
+          setSelectedStore({ name: storeName, lat: destLat, lng: destLng });
+        } else {
+          setSelectedStore(null);
+        }
 
-      // 활성 정보 창 닫기
-      if (activeInfoWindowRef.current) {
-        activeInfoWindowRef.current.close();
-        activeInfoWindowRef.current = null;
-      }
-
-      // 선택된 상점 설정
-      if (storeName) {
-        setSelectedStore({ name: storeName, lat: destLat, lng: destLng });
-      } else {
-        setSelectedStore(null);
-      }
-
-      // 상점 목록 업데이트
-      const newStores = stores.filter(store => store.name !== storeName);
-      newStores.push({ name: storeName || "목적지", lat: destLat, lng: destLng });
-      setStores(newStores);
+        // 상점 목록 업데이트
+        const newStores = stores.filter(store => store.name !== storeName);
+        newStores.push({ name: storeName || "목적지", lat: destLat, lng: destLng });
+        setStores(newStores);
     }
   }, [map, kakao, userMarker, userCircle, destinationCircle, destinationMarker, polyline, watchId, distanceOverlay, R, calculateDistanceAsync, stores]);
 

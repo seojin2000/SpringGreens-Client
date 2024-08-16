@@ -1,1 +1,1 @@
-self.__REACT_LOADABLE_MANIFEST="{}"
+self.__REACT_LOADABLE_MANIFEST="{\"pages/index.js -> ./components/map\":{\"id\":\"pages/index.js -> ./components/map\",\"files\":[\"static/chunks/pages_components_map_js.js\"]}}"
