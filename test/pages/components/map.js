@@ -337,12 +337,14 @@ const Map = () => {
                 overlayContainer
               );
               setOverlapOverlay(newOverlay);
-            } else if(overlapOverlay) {
-              overlapOverlay.setMap(null);
-              setOverlapOverlay(null);
+            } else {
+              if(overlapOverlay) {
+                overlapOverlay.setMap(null);
+                setOverlapOverlay(null);
+              }
             }   
           }
-      },
+        },
         (error) => {
           console.error("Error watching user location:", error);
         },
