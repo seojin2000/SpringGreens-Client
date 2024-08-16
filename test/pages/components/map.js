@@ -343,6 +343,30 @@ const Map = () => {
             //     setOverlapOverlay(null);
             //   }
             // }   
+          } else {
+            if (userCircle) {
+              userCircle.setOptions({ 
+                strokeColor: strokeColor, 
+                fillColor: fillColor,
+                strokeOpacity: 0.8,
+                fillOpacity: 0.3
+              });
+            } else {
+              console.warn('userCircle is not initialized');
+            }
+
+            if (newDestCircle) {
+              newDestCircle.setOptions({ 
+                strokeColor: strokeColor, 
+                fillColor: fillColor,
+                strokeOpacity: 0.8,
+                fillOpacity: 0.3
+              });
+            } else {
+              console.warn('destinationCircle is not initialized');
+            }
+
+            removeAllMarkers();
           }
         },
         (error) => {
