@@ -122,74 +122,74 @@ const Map = () => {
     markersRef.current = {};
   }, []);
 
-  // 원 색상 업데이트
-  const updateCircleColors = useCallback(async (userPosition, destPosition) => {
-    if (!userCircle || !destinationCircle) {
-      console.error('User circle or destination circle is not initialized');
-      return;
+  // // 원 색상 업데이트
+  // const updateCircleColors = useCallback(async (userPosition, destPosition) => {
+  //   if (!userCircle || !destinationCircle) {
+  //     console.error('User circle or destination circle is not initialized');
+  //     return;
 
-    }
+  //   }
 
-    const distance = await calculateDistanceAsync(
-      userPosition.getLat(), userPosition.getLng(),
-      destPosition.getLat(), destPosition.getLng()
-    ) * 1000;
+  //   const distance = await calculateDistanceAsync(
+  //     userPosition.getLat(), userPosition.getLng(),
+  //     destPosition.getLat(), destPosition.getLng()
+  //   ) * 1000;
     
 
 
-    const isOverlapping = (distance).toFixed(0) <= R+r;
-    console.log("isOverlapping", isOverlapping);
-    console.log("distance and R+r : ", (distance).toFixed(0), R+r);
-    // overlapping이 true라는 것은 원이 겹친상태.
-    const strokeColor = isOverlapping ? '#0051ff' : '#F08080';
-    const fillColor = isOverlapping ? '#0051ff' : '#F08080';
+  //   const isOverlapping = (distance).toFixed(0) <= R+r;
+  //   console.log("isOverlapping", isOverlapping);
+  //   console.log("distance and R+r : ", (distance).toFixed(0), R+r);
+  //   // overlapping이 true라는 것은 원이 겹친상태.
+  //   const strokeColor = isOverlapping ? '#0051ff' : '#F08080';
+  //   const fillColor = isOverlapping ? '#0051ff' : '#F08080';
   
-    userCircle.setOptions({ strokeColor, fillColor, strokeOpacity: 0.8, fillOpacity: 0.3 });
-    destinationCircle.setOptions({ strokeColor, fillColor, strokeOpacity: 0.8, fillOpacity: 0.3 });
+  //   userCircle.setOptions({ strokeColor, fillColor, strokeOpacity: 0.8, fillOpacity: 0.3 });
+  //   destinationCircle.setOptions({ strokeColor, fillColor, strokeOpacity: 0.8, fillOpacity: 0.3 });
 
-    // 겹치면
-    if (isOverlapping) {
-      console.log("isOverlapping is true");
+  //   // 겹치면
+  //   if (isOverlapping) {
+  //     console.log("isOverlapping is true");
 
-      removeAllMarkers();
-      if (overlapOverlay) overlapOverlay.setMap(null);
+  //     removeAllMarkers();
+  //     if (overlapOverlay) overlapOverlay.setMap(null);
 
-      const overlayContainer = document.createElement('div');
-      Object.assign(overlayContainer.style, {
-        width: '18rem',
-        height: '12.3125rem',
-        borderRadius: '0.9375rem',
-        backgroundColor: '#FFF',
-        position: 'relative',
-        zIndex: '10'
-      });
-      const newOverlay = new kakao.maps.CustomOverlay({
-        content: overlayContainer,
-        map: map,
-        position: userPosition,
-        zIndex: 10000
-      });
+  //     const overlayContainer = document.createElement('div');
+  //     Object.assign(overlayContainer.style, {
+  //       width: '18rem',
+  //       height: '12.3125rem',
+  //       borderRadius: '0.9375rem',
+  //       backgroundColor: '#FFF',
+  //       position: 'relative',
+  //       zIndex: '10'
+  //     });
+  //     const newOverlay = new kakao.maps.CustomOverlay({
+  //       content: overlayContainer,
+  //       map: map,
+  //       position: userPosition,
+  //       zIndex: 10000
+  //     });
 
-      ReactDOM.render(
-        <OverlayContent 
-          onClose={() => {
-            newOverlay.setMap(null);
-            setShowIcon(true);
-            if (userMarker) userMarker.setMap(map);
-            if (userCircle) userCircle.setMap(map);
-          }}
-          onMove={() => {
-            console.log("Move button clicked");
-          }}
-        />,
-        overlayContainer
-      );
+  //     ReactDOM.render(
+  //       <OverlayContent 
+  //         onClose={() => {
+  //           newOverlay.setMap(null);
+  //           setShowIcon(true);
+  //           if (userMarker) userMarker.setMap(map);
+  //           if (userCircle) userCircle.setMap(map);
+  //         }}
+  //         onMove={() => {
+  //           console.log("Move button clicked");
+  //         }}
+  //       />,
+  //       overlayContainer
+  //     );
 
-      setOverlapOverlay(newOverlay);
-    } else if (overlapOverlay) {
-      overlapOverlay.setMap(null);
-    }
-  }, [map, kakao, userCircle, destinationCircle, R, r, overlapOverlay, removeAllMarkers, calculateDistanceAsync, userMarker]);
+  //     setOverlapOverlay(newOverlay);
+  //   } else if (overlapOverlay) {
+  //     overlapOverlay.setMap(null);
+  //   }
+  // }, [map, kakao, userCircle, destinationCircle, R, r, overlapOverlay, removeAllMarkers, calculateDistanceAsync, userMarker]);
 
   // 목적지 설정 함수
   // 목적지를 설정한 다음, 사용자 우치로 이동하지 않아.
@@ -252,9 +252,6 @@ const Map = () => {
       bounds.extend(destPosition);
       map.setBounds(bounds);
 
-      // 원 색상 업데이트
-      updateCircleColors(userPosition, destPosition);
-
       // 기존 위치 추적 제거
       if (watchId) navigator.geolocation.clearWatch(watchId);
 
@@ -266,17 +263,15 @@ const Map = () => {
           // 새 위치를 추적하게 되면, 유저 마커와 원을 새로운 유저의 위치로 변경해준다. 
           userMarker.setPosition(newUserPosition);
           userCircle.setPosition(newUserPosition);
-
-          // map.setCenter(newUserPosition);
-          updateCircleColors(newUserPosition, destPosition);
           newPolyline.setPath([newUserPosition, destPosition]);
+
+          // 거리 측정
           const distance = await calculateDistanceAsync(
             userPosition.getLat(), userPosition.getLng(),
             destPosition.getLat(), destPosition.getLng()
           ) * 1000;
           
-      
-  
+    
           const isOverlapping = (distance).toFixed(0) <= R+r;
           console.log("isOverlapping", isOverlapping);
           console.log("distance and R+r : ", (distance).toFixed(0), R+r);
@@ -285,10 +280,65 @@ const Map = () => {
           const fillColor = isOverlapping ? '#0051ff' : '#F08080';
           // 겹치면
           if (isOverlapping) {
-            userCircle.setOptions({ strokeColor, fillColor, strokeOpacity: 0.8, fillOpacity: 0.3 });
-            destinationCircle.setOptions({ strokeColor, fillColor, strokeOpacity: 0.8, fillOpacity: 0.3 });
-          }
-        },
+            // 사용자 원과 목적지 원의 스타일 업데이트
+            if (userCircle) {
+              userCircle.setOptions({ 
+                strokeColor: strokeColor, 
+                fillColor: fillColor,
+                strokeOpacity: 0.8,
+                fillOpacity: 0.3
+              });
+            } else {
+              console.warn('userCircle is not initialized');
+            }
+
+            if (newDestCircle) {
+              newDestCircle.setOptions({ 
+                strokeColor: strokeColor, 
+                fillColor: fillColor,
+                strokeOpacity: 0.8,
+                fillOpacity: 0.3
+              });
+            } else {
+              console.warn('destinationCircle is not initialized');
+            }
+
+            removeAllMarkers();
+            if (overlapOverlay) overlapOverlay.setMap(null);
+
+            const overlayContainer = document.createElement('div');
+            Object.assign(overlayContainer.style, {
+              width: '18rem',
+              height: '12.3125rem',
+              borderRadius: '0.9375rem',
+              backgroundColor: '#FFF',
+              position: 'relative',
+              zIndex: '10'
+            });
+            const newOverlay = new kakao.maps.CustomOverlay({
+              content: overlayContainer,
+              map: map,
+              position: userPosition,
+              zIndex: 10000
+            });
+          
+            ReactDOM.render(
+              <OverlayContent 
+                onClose={() => {
+                  newOverlay.setMap(null);
+                  setShowIcon(true);
+                  if (userMarker) userMarker.setMap(map);
+                  if (userCircle) userCircle.setMap(map);
+                }}
+                onMove={() => {
+                  console.log("Move button clicked");
+                }}
+              />,
+              overlayContainer
+            );
+          
+            setOverlapOverlay(newOverlay);
+        }},
         (error) => {
           console.error("Error watching user location:", error);
         },
@@ -314,7 +364,7 @@ const Map = () => {
       newStores.push({ name: storeName || "목적지", lat: destLat, lng: destLng });
       setStores(newStores);
     }
-  }, [map, kakao, userMarker, userCircle, destinationCircle, destinationMarker, polyline, watchId, distanceOverlay, updateCircleColors, R, calculateDistanceAsync, stores]);
+  }, [map, kakao, userMarker, userCircle, destinationCircle, destinationMarker, polyline, watchId, distanceOverlay, R, calculateDistanceAsync, stores]);
 
   // 컴포넌트 언마운트 시 정리
   useEffect(() => {
@@ -632,8 +682,8 @@ const Map = () => {
         if (destinationCircle && destinationMarker) {
           const destPosition = destinationMarker.getPosition();
 
-          // 원 색상 업데이트
-          updateCircleColors(newPosition, destPosition);
+          // // 원 색상 업데이트
+          // updateCircleColors(newPosition, destPosition);
 
           const newPolyline = new kakao.maps.Polyline({
             path: [newPosition, destPosition],
@@ -660,7 +710,7 @@ const Map = () => {
     } else {
       console.log("custom position not initialized");
     }
-  }, [map, kakao, userMarker, userCircle, destinationMarker, polyline, distanceOverlay, calculateDistanceAsync, updateCircleColors]);
+  }, [map, kakao, userMarker, userCircle, destinationMarker, polyline, distanceOverlay, calculateDistanceAsync]);
 
   // 컴포넌트 렌더링
   return (
