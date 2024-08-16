@@ -269,37 +269,86 @@ const Map = () => {
           newPolyline.setPath([newUserPosition, destPosition]);
           const newDistance = await calculateDistanceAsync(newUserPosition.getLat(), newUserPosition.getLng(), destLat, destLng);
           newDistanceOverlay.setPosition(new kakao.maps.LatLng((newUserPosition.getLat() + destLat) / 2, (newUserPosition.getLng() + destLng) / 2));
-          newDistanceOverlay.setContent(`<div style="padding:5px;background:transparent;border-radius:5px;color: black;">${(newDistance * 1000).toFixed(0)}m</div>`);
 
           console.log("새로운 거리 계산 값 : ", distance, typeof R, R);
-          console.log("도착 여부 : ", R + r, distance*1000);
-          const isOverlapping = (newDistance * 1000).toFixed(0) <= Number(R) + r;
+          const isOverlapping = (newDistance * 1000).toFixed(0) <= (Number(R) + r).toFixed(0);
+
+          console.log("도착 여부 : ", R + r, (distance*1000).toFixed(0), isOverlapping);
+          newDistanceOverlay.setContent(`<div style="padding:5px;background:transparent;border-radius:5px;color: black;">${(newDistance * 1000).toFixed(0)}m</div>`);
 
           const strokeColor = isOverlapping ? '#0077ff' : '#F08080';
           const fillColor = isOverlapping ? '#0077ff' : '#F08080';
-  
-          // 사용자 원과 목적지 원의 스타일 업데이트
-          if (userCircle) {
-            userCircle.setOptions({ 
-              strokeColor: strokeColor, 
-              fillColor: fillColor,
-              strokeOpacity: 0.8,
-              fillOpacity: 0.3
+
+          // 만약 겹친다면
+          if(isOverlapping) {
+            // 사용자 원과 목적지 원의 스타일 업데이트
+            if (userCircle) {
+              userCircle.setOptions({ 
+                strokeColor: strokeColor, 
+                fillColor: fillColor,
+                strokeOpacity: 0.8,
+                fillOpacity: 0.3
+              });
+            } else {
+              console.warn('userCircle is not initialized');
+            }
+
+            if (newDestCircle) {
+              newDestCircle.setOptions({ 
+                strokeColor: strokeColor, 
+                fillColor: fillColor,
+                strokeOpacity: 0.8,
+                fillOpacity: 0.3
+              });
+            } else {
+              console.warn('destinationCircle is not initialized');
+            }
+            
+            const newPolyline = new kakao.maps.Polyline({
+              path: [userPosition, destPosition],
+              strokeWeight: 3,
+              strokeColor: '#0077ff',
+              strokeOpacity: 0.7,
+              strokeStyle: 'solid'
             });
+            newPolyline.setMap(map);
+            setPolyline(newPolyline);
+          
           } else {
-            console.warn('userCircle is not initialized');
+            // 사용자 원과 목적지 원의 스타일 업데이트
+            if (userCircle) {
+              userCircle.setOptions({ 
+                strokeColor: strokeColor, 
+                fillColor: fillColor,
+                strokeOpacity: 0.8,
+                fillOpacity: 0.3
+              });
+            } else {
+              console.warn('userCircle is not initialized');
+            }
+
+            if (newDestCircle) {
+              newDestCircle.setOptions({ 
+                strokeColor: strokeColor, 
+                fillColor: fillColor,
+                strokeOpacity: 0.8,
+                fillOpacity: 0.3
+              });
+            } else {
+              console.warn('destinationCircle is not initialized');
+            }
+            
+            const newPolyline = new kakao.maps.Polyline({
+              path: [userPosition, destPosition],
+              strokeWeight: 3,
+              strokeColor: strokeColor,
+              strokeOpacity: 0.7,
+              strokeStyle: 'solid'
+            });
+            newPolyline.setMap(map);
+            setPolyline(newPolyline);
           }
           
-          if (newDestCircle) {
-            newDestCircle.setOptions({ 
-              strokeColor: strokeColor, 
-              fillColor: fillColor,
-              strokeOpacity: 0.8,
-              fillOpacity: 0.3
-            });
-          } else {
-            console.warn('destinationCircle is not initialized');
-          }
         },
         (error) => {
           console.error("Error watching user location:", error);
