@@ -305,7 +305,7 @@ const Map = () => {
 
             removeAllMarkers();
             // 이미 있다면, 그럼 무시
-            // 없으면 생성
+            // 없으면 생성 
             if(!overlapOverlay) {
               const overlayContainer = document.createElement('div');
               Object.assign(overlayContainer.style, {
@@ -322,7 +322,6 @@ const Map = () => {
                 position: userPosition,
                 zIndex: 10000
               });
-            
               ReactDOM.render(
                 <OverlayContent 
                   onClose={() => {
@@ -338,9 +337,12 @@ const Map = () => {
                 overlayContainer
               );
               setOverlapOverlay(newOverlay);
-            }
-            
-        }},
+            } else if(overlapOverlay) {
+              overlapOverlay.setMap(null);
+              setOverlapOverlay(null);
+            }   
+          }
+      },
         (error) => {
           console.error("Error watching user location:", error);
         },
