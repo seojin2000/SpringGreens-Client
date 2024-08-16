@@ -133,20 +133,22 @@ const Map = () => {
     const d = await calculateDistanceAsync(
       userPosition.getLat(), userPosition.getLng(),
       destPosition.getLat(), destPosition.getLng()
-    ) * 1000;
-
-  
-    const isOverlapping = d <= Number(R) + r;
-    const strokeColor = isOverlapping ? '#0000FF' : '#304FFE';
-    const fillColor = isOverlapping ? '#0000FF' : '#304FFE';
-
-    userCircle.setOptions({ strokeColor, fillColor, strokeOpacity: 0.8, fillOpacity: 0.3 });
-    destinationCircle.setOptions({ strokeColor, fillColor, strokeOpacity: 0.8, fillOpacity: 0.3 });
+    );
+    
+    distanceOverlay.setContent(`<div style="padding:5px;background:transparent;border-radius:5px;color:black;">${(d * 1000).toFixed(0)}m</div>`)
+    const isOverlapping = d*1000 <= (Number(R) + r).toFixed(0);
+    // overlapping이 true라는 것은 원이 겹친상태.
+    const strokeColor = isOverlapping ? '#0051ff' : '#F08080';
+    const fillColor = isOverlapping ? '#0051ff' : '#F08080';
+    console.log("새로 계산 값에 따른 d : ", d * 1000, R+r, typeof R+r);
 
     setIsCirclesOverlapping(isOverlapping);
 
     // 겹치면
     if (isOverlapping) {
+
+      userCircle.setOptions({ strokeColor, fillColor, strokeOpacity: 0.8, fillOpacity: 0.3 });
+      destinationCircle.setOptions({ strokeColor, fillColor, strokeOpacity: 0.8, fillOpacity: 0.3 });
       // 원이 겹칠 때의 로직
       removeAllMarkers();
       if (overlapOverlay) overlapOverlay.setMap(null);
@@ -210,10 +212,10 @@ const Map = () => {
         center: destPosition,
         radius: R,
         strokeWeight: 2,
-        strokeColor: '#304FFE',
+        strokeColor: '#F08080',
         strokeOpacity: 0.8,
         strokeStyle: 'solid',
-        fillColor: '#304FFE',
+        fillColor: '#F08080',
         fillOpacity: 0.3,
         map: map
       });
@@ -267,88 +269,6 @@ const Map = () => {
           // map.setCenter(newUserPosition);
           updateCircleColors(newUserPosition, destPosition);
           newPolyline.setPath([newUserPosition, destPosition]);
-          const newDistance = await calculateDistanceAsync(newUserPosition.getLat(), newUserPosition.getLng(), destLat, destLng);
-          newDistanceOverlay.setPosition(new kakao.maps.LatLng((newUserPosition.getLat() + destLat) / 2, (newUserPosition.getLng() + destLng) / 2));
-
-          console.log("새로운 거리 계산 값 : ", distance, typeof R, R);
-          const isOverlapping = (newDistance * 1000).toFixed(0) <= (Number(R) + r).toFixed(0);
-
-          console.log("도착 여부 : ", R + r, (distance*1000).toFixed(0), isOverlapping);
-          newDistanceOverlay.setContent(`<div style="padding:5px;background:transparent;border-radius:5px;color: black;">${(newDistance * 1000).toFixed(0)}m</div>`);
-
-          const strokeColor = isOverlapping ? '#0077ff' : '#F08080';
-          const fillColor = isOverlapping ? '#0077ff' : '#F08080';
-
-          // 만약 겹친다면
-          if(isOverlapping) {
-            // 사용자 원과 목적지 원의 스타일 업데이트
-            if (userCircle) {
-              userCircle.setOptions({ 
-                strokeColor: strokeColor, 
-                fillColor: fillColor,
-                strokeOpacity: 0.8,
-                fillOpacity: 0.3
-              });
-            } else {
-              console.warn('userCircle is not initialized');
-            }
-
-            if (newDestCircle) {
-              newDestCircle.setOptions({ 
-                strokeColor: strokeColor, 
-                fillColor: fillColor,
-                strokeOpacity: 0.8,
-                fillOpacity: 0.3
-              });
-            } else {
-              console.warn('destinationCircle is not initialized');
-            }
-            
-            const newPolyline = new kakao.maps.Polyline({
-              path: [userPosition, destPosition],
-              strokeWeight: 3,
-              strokeColor: '#0077ff',
-              strokeOpacity: 0.7,
-              strokeStyle: 'solid'
-            });
-            newPolyline.setMap(map);
-            setPolyline(newPolyline);
-          
-          } else {
-            // 사용자 원과 목적지 원의 스타일 업데이트
-            if (userCircle) {
-              userCircle.setOptions({ 
-                strokeColor: strokeColor, 
-                fillColor: fillColor,
-                strokeOpacity: 0.8,
-                fillOpacity: 0.3
-              });
-            } else {
-              console.warn('userCircle is not initialized');
-            }
-
-            if (newDestCircle) {
-              newDestCircle.setOptions({ 
-                strokeColor: strokeColor, 
-                fillColor: fillColor,
-                strokeOpacity: 0.8,
-                fillOpacity: 0.3
-              });
-            } else {
-              console.warn('destinationCircle is not initialized');
-            }
-            
-            const newPolyline = new kakao.maps.Polyline({
-              path: [userPosition, destPosition],
-              strokeWeight: 3,
-              strokeColor: strokeColor,
-              strokeOpacity: 0.7,
-              strokeStyle: 'solid'
-            });
-            newPolyline.setMap(map);
-            setPolyline(newPolyline);
-          }
-          
         },
         (error) => {
           console.error("Error watching user location:", error);
