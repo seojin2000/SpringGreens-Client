@@ -202,11 +202,13 @@ const Map = () => {
       } else {
       }
 
+      // 목적지 반지름 설정, 새로 계산된 위치에서도 계산이 잘 될 수 있도록 설정
+      R = Number(width);
 
       // 목적지 원 생성
       const newDestCircle = new kakao.maps.Circle({
         center: destPosition,
-        radius: width,
+        radius: R,
         strokeWeight: 2,
         strokeColor: '#304FFE',
         strokeOpacity: 0.8,
@@ -269,7 +271,8 @@ const Map = () => {
           newDistanceOverlay.setPosition(new kakao.maps.LatLng((newUserPosition.getLat() + destLat) / 2, (newUserPosition.getLng() + destLng) / 2));
           newDistanceOverlay.setContent(`<div style="padding:5px;background:transparent;border-radius:5px;color: black;">${(newDistance * 1000).toFixed(0)}m</div>`);
 
-
+          console.log("새로운 거리 계산 값 : ", distance, typeof R, R);
+          console.log("도착 여부 : ", R + r, distance*1000);
           const isOverlapping = (newDistance * 1000).toFixed(0) <= Number(R) + r;
 
           const strokeColor = isOverlapping ? '#0077ff' : '#F08080';
