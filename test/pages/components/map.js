@@ -130,26 +130,27 @@ const Map = () => {
 
     }
 
-    const d = await calculateDistanceAsync(
+    const distance = await calculateDistanceAsync(
       userPosition.getLat(), userPosition.getLng(),
       destPosition.getLat(), destPosition.getLng()
-    );
+    ) * 1000;
     
-    distanceOverlay.setContent(`<div style="padding:5px;background:transparent;border-radius:5px;color:black;">${(d * 1000).toFixed(0)}m</div>`)
-    const isOverlapping = d*1000 <= (Number(R) + r).toFixed(0);
+
+
+    const isOverlapping = (distance).toFixed(0) <= R+r+2;
+    console.log("isOverlapping", isOverlapping);
+    console.log("distance and R+r : ", (distance).toFixed(0), R+r+2);
     // overlapping이 true라는 것은 원이 겹친상태.
     const strokeColor = isOverlapping ? '#0051ff' : '#F08080';
     const fillColor = isOverlapping ? '#0051ff' : '#F08080';
-    console.log("새로 계산 값에 따른 d : ", d * 1000, R+r, typeof R+r);
-
-    setIsCirclesOverlapping(isOverlapping);
+  
+    userCircle.setOptions({ strokeColor, fillColor, strokeOpacity: 0.8, fillOpacity: 0.3 });
+    destinationCircle.setOptions({ strokeColor, fillColor, strokeOpacity: 0.8, fillOpacity: 0.3 });
 
     // 겹치면
     if (isOverlapping) {
+      console.log("isOverlapping is true");
 
-      userCircle.setOptions({ strokeColor, fillColor, strokeOpacity: 0.8, fillOpacity: 0.3 });
-      destinationCircle.setOptions({ strokeColor, fillColor, strokeOpacity: 0.8, fillOpacity: 0.3 });
-      // 원이 겹칠 때의 로직
       removeAllMarkers();
       if (overlapOverlay) overlapOverlay.setMap(null);
 
