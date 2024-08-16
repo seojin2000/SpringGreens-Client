@@ -270,7 +270,7 @@ const Map = () => {
             userPosition.getLat(), userPosition.getLng(),
             destPosition.getLat(), destPosition.getLng()
           ) * 1000;
-          newDistanceOverlay.setPosition(new kakao.maps.LatLng((newUserLat + destLat) / 2, (newUserLng + destLng) / 2));
+          newDistanceOverlay.setPosition(new kakao.maps.LatLng((position.coords.latitude + destLat) / 2, (position.coords.longitude + destLng) / 2));
           newDistanceOverlay.setContent(`<div style="padding:5px;background:transparent;border-radius:5px;color:black;">${(distance * 1000).toFixed(0)}m</div>`);
     
           const isOverlapping = (distance).toFixed(0) <= R+r;
