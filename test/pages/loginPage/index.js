@@ -1,7 +1,9 @@
 "use client";
-import React from 'react';
+import React, {useRef} from 'react';
 import { styled } from '@mui/material/styles';
+import { useAuth } from '../../src/context/AuthContext';
 import { useRouter } from 'next/navigation'
+import {NavBar} from '../components/Navbar';
 // 스타일 정의
 const Q1 = styled("div")(({ theme }) => ({
   backgroundColor: `rgba(255, 255, 255, 1)`,
@@ -159,27 +161,86 @@ const Q6 = styled("div")({
   marginBottom: `20px`,
 });
 
+// let accessToken = null;
 function Q() {
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
+  const { accessToken, setAccessToken } = useAuth(); // Context API에서 accessToken과 setAccessToken 가져오기
+  
   const router = useRouter(); // useRouter 훅 호출
 
   const handleSignUpClick = () => {
     router.push("/loginSelectPage"); // /loginSelectPage로 이동
   };
 
+  // 로그인 버튼을 클릭했을 때, 로그인 JSON을 보내자.
+  // 로그인 버튼 클릭 시 호출되는 함수
+  const sendLogin = async (event) => {
+
+     // ref를 사용하여 이메일과 비밀번호 값을 가져옴
+     const email = emailRef.current.value;
+     const password = passwordRef.current.value;
+
+    console.log("이메일 패스워드");
+    console.log(email, password);
+    // 서버로 보낼 로그인 데이터
+    const loginData = {
+      email: email,
+      password: password,
+    };
+
+    try {
+      // 서버에 로그인 요청을 보냅니다.
+      // cors를 허용했기 때문에, 데이터를 잘 받아온다.
+      const response = await fetch('http://localhost:8080/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(loginData),
+      });
+
+      // 서버 응답 확인
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status} ${response.statusText}`);
+      }
+
+      // 응답을 JSON으로 파싱
+      const data = await response.json();
+      console.log('Login successful:', data);
+
+      console.log("액세스 토큰 저장 In-memory : ", data.data.access_token);
+      // 전역적으로 액세스 토큰을 사용하기 위해서
+      setAccessToken(data.data.access_token);
+
+      if(data.status_code == 200) {
+        router.push('/mainPage');
+        event.preventDefault();
+      }
+
+    } catch (error) {
+      console.error('Login failed:', error);
+      alert('로그인에 실패했습니다. 다시 시도해주세요.');
+    }
+  };
+
   return (
     <Q1>
       <Q6>{`로그인`}</Q6>
+      
       <Tabpanel>
-        <InputField type="email" placeholder="  이메일을 입력하세요" />
+        <InputField ref={emailRef} type="email" placeholder="  이메일을 입력하세요" />
       </Tabpanel>
       
       <Tabpanel1>
-        <InputField type="password" placeholder="  비밀번호를 입력하세요" />
+        <InputField ref={passwordRef} type="password" placeholder="  비밀번호를 입력하세요" />
       </Tabpanel1>
 
-      <TabpanelButton>
+
+      <TabpanelButton onClick={sendLogin}>
         <Q2>{`로그인`}</Q2>
       </TabpanelButton>
+
 
       <TabpanelButton1 onClick={handleSignUpClick}>
         <Q3>{`회원가입`}</Q3>
@@ -193,7 +254,10 @@ function Q() {
           {`비밀번호찾기`}
         </ListItemLinkSignUp>
       </Group82>    
+
     </Q1>
+    
+
   );
 }
 

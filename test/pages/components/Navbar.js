@@ -3,26 +3,49 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 const Navbar = () => {
-  const router = useRouter();
-  const [activeIcon, setActiveIcon] = useState('map');
+  const [activeIcon, setActiveIcon] = useState(null);
   const [navigateToLogin, setNavigateToLogin] = useState(false);
+  const [navigateToMap, setNavigateToMap] = useState(false);
+  const [navigateToHome, setNavigateToHome] = useState(false);
+  const router = useRouter();
 
-  const handleClick = (iconName) => {
-    if (iconName === 'user') {
-      setActiveIcon(iconName);
-      setNavigateToLogin(true);
-    } else {
-      setActiveIcon(iconName);
-      setNavigateToLogin(false);
-    }
-  };
 
   useEffect(() => {
     if (navigateToLogin) {
       router.push('/loginPage');
+      setNavigateToLogin(false);
     }
   }, [navigateToLogin, router]);
 
+  useEffect(() => {
+    if (navigateToMap) {
+      router.push('/map');
+      setNavigateToLogin(false);
+    }
+  }, [navigateToMap, router]);
+
+  useEffect(() => {
+    if (navigateToHome) {
+      router.push('/mainPage');
+      setNavigateToHome(false);
+    }
+  }, [navigateToHome, router]);
+
+  const handleClick = (iconName) => {
+    if (iconName === 'user') {
+      setActiveIcon(iconName);
+      localStorage.setItem('activeIcon', iconName); // 상태 저장
+      setNavigateToLogin(true);
+    } else if(iconName === 'map'){
+      setActiveIcon(iconName);
+      localStorage.setItem('activeIcon', iconName);
+      setNavigateToMap(iconName);
+    } else if (iconName === 'home') {
+      setActiveIcon(iconName);
+      localStorage.setItem('activeIcon', iconName);
+      setNavigateToHome(iconName);
+    }
+  };
 
   return (
     <nav className="navbar">

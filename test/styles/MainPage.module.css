@@ -4,8 +4,8 @@
   display: flex;
   flex-direction: column;
   width: 100vw; /* Viewport width */
-  height: 100vh; /* Viewport height */
-  background-color: rgb(218, 218, 218);
+  height: calc(100%-70px); /* Viewport height */
+  background-color: #fff;
   overflow: hidden;
   padding-top: 2.69rem; /* Adjust padding as needed */
   box-sizing: border-box; /* Ensure padding is included in the width and height */
@@ -16,10 +16,10 @@
 }
 
 .menuBox {
+  display: flex;
+  align-items: center;
   width: 22.5rem;
-  height: 3.5rem;
-  position: relative;
-  margin: 0 auto;
+  height: 2.6rem;
 }
 
 .headBox {
@@ -74,4 +74,11 @@
 .menuList {
   list-style: none;
   padding: 0;
+}
+
+.menuText {
+  color:black;
+}
+.headBox {
+  color : black;
 }
