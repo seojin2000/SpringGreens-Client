@@ -22,6 +22,7 @@ const chunkArray = (array, size) => {
 
 // Map 컴포넌트
 const Map = () => {
+  const { accessToken } = useAuth();
   // 상태 변수들
   const [map, setMap] = useState(null);  // 카카오 맵 객체
   const [kakao, setKakao] = useState(null);  // 카카오 API 객체
@@ -104,15 +105,16 @@ const Map = () => {
   };
 
   // 상가 거리 데이터 가져오기
-  const fetchMallStreetData = async () => {
-    const { accessToken, setAccessToken } = useAuth();
-    console.log(accessToken);
+  const fetchMallStreetData = async()=>  {
+    console.log("액세스 토큰 map :  ",  accessToken);
+    // const { accessToken, setAccessToken } = useAuth();
+    // console.log(accessToken);
     try {
       const response = await fetch('/api/map/get/mall/street', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${accessToken}`, // accessToken을 Authorization 헤더에 추가
+          // 'Authorization': `Bearer ${accessToken}`, // accessToken을 Authorization 헤더에 추가
         },
       });
   

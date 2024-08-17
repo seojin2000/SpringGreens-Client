@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import {React, useState} from 'react';
 import {useRouter} from 'next/navigation';
 import {
   styled
@@ -607,93 +607,151 @@ const Line7 = styled("div")({
 
 
 
-  const InputField = styled('input')({
-    border: `1px solid rgba(153, 153, 153, 0.25)`,
-    boxSizing: `border-box`,
-    borderRadius: `6px`,
-    width: `320px`,
-    height: `50px`,
-    position: `absolute`,
-    left: `0px`,
-    top: `32px`,
-    color: '#000', // 글자 색상을 검정색으로 설정
-    backgroundColor: '#fff', // 배경색을 흰색으로 설정
-  });
+const InputField = styled('input')({
+  border: `1px solid rgba(153, 153, 153, 0.25)`,
+  boxSizing: `border-box`,
+  borderRadius: `6px`,
+  width: `320px`,
+  height: `50px`,
+  position: `absolute`,
+  left: `0px`,
+  top: `32px`,
+  color: '#000', // 글자 색상을 검정색으로 설정
+  backgroundColor: '#fff', // 배경색을 흰색으로 설정
+});
 
 function SalarRegister() {
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        businessNumber: '',
+        contact: '', // 상태 객체의 키와 일치
+        password: '',
+    });
+
     const router = useRouter();
-    const handleClick = () => {
-        alert('선택 완료 버튼이 클릭되었습니다!'); // 클릭 시 동작
-      };
-      const moveDomestic = () => {
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value
+        });
+    };
+
+    const handleClick = async () => {
+
+        // 폼 검증
+        if (formData.password !== formData.confirmPassword) {
+            alert('비밀번호가 일치하지 않습니다.');
+            return;
+        }
+
+        try {
+            const response = await fetch('http://localhost:8080/signup/retail', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+                
+            });
+            console.log(formData);
+
+            if (response.ok) {
+                alert('회원가입이 완료되었습니다!');
+            } else {
+                alert('회원가입에 실패했습니다. 다시 시도해 주세요.');
+            }
+        } catch (error) {
+            console.error('회원가입 오류:', error);
+            alert('서버와의 연결에 문제가 발생했습니다. 다시 시도해 주세요.');
+        }
+    };
+
+    const moveDomestic = () => {
         router.push("/domestic");
-      };
+    };
 
-  return (
-    <Q1>
-      <Q2>
-        {`회원가입`}
-      </Q2>
-      <Component2>
-        <Q3>
-          {`이름`}
-        </Q3>
-        <InputField type="text" placeholder="  이름을 입력해 주세요"/> 
-      </Component2>
-      <Component3>
-        <Q5>
-          {`이메일`}
-        </Q5>
-        <Q6 type='text' placeholder="  이메일을 입력해 주세요"/>
-      </Component3>
-      <Component7>
-        <Q7>
-          {`사업자등록번호`}
-        </Q7>
-        <Q8 type='text' placeholder='  사업자등록번호를 입력해 주세요'></Q8>
-      </Component7>
-      <Component10>
-    
-        <Q9>
-          {`대표자 연락처`}
-        </Q9>
-        <Q10 type='text' placeholder='  가게 대표자 전화번호를 입력해 주세요'>
-        
-        </Q10>
-      </Component10>
-      <Component4>
-        <Q11>
-          {`비밀번호`}
-        </Q11>
-        <Q12 type='password' placeholder='  비밀번호를 입력해 주세요'></Q12>
-      </Component4>
-      <Component6>
-        <Q13>
-          {`비밀번호 확인`}
-        </Q13>
-        <Q14 type='password' placeholder='  비밀번호를 입력해 주세요'></Q14>
-      </Component6>
-      <Group101>
-        <Rectangle31 onClick={() => handleClick()}></Rectangle31>
-        <Q15>{`회원가입 완료`}</Q15>
-      </Group101>
-      <Frame66>
-        <Frame65 onClick={() => moveDomestic()}>
-          <Q16>
-            {`도매`}
-          </Q16>
-        </Frame65>
-        <Frame64>
-          <Q17>
-            {`소매`}
-          </Q17>
-        </Frame64>
-      </Frame66>
-      <Line7>
-      </Line7>
-    </Q1>);
-
-  }
+    return (
+        <Q1>
+            <Q2>{`회원가입`}</Q2>
+            <Component2>
+                <Q3>{`이름`}</Q3>
+                <InputField
+                    type="text"
+                    name="name"
+                    placeholder="이름을 입력해 주세요"
+                    value={formData.name}
+                    onChange={handleChange}
+                />
+            </Component2>
+            <Component3>
+                <Q5>{`이메일`}</Q5>
+                <Q6
+                    type='text'
+                    name="email"
+                    placeholder="이메일을 입력해 주세요"
+                    value={formData.email}
+                    onChange={handleChange}
+                />
+            </Component3>
+            <Component7>
+                <Q7>{`사업자등록번호`}</Q7>
+                <Q8
+                    type='text'
+                    name="businessNumber"
+                    placeholder='사업자등록번호를 입력해 주세요'
+                    value={formData.businessNumber}
+                    onChange={handleChange}
+                />
+            </Component7>
+            <Component10>
+                <Q9>{`대표자 연락처`}</Q9>
+                <Q10
+                    type='text'
+                    name="contact"
+                    placeholder='가게 대표자 전화번호를 입력해 주세요'
+                    value={formData.contact}
+                    onChange={handleChange}
+                />
+            </Component10>
+            <Component4>
+                <Q11>{`비밀번호`}</Q11>
+                <Q12
+                    type='password'
+                    name="password"
+                    placeholder='비밀번호를 입력해 주세요'
+                    value={formData.password}
+                    onChange={handleChange}
+                />
+            </Component4>
+            <Component6>
+                <Q13>{`비밀번호 확인`}</Q13>
+                <Q14
+                    type='password'
+                    name="confirmPassword"
+                    placeholder='비밀번호를 입력해 주세요'
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
+                />
+            </Component6>
+            <Group101>
+                <Rectangle31 onClick={handleClick}></Rectangle31>
+                <Q15>{`회원가입 완료`}</Q15>
+            </Group101>
+            <Frame66>
+                <Frame65 onClick={moveDomestic}>
+                    <Q16>{`도매`}</Q16>
+                </Frame65>
+                <Frame64>
+                    <Q17>{`소매`}</Q17>
+                </Frame64>
+            </Frame66>
+            <Line7></Line7>
+        </Q1>
+    );
+}
 
 export default SalarRegister;
 

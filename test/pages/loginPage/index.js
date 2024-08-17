@@ -3,7 +3,7 @@ import React, {useRef} from 'react';
 import { styled } from '@mui/material/styles';
 import { useAuth } from '../../src/context/AuthContext';
 import { useRouter } from 'next/navigation'
-import {NavBar} from '../components/Navbar';
+import  Navbar  from '../components/Navbar';
 // 스타일 정의
 const Q1 = styled("div")(({ theme }) => ({
   backgroundColor: `rgba(255, 255, 255, 1)`,
@@ -109,7 +109,8 @@ const Tabpanel = styled("div")(({ theme }) => ({
   width: `100%`,
   maxWidth: `298px`,
   height: `48px`,
-  marginTop: `20px`,
+  marginTop: `0.5rem`,
+  marginBottom: `1.5rem`,
   backgroundColor: `rgba(255, 255, 255, 1)`,
 }));
 
@@ -136,7 +137,7 @@ const Tabpanel1 = styled("div")(({ theme }) => ({
   width: `100%`,
   maxWidth: `298px`,
   height: `48px`,
-  marginTop: `10px`,
+  marginBottom: `2rem`,
 }));
 
 const TabpanelLabelStaySig = styled("div")({
@@ -158,7 +159,7 @@ const Q6 = styled("div")({
   fontSize: `20px`,
   letterSpacing: `0`,
   lineHeight: `24px`,
-  marginBottom: `20px`,
+  marginBottom: `3rem`,
 });
 
 // let accessToken = null;
@@ -177,9 +178,9 @@ function Q() {
   // 로그인 버튼 클릭 시 호출되는 함수
   const sendLogin = async (event) => {
 
-     // ref를 사용하여 이메일과 비밀번호 값을 가져옴
-     const email = emailRef.current.value;
-     const password = passwordRef.current.value;
+    // ref를 사용하여 이메일과 비밀번호 값을 가져옴
+    const email = emailRef.current.value;
+    const password = passwordRef.current.value;
 
     console.log("이메일 패스워드");
     console.log(email, password);
@@ -205,6 +206,7 @@ function Q() {
         throw new Error(`Error: ${response.status} ${response.statusText}`);
       }
 
+
       // 응답을 JSON으로 파싱
       const data = await response.json();
       console.log('Login successful:', data);
@@ -212,6 +214,7 @@ function Q() {
       console.log("액세스 토큰 저장 In-memory : ", data.data.access_token);
       // 전역적으로 액세스 토큰을 사용하기 위해서
       setAccessToken(data.data.access_token);
+
 
       if(data.status_code == 200) {
         router.push('/mainPage');
@@ -254,10 +257,8 @@ function Q() {
           {`비밀번호찾기`}
         </ListItemLinkSignUp>
       </Group82>    
-
-    </Q1>
     
-
+    </Q1>
   );
 }
 

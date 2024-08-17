@@ -7,7 +7,7 @@ export const config = {
 }
 
 const proxy = createProxyMiddleware({
-  // target: 'http://ec2-3-37-50-217.ap-northeast-2.compute.amazonaws.com:9090',
+  target: 'http://ec2-3-37-50-217.ap-northeast-2.compute.amazonaws.com:9090',
   target: 'http://localhost:8080',
   changeOrigin: true,
 });

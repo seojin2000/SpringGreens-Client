@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
 import { useRouter } from 'next/navigation';
+import { useRegister } from '../src/context/RegisterContext';
 
 import {
   styled
@@ -441,7 +442,7 @@ const Group101 = styled("div")({
   boxSizing: `border-box`,
   width: `320px`,
   height: `60px`,
-  top: `953px`,
+  top: `930px`,
 });
 
 const Rectangle31 = styled("div")({
@@ -576,13 +577,26 @@ const Line7 = styled("div")({
   });
 
 function DomasticRegister1() {
+  const { registerData, setRegisterData } = useRegister();
   const router = useRouter();
-  const moveSalarRegister = () => {
-      router.push("/salar");
+
+  // 폼 입력 변경 시 호출되는 함수
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setRegisterData({
+      ...registerData,
+      [name]: value,
+    });
   };
+
+  // 다음 페이지로 이동하는 함수
   const handleClick = () => {
-    alert("/회원가입 완료");
-  }
+    router.push("/domestic/domasticRegister2");
+  };
+
+  const moveSalarRegister = () => {
+    router.push("/salar");
+  };
   
   return (
     <Q1>
@@ -593,52 +607,100 @@ function DomasticRegister1() {
         <Q3>
           {`이름`}
         </Q3>
-        <InputField type="text" placeholder="  이름을 입력해 주세요"/> 
+        
+        <InputField 
+          type="text" 
+          name="name"  // name 속성 추가
+          placeholder="이름을 입력해 주세요" 
+          value={registerData.name} 
+          onChange={handleChange} 
+        />
+
       </Component2>
       <Component3>
         <Q5>
           {`이메일`}
         </Q5>
-        <Q6 type='text' placeholder="  이메일을 입력해 주세요"/>
+
+        <Q6 
+          type="text" 
+          name="email"  // name 속성 추가
+          placeholder="이메일을 입력해 주세요" 
+          value={registerData.email} 
+          onChange={handleChange} 
+        />
+
       </Component3>
       <Component7>
         <Q7>
           {`사업자등록번호`}
         </Q7>
-        <Q8 type='text' placeholder='  사업자등록번호를 입력해 주세요'></Q8>
+
+        <Q8 
+          type="text" 
+          name="businessNumber"  // name 속성 추가
+          placeholder="사업자등록번호를 입력해 주세요" 
+          value={registerData.businessNumber} 
+          onChange={handleChange} 
+        />
+        
       </Component7>
       <Component10>
     
         <Q9>
           {`대표자 연락처`}
         </Q9>
-        <Q10 type='text' placeholder='  가게 대표자 전화번호를 입력해 주세요'>
-        
-        </Q10>
+
+        <Q10 
+          type="text" 
+          name="phone"  // name 속성 추가
+          placeholder="가게 대표자 전화번호를 입력해 주세요" 
+          value={registerData.phone} 
+          onChange={handleChange} 
+        />
+      
       </Component10>
       <Component4>
         <Q11>
           {`비밀번호`}
         </Q11>
-        <Q12 type='password' placeholder='  비밀번호를 입력해 주세요'></Q12>
+
+        <Q12 
+          type="password" 
+          name="password"  // name 속성 추가
+          placeholder="비밀번호를 입력해 주세요" 
+          value={registerData.password} 
+          onChange={handleChange} 
+        />
+
       </Component4>
       <Component6>
         <Q13>
           {`비밀번호 확인`}
         </Q13>
-        <Q14 type='password' placeholder='  비밀번호를 입력해 주세요'></Q14>
+
+        <Q14 
+          type="password" 
+          name="passwordConfirm"  // name 속성 추가
+          placeholder="비밀번호를 입력해 주세요" 
+          // 비밀번호 확인용이라서 이 부분은 전역 상태에 저장되지 않음
+        />
+        
       </Component6>
+
+      
       <Group101>
-        <Rectangle31 onClick={() => handleClick()}></Rectangle31>
+        <Rectangle31 onClick={handleClick}></Rectangle31>
         <Q15>{`가게등록 하기`}</Q15>
       </Group101>
+
       <Frame66>
         <Frame65>
           <Q16>
             {`도매`}
           </Q16>
         </Frame65>
-        <Frame64 onClick={() => moveSalarRegister()}>
+        <Frame64 onClick={moveSalarRegister}>
           <Q17>
             {`소매`}
           </Q17>
