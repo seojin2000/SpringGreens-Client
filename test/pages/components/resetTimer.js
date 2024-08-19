@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const FiveSecondTimer = ({ onTimerEnd }) => {
+const FiveSecondTimer = ({ onTimerEnd, fontSize = '2rem' }) => {
   const [seconds, setSeconds] = useState(5);
 
   useEffect(() => {
@@ -23,8 +23,15 @@ const FiveSecondTimer = ({ onTimerEnd }) => {
     return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   };
 
+  const timerStyle = {
+    fontSize: fontSize,
+    fontWeight: 'bold',
+    marginBottom: '1rem',
+    fontFamily: 'monospace'
+  };
+
   return (
-    <div className="text-6xl font-bold mb-4 font-mono">{formatTime(seconds)}</div>
+    <div style={timerStyle}>{formatTime(seconds)}</div>
   );
 };
 

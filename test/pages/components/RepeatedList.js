@@ -6,6 +6,14 @@ import SampleImg from '@/public/images/sampleImg.png';
 const ListItem = ({ title, price, count, direction }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [showArrow, setShowArrow] = useState(!!direction);
+  const [windowWidth, setWindowWidth] = useState(0);
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    handleResize(); // Set initial width
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleClick = () => {
     setIsExpanded(!isExpanded);
@@ -13,10 +21,8 @@ const ListItem = ({ title, price, count, direction }) => {
 
   const handleButtonClick = (e) => {
     e.stopPropagation();
-    // 버튼 클릭 시 수행할 작업을 여기에 추가하세요
     console.log('Button clicked');
   };
-
 
   useEffect(() => {
     if (direction) {
@@ -39,9 +45,14 @@ const ListItem = ({ title, price, count, direction }) => {
     </div>
   );
 
+  const boxStyle = {
+    width: `${windowWidth}px`,
+    maxWidth: '100%',
+  };
+
   if (isExpanded) {
     return (
-      <div className={styles.ex_listBox}>
+      <div className={styles.ex_listBox} style={boxStyle}>
         <div className={styles.ex_content} onClick={handleClick}>
           <div className={styles.ex_sampleImg}>
             <Image src={SampleImg} alt="Sample Image" width={320} height={218} />
@@ -52,7 +63,7 @@ const ListItem = ({ title, price, count, direction }) => {
                 <p className={styles.ex_title}>{title}</p>
                 <p className={styles.ex_price}>{price}</p>
               </div>
-                <p className={styles.ex_storeMove}>상세페이지 이동</p>
+              <p className={styles.ex_storeMove}>상세페이지 이동</p>
             </div>
           </div>
         </div>
@@ -63,7 +74,7 @@ const ListItem = ({ title, price, count, direction }) => {
     );
   } else {
     return (
-      <div className={styles.listBox} onClick={handleClick}>
+      <div className={styles.listBox} onClick={handleClick} style={boxStyle}>
         <div className={styles.sampleImg}>
           <Image src={SampleImg} alt="Sample Image" width={80} height={80} />
         </div>

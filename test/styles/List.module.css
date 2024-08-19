@@ -5,62 +5,72 @@
   margin-bottom: 20px;
 }
 
-/* 축소된 상태의 스타일 */
-.listBox {
-  display: flex;
-  align-items: center;
-  width: 20rem;
-  height: 5rem;
+/* 공통 스타일 */
+.listBox, .ex_listBox {
+  box-sizing: border-box;
+  padding: 10px;
   margin: 0 auto 0.5rem;
   background: #F6F6F6;
   transition: all 0.3s ease;
   cursor: pointer;
+  width: 100%;
+  max-width: 20rem;
+}
+
+/* 축소된 상태의 스타일 */
+.listBox {
+  display: flex;
+  align-items: center;
+  height: 5rem;
+}
+
+.sampleImg, .ex_sampleImg {
+  background-color: antiquewhite;
+  flex-shrink: 0;
 }
 
 .sampleImg {
   width: 5rem;
   height: 5rem;
-  background-color: antiquewhite;
-  flex-shrink: 0;
   margin-right: 0.75rem;
 }
 
-.contentWrapper {
-  flex-grow: 1;
+.contentWrapper, .ex_contentWrapper {
   display: flex;
+  width: 100%;
+}
+
+.contentWrapper {
   justify-content: space-between;
   align-items: center;
   height: 100%;
 }
 
-.textBox {
+.textBox, .ex_textBox {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.title {
-  color: #4A4A4A;
+.title, .ex_title, .price, .ex_price {
   font-family: Roboto;
   font-size: 0.75rem;
-  font-style: normal;
-  font-weight: 400;
   line-height: 0.875rem;
   letter-spacing: -0.03125rem;
-  margin-bottom: 0.25rem;
-  width: 8rem;
-  height: 1.75rem;
 }
 
-.price {
+.title, .ex_title {
+  color: #4A4A4A;
+  font-weight: 400;
+  margin-bottom: 0.25rem;
+  width: 100%;
+  max-width: 8rem;
+}
+
+.price, .ex_price {
   color: #222;
-  font-family: Roboto;
-  font-size: 0.75rem;
-  font-style: normal;
   font-weight: 600;
-  line-height: 0.875rem;
-  letter-spacing: -0.03125rem;
 }
 
 .countWrapper {
@@ -68,14 +78,13 @@
   align-items: center;
   height: 100%;
   position: relative;
-  width: 4rem; /* 화살표를 포함할 수 있는 충분한 너비 */
+  width: 4rem;
 }
 
-.count {
+.count, .ex_count {
   color: #304FFE;
   font-family: Roboto;
   font-size: 0.75rem;
-  font-style: normal;
   font-weight: 700;
   line-height: 0.875rem;
   letter-spacing: -0.03125rem;
@@ -83,61 +92,43 @@
 
 /* 확장된 상태의 스타일 */
 .ex_listBox {
-  width: 20rem;
-  height: 20rem;
-  margin: 0 auto 0.5rem;
+  height: auto;
+  min-height: 20rem;
   border-radius: 0.25rem;
-  background: #F6F6F6;
   display: flex;
   flex-direction: column;
-  cursor: pointer;
 }
 
 .ex_sampleImg {
-  width: 20rem;
-  height: 13.6rem;
-  background-color: antiquewhite;
+  width: 100%;
+  height: 0;
+  padding-bottom: 68%; /* 20rem / 13.6rem * 100 */
   border-radius: 0.25rem;
+  position: relative;
+}
+
+.ex_sampleImg img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .ex_contentWrapper {
-  display: flex;
   justify-content: space-between;
+  margin-top: 0.63rem;
 }
 
 .ex_textBox {
-  color: #4A4A4A;
-  width: 8rem;
-  height: 1.75rem;
-  font-family: Roboto;
-  font-size: 0.75rem;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 0.875rem;
-  letter-spacing: -0.03125rem;
-  margin-top: 0.63rem;
   margin-left: 1.87rem;
-}
-
-.ex_title {
-  margin-bottom: 0.25rem;
-}
-
-.ex_price {
-  color: #222;
-  font-family: Roboto;
-  font-size: 0.75rem;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 0.875rem;
-  letter-spacing: -0.03125rem;
 }
 
 .ex_storeMove {
   color: #999;
   font-family: Roboto;
   font-size: 0.75rem;
-  font-style: normal;
   font-weight: 400;
   line-height: 0.875rem;
   letter-spacing: -0.03125rem;
@@ -150,7 +141,6 @@
   color: #304FFE;
   font-family: Roboto;
   font-size: 0.75rem;
-  font-style: normal;
   font-weight: 400;
   line-height: 0.875rem;
   letter-spacing: -0.03125rem;
@@ -160,16 +150,6 @@
 
 .ex_viewText {
   margin-right: 0.5rem;
-}
-
-.ex_count {
-  color: #304FFE;
-  font-family: Roboto;
-  font-size: 0.75rem;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 0.875rem;
-  letter-spacing: -0.03125rem;
 }
 
 .wishlistButton {
@@ -200,3 +180,21 @@
   color: red;
 }
 
+/* 반응형 스타일 */
+@media (max-width: 600px) {
+  .listBox, .ex_listBox {
+    max-width: 100%;
+  }
+
+  .title, .ex_title {
+    max-width: 100%;
+  }
+
+  .ex_textBox {
+    margin-left: 0;
+  }
+
+  .ex_viewCountWrapper {
+    margin-right: 0;
+  }
+}

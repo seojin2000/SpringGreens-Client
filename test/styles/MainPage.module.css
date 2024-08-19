@@ -4,14 +4,22 @@
   display: flex;
   flex-direction: column;
   width: 100vw; /* Viewport width */
-  height: calc(100%-70px); /* Viewport height */
+  height: calc(100vh - 70px); /* Viewport height minus navbar height */
   background-color: #fff;
-  overflow: hidden;
+  overflow: auto;
   padding-top: 2.69rem; /* Adjust padding as needed */
   box-sizing: border-box; /* Ensure padding is included in the width and height */
 }
+
 .topSection {
   flex-shrink: 0;
+  width: 100%;
+}
+
+.menuAndLocationWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
   width: 100%;
 }
 
@@ -22,17 +30,30 @@
   height: 2.6rem;
 }
 
+.myPlaceContainer{
+  margin-left: 1.25rem;
+}
+
+.myPlace{
+  padding: 0.25rem 0.625rem;
+  border-radius: 0.25rem;
+  background: #D9DFFF;
+  color: #304FFE;
+  margin-right: 0.5rem;
+}
+
 .headBox {
   display: flex;
   align-items: center;
-  width: 22.5rem;
-  height: 2.6rem;
   justify-content: space-between;
-  margin: 0 auto 1.25rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
 }
 
 .headBox h3 {
-  margin-left: 1.56rem;
+  margin-bottom: 0.75rem;
 }
 
 .sampleTimer {
@@ -46,13 +67,12 @@
 .sampleRe {
   width: 2rem;
   height: 2rem;
-  margin-right: 1.56rem;
   background-color: grey;
+  margin-left: 1.2rem;
 }
 
 .menuButton {
   position: absolute;
-  top: 0.625rem;
   right: 0.625rem;
   z-index: 1000;
   background: none;
@@ -71,6 +91,8 @@
   z-index: 999;
 }
 
+
+
 .menuList {
   list-style: none;
   padding: 0;
@@ -79,6 +101,11 @@
 .menuText {
   color:black;
 }
+
 .headBox {
   color : black;
+}
+
+.timerAndRestartWapper{
+  display: flex;
 }
