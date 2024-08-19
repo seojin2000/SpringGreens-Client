@@ -1,4 +1,16 @@
 {
+  "pages/fcm/index.js -> ../../pages/firebase": {
+    "id": "pages/fcm/index.js -> ../../pages/firebase",
+    "files": [
+      "static/chunks/pages_firebase_js.js"
+    ]
+  },
+  "pages/index.js -> ./fcm": {
+    "id": "pages/index.js -> ./fcm",
+    "files": [
+      "static/chunks/pages_fcm_index_js.js"
+    ]
+  },
   "pages/index.js -> ./map/index": {
     "id": "pages/index.js -> ./map/index",
     "files": [

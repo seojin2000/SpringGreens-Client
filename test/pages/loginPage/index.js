@@ -2,8 +2,7 @@
 import React, {useRef} from 'react';
 import { styled } from '@mui/material/styles';
 import { useAuth } from '../../src/context/AuthContext';
-import { useRouter } from 'next/navigation'
-import  Navbar  from '../components/Navbar';
+import { useSearchParams, useRouter } from 'next/navigation'
 // 스타일 정의
 const Q1 = styled("div")(({ theme }) => ({
   backgroundColor: `rgba(255, 255, 255, 1)`,
@@ -167,12 +166,18 @@ function Q() {
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const { accessToken, setAccessToken } = useAuth(); // Context API에서 accessToken과 setAccessToken 가져오기
-  
+  const searchParams = useSearchParams(); // 쿼리 파라미터 가져오기
+
+  // 리다이렉션 URL 가져오기
+  const redirectTo = searchParams.get('redirect') || '/mainPage'; // 기본값으로 '/mainPage' 설정
+
+
   const router = useRouter(); // useRouter 훅 호출
 
   const handleSignUpClick = () => {
     router.push("/loginSelectPage"); // /loginSelectPage로 이동
   };
+
 
   // 로그인 버튼을 클릭했을 때, 로그인 JSON을 보내자.
   // 로그인 버튼 클릭 시 호출되는 함수
@@ -216,9 +221,10 @@ function Q() {
       setAccessToken(data.data.access_token);
 
 
-      if(data.status_code == 200) {
-        router.push('/mainPage');
-        event.preventDefault();
+      if (data.status_code === 200) {
+        router.push(decodeURIComponent(redirectTo)); // 클라이언트 측에서 리디렉션 처리
+      } else {
+        console.error('Login failed:', data.message);
       }
 
     } catch (error) {

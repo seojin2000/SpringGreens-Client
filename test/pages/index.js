@@ -7,6 +7,9 @@ import { RegisterProvider } from "@/src/context/RegisterContext";
 const MapWithNoSSR = dynamic(() => import('./map/index'), {
   ssr: false,
 });
+const FirebaseMessagingComponent = dynamic(() => import('./fcm'), {
+  ssr: false
+});
 
 export default function Home() {
   return (

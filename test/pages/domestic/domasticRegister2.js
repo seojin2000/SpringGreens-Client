@@ -575,6 +575,7 @@ const InputField = styled('input')({
         if (response.ok) {
           console.log('Successfully registered:', await response.json());
           // router.push('/success'); // 성공 후 이동할 페이지
+          router.push("/loginPage");
         } else {
           console.error('Failed to register:', response.statusText);
         }

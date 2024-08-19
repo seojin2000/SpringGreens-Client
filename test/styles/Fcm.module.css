@@ -1,0 +1,411 @@
+.div {
+    width: 100vw;
+    height: 100vh;
+    background-color: #fff;
+    overflow: hidden;
+    display: flex; /* Flexbox 레이아웃 사용 */
+    flex-direction: column; /* 세로 방향으로 나열 */
+    position: absolute;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 3rem;
+    background-color: #304FFE;
+}
+
+.authGroup {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    width: 30%;
+    height: 100%;
+    margin-right: 30px;
+}
+
+.username {
+    font-size: 20px;
+    margin-right: 20px;
+}
+
+.logoutWrapper {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #D9DFFF;
+    width: 20%;
+    border-radius: 10px;
+    padding: 2px;
+}
+
+.logout {
+    color: #304FFE;
+    font-size: 20px;
+}
+
+.title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    margin-left: 20px;
+    padding: 10px 0;
+    cursor: pointer;
+}
+
+.main {
+    display: flex; /* Flexbox 레이아웃 사용 */
+    flex-direction: row; /* 가로 방향으로 나열 */
+    width: 100%;
+    height: calc(100% - 3rem); /* 헤더 높이만큼 제외 */
+}
+
+.sidebar {
+    width: 12%;
+    height: 100%;
+    background-color: #fff;
+    box-shadow: 4px 0 8px rgba(0, 0, 0, 0.09); /* 드롭섀도우 추가 */
+}
+
+.sidepage {
+    list-style-type: none; /* 불릿 제거 */
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 20px;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    color: black;
+}
+
+.sidepage li {
+    margin: 10px 0;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd; /* 구분선 추가 */
+}
+
+.sidepage li:last-child {
+    border-bottom: none; /* 마지막 항목에는 구분선 제거 */
+}
+
+.a {
+    color: black;
+}
+
+
+/* 바디의 스타일 */
+.body {
+    display: flex; /* Flexbox 레이아웃 사용 */
+    flex-wrap: wrap; /* 여러 줄로 나열 */
+    justify-content: center; /* 가로 방향으로 가운데 정렬 */
+    align-items: flex-start; /* 세로 방향으로 시작 정렬 (이미지 박스 위쪽으로 정렬) */
+    gap: 20px; /* 항목 사이의 간격 설정 */
+    padding: 20px; /* 바디의 패딩 추가 */
+    height: 100%; /* 전체 높이 설정 */
+    width: 100%; /* 전체 너비 설정 */
+    box-sizing: border-box; /* 패딩과 테두리를 포함한 박스 사이즈 설정 */
+}
+
+/* 이미지와 입력 필드를 감싸는 래퍼 */
+.imageWrapper {
+    display: flex; /* Flexbox 레이아웃 사용 */
+    flex-direction: column; /* 세로 방향으로 나열 */
+    align-items: center; /* 수평 방향으로 중앙 정렬 */
+    width: 300px; /* 이미지 박스와 동일한 너비 설정 */
+    gap: 10px; /* 요소 사이의 간격 설정 */
+}
+
+/* 이미지 박스 */
+.imageBox {
+    width: 300px; /* 고정 너비 */
+    height: 400px; /* 고정 높이 */
+    display: flex; /* Flexbox 레이아웃 사용 */
+    flex-direction: column; /* 세로 방향으로 나열 */
+    justify-content: center; /* 세로 방향으로 중앙 정렬 */
+    align-items: center; /* 수평 방향으로 중앙 정렬 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+    background-color: #ffffff;
+    box-shadow: 4px 0 8px rgba(0, 0, 0, 0.2); /* 드롭섀도우 추가 */
+    border-radius: 10px; /* 모서리 둥글게 */
+    border: 4px dashed #ccc; /* 점선 테두리 추가 */
+    color: rgb(179, 179, 179); /* 기본 글씨 색상 */
+    font-family: Arial, Helvetica, sans-serif; /* 폰트 설정 */
+    font-size: 15px; /* 폰트 크기 설정 */
+    position: relative; /* 상대 위치 설정 */
+}
+
+
+/* 파일 입력 */
+.fileInput {
+    display: none; /* 파일 입력을 숨김 */
+  }
+
+/* 파일 입력 라벨 */
+.uploadLabel {
+    display: flex; /* Flexbox 레이아웃 사용 */
+    flex-direction: column; /* 세로 방향으로 나열 */
+    justify-content: center; /* 세로 방향으로 중앙 정렬 */
+    align-items: center; /* 수평 방향으로 중앙 정렬 */
+    width: 100%;
+    height: 100%;
+    cursor: pointer; /* 클릭 가능한 커서로 변경 */
+  }
+
+/* 업로드 아이콘 */
+.uploadIcon {
+    width: 100%; /* 적절한 이미지 크기 설정 */
+    height: auto; /* 비율 유지 */
+  }
+  
+/* 업로드 텍스트 */
+.uploadText {
+  margin-top: 10px; /* 이미지와 텍스트 사이의 간격 설정 */
+  color: black; /* 텍스트 색상 설정 */
+}
+/* 제목 입력 필드 스타일 */
+.titleInput {
+    width: 100%; /* 부모 요소의 너비를 차지하게 설정 */
+    padding: 10px; /* 패딩 설정 */
+    font-size: 16px; /* 폰트 크기 설정 */
+    border: 1px solid #ccc; /* 테두리 설정 */
+    border-radius: 10px; /* 모서리 둥글게 설정 */
+    background-color: #ffffff; /* 배경 색상 */
+    color: #000000; /* 글씨 색상 */
+    text-align: center; /* 글씨 가운데 정렬 */
+    box-sizing: border-box; /* 패딩과 테두리를 포함한 박스 사이즈 설정 */
+    margin-bottom: 10px; /* 입력 필드와 버튼 사이의 여백 설정 */
+    outline: none; /* 포커스 시 기본 테두리 제거 */
+}
+
+/* 본문 입력 필드 스타일 */
+.bodyInput {
+    width: 100%; /* 부모 요소의 너비를 차지하게 설정 */
+    padding: 10px; /* 패딩 설정 */
+    font-size: 16px; /* 폰트 크기 설정 */
+    border: 1px solid #ccc; /* 테두리 설정 */
+    border-radius: 10px; /* 모서리 둥글게 설정 */
+    background-color: #ffffff; /* 배경 색상 */
+    color: #000000; /* 글씨 색상 */
+    box-sizing: border-box; /* 패딩과 테두리를 포함한 박스 사이즈 설정 */
+    margin-bottom: 10px; /* 입력 필드와 버튼 사이의 여백 설정 */
+    outline: none; /* 포커스 시 기본 테두리 제거 */
+    min-height: 50px; /* 최소 높이 설정 */
+    resize: none; /* 수직으로만 크기 조정 가능 */
+}
+
+/* 시간 입력 필드 스타일 */
+.timeInput {
+    width: 100%; /* 부모 요소의 너비를 차지하게 설정 */
+    padding: 10px; /* 패딩 설정 */
+    font-size: 16px; /* 폰트 크기 설정 */
+    border: 1px solid #ccc; /* 테두리 설정 */
+    border-radius: 10px; /* 모서리 둥글게 설정 */
+    background-color: #ffffff; /* 배경 색상 */
+    color: #000000; /* 글씨 색상 */
+    text-align: center; /* 글씨 가운데 정렬 */
+    box-sizing: border-box; /* 패딩과 테두리를 포함한 박스 사이즈 설정 */
+    margin-bottom: 10px; /* 입력 필드와 버튼 사이의 여백 설정 */
+    /* 기본 브라우저 스타일 제거 */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: textfield;
+}
+
+/* 포커스 시 테두리 제거 */
+.timeInput:focus {
+    border: 1px solid #ccc; /* 포커스 시 테두리 색상 설정 (원래 색상과 동일) */
+    box-shadow: none; /* 포커스 시 그림자 제거 */
+}
+
+/* 포커스 시 테두리 제거 (시간 입력 필드) */
+.timeInput::-webkit-inner-spin-button,
+.timeInput::-webkit-calendar-picker-indicator {
+    display: none; /* Safari에서 스핀 버튼과 캘린더 버튼 숨기기 */
+}
+
+/* 버튼 스타일 */
+.registrationBtn {
+    padding: 10px 20px; /* 버튼의 패딩 설정 */
+    font-size: 16px; /* 버튼의 글씨 크기 설정 */
+    background-color: #304FFE; /* 버튼 배경 색상 설정 */
+    color: #ffffff; /* 버튼 글씨 색상 설정 */
+    border: none; /* 버튼 테두리 제거 */
+    border-radius: 5px; /* 버튼 모서리 둥글게 */
+    cursor: pointer; /* 마우스 커서 포인터로 변경 */
+    transition: background-color 0.3s; /* 배경 색상 변경 애니메이션 추가 */
+}
+
+.registrationBtn:hover {
+    background-color: #0039cb; /* 버튼 호버 시 배경 색상 변경 */
+}
+/* 로그인 */
+
+/* Fcm.module.css */
+.loginButton {
+    background-color: #D9DFFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    outline: none;
+    color: #304FFE;
+  }
+  
+  .loginButton:hover {
+    color: #fff;
+    background-color: #0056b3;
+  }
+
+  /* 구독 서비스 신청 */
+  .subscriptionWrapper {
+    padding: 30px;
+    background-color: #ffffff;
+    border: 1px solid #dcdcdc;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    max-height: 600px; /* 최대 높이 설정 */
+    overflow-y: auto; /* 수직 스크롤 가능하게 설정 */
+    margin: 30px auto;
+  }
+  
+  .subscriptionTitle {
+    font-size: 26px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #dcdcdc;
+    padding-bottom: 10px;
+  }
+  
+  .subscriptionDescription {
+    font-size: 16px;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 30px;
+  }
+  
+  .subheading {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #dcdcdc;
+    padding-bottom: 5px;
+  }
+  
+  .benefitsList,
+  .noticeList,
+  .agreementList {
+    margin: 15px 0;
+    padding-left: 20px;
+    list-style-type: disc;
+  }
+  
+  .benefitsList li,
+  .noticeList li,
+  .agreementList li {
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #666;
+  }
+  
+  .agreementText {
+    font-size: 16px;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+  
+  .subscriptionButton {
+    background-color: #0070f3;
+    color: white;
+    border: 1px solid #005bb5;
+    border-radius: 4px;
+    padding: 12px 24px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+  }
+  
+  .subscriptionButton:hover {
+    background-color: #005bb5;
+    border-color: #003d7a;
+  }
+  
+
+  /* 발송 내역 */
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 60px); /* 헤더 높이와 기타 마진을 고려하여 전체 화면 높이에서 차감 */
+    padding: 20px;
+    background-color: #ffffff;
+    border: 1px solid #dcdcdc;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* .title {
+    font-size: 26px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #dcdcdc;
+    padding-bottom: 10px;
+  }
+   */
+  .tableWrapper {
+    flex: 1; /* 남은 공간을 채우도록 설정 */
+    overflow-y: auto; /* 수직 스크롤 가능하도록 설정 */
+  }
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed; /* 열 너비 고정 */
+  }
+  
+  .table th, .table td {
+    border: 1px solid #dcdcdc;
+    padding: 12px;
+    text-align: left;
+  }
+  
+  .table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .table tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .table td {
+    font-size: 16px;
+    color: #666;
+  }
+  /* 로그인 후 이용  */
+
+  .message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: calc(100vh - 60px); /* 헤더 높이와 기타 마진을 고려하여 전체 화면 높이에서 차감 */
+    font-size: 20px;
+    color: #666;
+  }

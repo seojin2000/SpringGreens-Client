@@ -114,7 +114,7 @@ const Map = () => {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          // 'Authorization': `Bearer ${accessToken}`, // accessToken을 Authorization 헤더에 추가
+          'Authorization': `Bearer ` + accessToken, // accessToken을 Authorization 헤더에 추가
         },
       });
   
@@ -595,6 +595,7 @@ const Map = () => {
         markersRef.current = {};
   
         // 기준 좌표로 지도 이동
+        console.log(mallStreetData);
         const latitude = mallStreetData.data.standard_position.latitude;  
         const longitude = mallStreetData.data.standard_position.longitude;
         console.log("Center Coordinates:", latitude, longitude);
